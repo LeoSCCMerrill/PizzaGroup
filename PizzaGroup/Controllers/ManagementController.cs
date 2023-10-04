@@ -8,5 +8,9 @@ namespace PizzaGroup.Controllers
         {
             return View();
         }
+        public IActionResult CreateEmployee()
+        {
+            return View();
+        }
     }
 }

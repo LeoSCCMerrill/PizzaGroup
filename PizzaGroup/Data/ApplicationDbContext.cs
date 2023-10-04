@@ -5,7 +5,7 @@ using PizzaGroup.Models;
 
 namespace PizzaGroup.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -68,4 +68,5 @@ namespace PizzaGroup.Data
                 UserId = EMPLOYEE_ROLE_ID
             });
         }
+    }
 }
