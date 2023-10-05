@@ -8,5 +8,10 @@ namespace PizzaGroup.Controllers
         {
             return View();
         }
+
+        public IActionResult CustomPizzaView()
+        {
+            return View();
+        }
     }
 }
