@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PizzaGroup.Data;
 using PizzaGroup.Models;
 
 namespace PizzaGroup.Controllers
 {
+    [Authorize(Roles = "Owner, Manager")]
     public class ManagementController : Controller
     {
         private UserManager<User> userManager;
@@ -36,6 +38,20 @@ namespace PizzaGroup.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> DemoteManager(string userId)
+        {
+            User user = await userManager.FindByIdAsync(userId);
+            await userManager.RemoveFromRoleAsync(user, "Manager");
+            await userManager.AddToRoleAsync(user, "Employee");
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> PromoteEmployee(string userId)
+        {
+            User user = await userManager.FindByIdAsync(userId);
+            await userManager.RemoveFromRoleAsync(user, "Employee");
+            await userManager.AddToRoleAsync(user, "Manager");
+            return RedirectToAction("Index");
+        }
         public async Task<IActionResult> DeleteEmployee(string userId)
         {
             await userManager.DeleteAsync(await userManager.FindByIdAsync(userId));
