@@ -49,10 +49,10 @@ namespace PizzaGroup.Data
             }, new User
             {
                 Id = EMPLOYEE_USER_ID,
-                UserName = "student@myemail.com",
-                NormalizedUserName = "STUDENT@MYEMAIL.COM",
-                Email = "student@myemail.com",
-                NormalizedEmail = "STUDENT@MYEMAIL.COM",
+                UserName = "employee@hizza.com",
+                NormalizedUserName = "EMPLOYEE@HIZZA.COM",
+                Email = "employee@hizza.com",
+                NormalizedEmail = "EMPLOYEE@HIZZA.COM",
                 EmailConfirmed = true,
                 PasswordHash = "AQAAAAEAACcQAAAAEALfXOO0MYDpnaWi+2TO6u67hE3xzrew03QVb8Vb3wTOdiKZzWGSm42SscHBRPRT0g==", // Password1!
                 SecurityStamp = "1",
