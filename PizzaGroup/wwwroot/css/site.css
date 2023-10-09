@@ -16,3 +16,24 @@ html {
 body {
   margin-bottom: 60px;
 }
+.align-right {
+    text-align: right;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#Logo {
+    width: auto;
+    height: auto;
+    margin-left: 1em;
+}
+
+main {
+    flex-grow: 1;
+    margin-left: 20px; 
+}
