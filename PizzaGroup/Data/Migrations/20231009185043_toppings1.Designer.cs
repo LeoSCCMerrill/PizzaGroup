@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaGroup.Data;
 
@@ -11,9 +12,10 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231009185043_toppings1")]
+    partial class toppings1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,14 +54,14 @@ namespace PizzaGroup.Data.Migrations
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "bf10219c-3088-4e27-a742-33c3f8bd4656",
+                            ConcurrencyStamp = "02fc1241-f5dd-4c9f-bf65-bb28af6e5b9c",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "d5bc97b8-ce12-4d70-a186-be3ace66679d",
+                            ConcurrencyStamp = "c8765029-7f5a-4f4d-b858-812fe195fb99",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -199,8 +201,8 @@ namespace PizzaGroup.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("PizzaPrice")
-                        .HasColumnType("float");
+                    b.Property<int>("PizzaPrice")
+                        .HasColumnType("int");
 
                     b.Property<string>("PizzaSize")
                         .IsRequired()
@@ -215,7 +217,7 @@ namespace PizzaGroup.Data.Migrations
                         {
                             PizzaID = 1,
                             PizzaName = "Custom 1",
-                            PizzaPrice = 10.0,
+                            PizzaPrice = 10,
                             PizzaSize = "Medium"
                         });
                 });
@@ -273,11 +275,6 @@ namespace PizzaGroup.Data.Migrations
                         {
                             ToppingID = 2,
                             ToppingName = "Beef"
-                        },
-                        new
-                        {
-                            ToppingID = 3,
-                            ToppingName = "Do not use"
                         });
                 });
 

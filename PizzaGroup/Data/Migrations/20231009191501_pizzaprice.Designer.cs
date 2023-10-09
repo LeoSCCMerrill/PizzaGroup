@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaGroup.Data;
 
@@ -11,9 +12,10 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231009191501_pizzaprice")]
+    partial class pizzaprice
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,14 +54,14 @@ namespace PizzaGroup.Data.Migrations
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "bf10219c-3088-4e27-a742-33c3f8bd4656",
+                            ConcurrencyStamp = "9b45f4dd-38f0-4d1e-b1ae-729a58d65fa1",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "d5bc97b8-ce12-4d70-a186-be3ace66679d",
+                            ConcurrencyStamp = "b3576165-3c2d-47f6-b33a-f6d564b8e471",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -273,11 +275,6 @@ namespace PizzaGroup.Data.Migrations
                         {
                             ToppingID = 2,
                             ToppingName = "Beef"
-                        },
-                        new
-                        {
-                            ToppingID = 3,
-                            ToppingName = "Do not use"
                         });
                 });
 
