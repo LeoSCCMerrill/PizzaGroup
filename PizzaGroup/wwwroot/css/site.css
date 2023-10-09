@@ -37,3 +37,21 @@ main {
     flex-grow: 1;
     margin-left: 20px; 
 }
+
+/* Create three equal columns that floats next to each other */
+.column {
+    float: left;
+    width: 33.33%;
+    padding: 15px;
+}
+
+/* Clear floats after the columns */
+.row::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+#grad {
+    background-image: linear-gradient(white, red);
+}

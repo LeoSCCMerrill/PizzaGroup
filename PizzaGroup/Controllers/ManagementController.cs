@@ -57,5 +57,10 @@ namespace PizzaGroup.Controllers
             };
             return viewModel;
         }
+
+        public  IActionResult CreateNewPizza()
+        {
+            return View();
+        }
     }
 }
