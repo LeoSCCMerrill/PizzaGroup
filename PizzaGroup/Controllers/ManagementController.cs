@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PizzaGroup.Data;
 using PizzaGroup.Models;
 
 namespace PizzaGroup.Controllers
 {
+    [Authorize(Roles = "Owner, Manager")]
     public class ManagementController : Controller
     {
         private UserManager<User> userManager;
