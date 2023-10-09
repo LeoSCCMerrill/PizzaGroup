@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaGroup.Data;
 
@@ -11,9 +12,10 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231009175746_MoreAccountWork")]
+    partial class MoreAccountWork
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,28 +53,15 @@ namespace PizzaGroup.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "e4f00b84-e6dd-40a3-a59a-9e77e03361a8",
-                            Name = "Owner",
-                            NormalizedName = "OWNER"
-                        },
-                        new
-                        {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-
-
-                            ConcurrencyStamp = "9170c33b-dfae-4b6b-a06b-350810da3efa",
-
+                            ConcurrencyStamp = "6bc95c27-10ea-4d58-95c1-19d2a1dec8ce",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-
-
-                            ConcurrencyStamp = "36d5b3a4-f33e-4b7b-b04d-ba66bcfdc1fd",
-
+                            ConcurrencyStamp = "2e7c69fc-3856-4923-8515-9f9a8d3833b7",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -169,11 +158,6 @@ namespace PizzaGroup.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            RoleId = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11"
-                        },
-                        new
-                        {
                             UserId = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
                             RoleId = "b4280b6a-0613-4cbd-a9e6-f1701e926e73"
                         },
@@ -204,102 +188,6 @@ namespace PizzaGroup.Data.Migrations
 
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
-
-
-            modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
-                {
-                    b.Property<int>("PizzaID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PizzaID"), 1L, 1);
-
-                    b.Property<string>("PizzaName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("PizzaPrice")
-                        .HasColumnType("float");
-
-                    b.Property<string>("PizzaSize")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PizzaID");
-
-                    b.ToTable("Pizzas");
-
-                    b.HasData(
-                        new
-                        {
-                            PizzaID = 1,
-                            PizzaName = "Custom 1",
-                            PizzaPrice = 10.0,
-                            PizzaSize = "Medium"
-                        });
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
-                {
-                    b.Property<int>("PizzaID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ToppingID")
-                        .HasColumnType("int");
-
-                    b.HasKey("PizzaID", "ToppingID");
-
-                    b.HasIndex("ToppingID");
-
-                    b.ToTable("PizzaToppings");
-
-                    b.HasData(
-                        new
-                        {
-                            PizzaID = 1,
-                            ToppingID = 1
-                        },
-                        new
-                        {
-                            PizzaID = 1,
-                            ToppingID = 2
-                        });
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.Topping", b =>
-                {
-                    b.Property<int>("ToppingID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ToppingID"), 1L, 1);
-
-                    b.Property<string>("ToppingName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("ToppingID");
-
-                    b.ToTable("Toppings");
-
-                    b.HasData(
-                        new
-                        {
-                            ToppingID = 1,
-                            ToppingName = "Pepperoni"
-                        },
-                        new
-                        {
-                            ToppingID = 2,
-                            ToppingName = "Beef"
-                        },
-                        new
-                        {
-                            ToppingID = 3,
-                            ToppingName = "Do not use"
-                        });
-                });
-
 
             modelBuilder.Entity("PizzaGroup.Models.User", b =>
                 {
@@ -366,22 +254,6 @@ namespace PizzaGroup.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
 
                     b.HasData(
-                        new
-                        {
-                            Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "c8554266-b401-4519-9aeb-a9283053fc58",
-                            Email = "owner@hizza.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "OWNER@HIZZA.COM",
-                            NormalizedUserName = "OWNER@HIZZA.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEALfXOO0MYDpnaWi+2TO6u67hE3xzrew03QVb8Vb3wTOdiKZzWGSm42SscHBRPRT0g==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "VVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
-                            TwoFactorEnabled = false,
-                            UserName = "owner@hizza.com"
-                        },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
@@ -465,35 +337,6 @@ namespace PizzaGroup.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
-                {
-                    b.HasOne("PizzaGroup.Models.Pizza", "Pizza")
-                        .WithMany("PizzaToppings")
-                        .HasForeignKey("PizzaID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PizzaGroup.Models.Topping", "Topping")
-                        .WithMany("PizzaToppings")
-                        .HasForeignKey("ToppingID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pizza");
-
-                    b.Navigation("Topping");
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
-                {
-                    b.Navigation("PizzaToppings");
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.Topping", b =>
-                {
-                    b.Navigation("PizzaToppings");
                 });
 #pragma warning restore 612, 618
         }

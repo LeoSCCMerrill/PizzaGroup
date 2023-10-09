@@ -1,0 +1,13 @@
+﻿@model PizzaViewModel
+
+@Model.Pizza
+
+@foreach(PizzaTopping pizzatoppings in Model.PizzaToppings)
+{
+    @foreach(Topping topping in Model.Toppings)
+    {
+        if (pizzatoppings.ToppingID == topping.ToppingID){
+            @topping.ToppingName
+        }
+    }
+}
