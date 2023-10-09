@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaGroup.Data;
 
@@ -11,9 +12,10 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231009192058_testTopping")]
+    partial class testTopping
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -51,28 +53,15 @@ namespace PizzaGroup.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "e4f00b84-e6dd-40a3-a59a-9e77e03361a8",
-                            Name = "Owner",
-                            NormalizedName = "OWNER"
-                        },
-                        new
-                        {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-
-
-                            ConcurrencyStamp = "9170c33b-dfae-4b6b-a06b-350810da3efa",
-
+                            ConcurrencyStamp = "bf10219c-3088-4e27-a742-33c3f8bd4656",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-
-
-                            ConcurrencyStamp = "36d5b3a4-f33e-4b7b-b04d-ba66bcfdc1fd",
-
+                            ConcurrencyStamp = "d5bc97b8-ce12-4d70-a186-be3ace66679d",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -169,11 +158,6 @@ namespace PizzaGroup.Data.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            RoleId = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11"
-                        },
-                        new
-                        {
                             UserId = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
                             RoleId = "b4280b6a-0613-4cbd-a9e6-f1701e926e73"
                         },
@@ -204,7 +188,6 @@ namespace PizzaGroup.Data.Migrations
 
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
-
 
             modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
                 {
@@ -300,7 +283,6 @@ namespace PizzaGroup.Data.Migrations
                         });
                 });
 
-
             modelBuilder.Entity("PizzaGroup.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -368,22 +350,6 @@ namespace PizzaGroup.Data.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            AccessFailedCount = 0,
-                            ConcurrencyStamp = "c8554266-b401-4519-9aeb-a9283053fc58",
-                            Email = "owner@hizza.com",
-                            EmailConfirmed = true,
-                            LockoutEnabled = false,
-                            NormalizedEmail = "OWNER@HIZZA.COM",
-                            NormalizedUserName = "OWNER@HIZZA.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEALfXOO0MYDpnaWi+2TO6u67hE3xzrew03QVb8Vb3wTOdiKZzWGSm42SscHBRPRT0g==",
-                            PhoneNumberConfirmed = false,
-                            SecurityStamp = "VVPCRDAS3MJWQD5CSW2GWPRADBXEZINA",
-                            TwoFactorEnabled = false,
-                            UserName = "owner@hizza.com"
-                        },
-                        new
-                        {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "c8554266-b401-4519-9aeb-a9283053fc58",
@@ -403,16 +369,16 @@ namespace PizzaGroup.Data.Migrations
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
                             AccessFailedCount = 0,
                             ConcurrencyStamp = "1",
-                            Email = "employee@hizza.com",
+                            Email = "student@myemail.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
-                            NormalizedEmail = "EMPLOYEE@HIZZA.COM",
-                            NormalizedUserName = "EMPLOYEE@HIZZA.COM",
+                            NormalizedEmail = "STUDENT@MYEMAIL.COM",
+                            NormalizedUserName = "STUDENT@MYEMAIL.COM",
                             PasswordHash = "AQAAAAEAACcQAAAAEALfXOO0MYDpnaWi+2TO6u67hE3xzrew03QVb8Vb3wTOdiKZzWGSm42SscHBRPRT0g==",
                             PhoneNumberConfirmed = false,
                             SecurityStamp = "1",
                             TwoFactorEnabled = false,
-                            UserName = "employee@hizza.com"
+                            UserName = "student@myemail.com"
                         });
                 });
 
