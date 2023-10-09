@@ -6,30 +6,129 @@
 
 <h1 class="mb-2">Manage Employees</h1>
 
-<h5 class="mt-2"><a asp-action="CreateEmployee">Add an Employee</a></h5>
-
-<table class="table table-bordered table-striped table-sm">
-    <thead>
-        <tr><th>Email</th><th></th></tr>
-    </thead>
-    <tbody>
-        @if (Model == null || Model.Users == null || Model.Users.Count() == 0)
-        {
-            <tr><td>There are no employee accounts</td></tr>
-        }
-        else
-        {
-            @foreach (User user in Model.Users)
-            {
-                <tr>
-                    <td>@user.Email</td>
-                    <td>
-                        <form method="post" asp-action="DeleteEmployee" asp-route-userId="@user.Id">
-                            <button type="submit" class="btn btn-primary">Delete Employee</button>
-                        </form>
-                    </td>
-                </tr>
+@if (User.IsInRole("Owner"))
+{
+    <table class="table table-bordered table-striped table-sm">
+        <caption>Managers</caption>
+        <thead>
+            <tr><th>Email</th><th>Demote</th><th>Delete</th></tr>
+        </thead>
+        <tbody>
+            @{
+                var managerFlag = false;
             }
-        }
-    </tbody>
-</table>
+            @if (Model.Users.Count() != 0)
+            {
+                @foreach (User user in Model.Users)
+                {
+                    if (user.RoleNames.Contains("Manager"))
+                    {
+                        managerFlag = true;
+                        <tr>
+                            <td>@user.Email</td>
+                            <td>
+                                <form method="post" asp-action="DemoteManager" asp-route-userId="@user.Id">
+                                    <button type="submit" class="btn btn-primary">Demote Manager</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" asp-action="DeleteEmployee" asp-route-userId="@user.Id">
+                                    <button type="submit" class="btn btn-primary">Delete Manager</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+            @if (!managerFlag)
+            {
+                <tr><td>There are no Manager accounts</td></tr>
+            }
+        </tbody>
+    </table>
+    <h5 class="mt-2"><a asp-action="CreateEmployee">Add an Employee</a></h5>
+    <table class="table table-bordered table-striped table-sm">
+        <caption>Employees</caption>
+        <thead>
+            <tr><th>Email</th><th>Promote</th><th>Delete</th></tr>
+        </thead>
+        <tbody>
+            @{
+                var employeeFlag = false;
+            }
+            @if (Model.Users.Count() != 0)
+            {
+                @foreach (User user in Model.Users)
+                {
+                    if (user.RoleNames.Contains("Employee"))
+                    {
+                        employeeFlag = true;
+                        <tr>
+                            <td>@user.Email</td>
+                            <td>
+                                <form method="post" asp-action="PromoteEmployee" asp-route-userId="@user.Id">
+                                    <button type="submit" class="btn btn-primary">Promote Employee</button>
+                                </form>
+                            </td>
+                            <td>
+                                <form method="post" asp-action="DeleteEmployee" asp-route-userId="@user.Id">
+                                    <button type="submit" class="btn btn-primary">Delete Employee</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+            @if (!employeeFlag)
+            {
+                <tr><td>There are no Employee accounts</td></tr>
+            }
+        </tbody>
+    </table>
+
+}
+else if (User.IsInRole("Manager"))
+{
+    <h5 class="mt-2"><a asp-action="CreateEmployee">Add an Employee</a></h5>
+    <table class="table table-bordered table-striped table-sm">
+        <caption>Employees</caption>
+        <thead>
+            <tr><th>Email</th><th>Delete</th></tr>
+        </thead>
+        <tbody>
+            @{
+                var employeeFlag = false;
+            }
+            @if (Model.Users.Count() != 0)
+            {
+                @foreach (User user in Model.Users)
+                {
+                    if (user.RoleNames.Contains("Employee"))
+                    {
+                        employeeFlag = true;
+                        <tr>
+                            <td>@user.Email</td>
+                            <td>
+                                <form method="post" asp-action="DeleteEmployee" asp-route-userId="@user.Id">
+                                    <button type="submit" class="btn btn-primary">Delete Employee</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+            @if (!employeeFlag)
+            {
+                <tr><td>There are no Employee accounts</td></tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <table class="table table-bordered table-striped table-sm">
+        <caption>You should not have access to this page</caption>
+    </table>
+}
+
+
