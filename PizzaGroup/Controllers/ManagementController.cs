@@ -36,6 +36,20 @@ namespace PizzaGroup.Controllers
             return RedirectToAction("Index");
         }
 
+        public async Task<IActionResult> DemoteManager(string userId)
+        {
+            User user = await userManager.FindByIdAsync(userId);
+            await userManager.RemoveFromRoleAsync(user, "Manager");
+            await userManager.AddToRoleAsync(user, "Employee");
+            return RedirectToAction("Index");
+        }
+        public async Task<IActionResult> PromoteEmployee(string userId)
+        {
+            User user = await userManager.FindByIdAsync(userId);
+            await userManager.RemoveFromRoleAsync(user, "Employee");
+            await userManager.AddToRoleAsync(user, "Manager");
+            return RedirectToAction("Index");
+        }
         public async Task<IActionResult> DeleteEmployee(string userId)
         {
             await userManager.DeleteAsync(await userManager.FindByIdAsync(userId));
