@@ -12,10 +12,13 @@ namespace PizzaGroup.Data
         {
         }
         public DbSet<User> ApplicationUsers { get; set; }
+        public DbSet<Order> Orders { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure the User entity
             base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Order>().HasKey(o=> o.OrderID);
+
             modelBuilder.Entity<User>().HasKey(x => x.Id);
             const string MANAGER_USER_ID = "b4280b6a-0613-4cbd-a9e6-f1701e926e73";
             const string MANAGER_ROLE_ID = MANAGER_USER_ID;
