@@ -1,4 +1,10 @@
-﻿
+﻿@model Pizza
 
 <h1>Browse all of our Classic Pizzas Here!</h1>
+
+<p>Placeholder pizza</p>
+<form method="post" asp-action="DeletePizza" asp-controller="Customer" asp-route-id="@Model.PizzaID">
+<button type="submit" class="btn btn-primary">Delete</button>
+</form>
+
 <p>under construction</p>
