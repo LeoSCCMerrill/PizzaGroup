@@ -14,8 +14,8 @@ ALTER TABLE TO MAKE NICER AND ADD WHATEVER ELSE NEEDS TO GO HERE<br />
             @foreach (var o in Model)
             {
         <tr>
-            <td>@o.customerID</td>
-            <td>@o.PizzaID</td>
+            <td>@o.CustomerID</td>
+            <td>@o.Pizzas[0]</td>
             <td>GET PRICE SOMEHOW</td>
             <td><button name=@o>DELETE</button></td>
             <td><button name=@o>EDIT</button></td>
