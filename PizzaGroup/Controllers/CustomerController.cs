@@ -18,7 +18,7 @@ namespace PizzaGroup.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View(new Pizza());
         }
 
         public IActionResult CustomPizzaView()

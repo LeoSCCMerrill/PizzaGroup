@@ -16,11 +16,13 @@ namespace PizzaGroup.Data
         public DbSet<Topping> Toppings { get; set; }
         public DbSet<PizzaTopping> PizzaToppings { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<Crust> Crusts { get; set; }
+        public DbSet<Size> Sizes { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure the User entity
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Order>().HasKey(o=> o.OrderID);
+            modelBuilder.Entity<Order>().HasKey(o => o.OrderID);
 
             modelBuilder.Entity<User>().HasKey(x => x.Id);
             const string OWNER_USER_ID = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11";
@@ -112,17 +114,217 @@ namespace PizzaGroup.Data
                 new Topping
                 {
                     ToppingID = 1,
-                    ToppingName = "Pepperoni"
+                    ToppingName = "Pepperoni",
+                    ToppingPrice = 0.29m,
+                    ToppingType = ToppingType.MEAT
                 },
                 new Topping
                 {
                     ToppingID = 2,
-                    ToppingName = "Beef"
+                    ToppingName = "Beef",
+                    ToppingPrice = 0.29m,
+                    ToppingType = ToppingType.MEAT
                 },
                 new Topping
                 {
                     ToppingID = 3,
-                    ToppingName = "Do not use"
+                    ToppingName = "Bacon",
+                    ToppingPrice = 0.29m,
+                    ToppingType = ToppingType.MEAT
+                },
+                new Topping
+                {
+                    ToppingID = 4,
+                    ToppingName = "Chicken",
+                    ToppingPrice = 0.29m,
+                    ToppingType = ToppingType.MEAT
+                },
+                new Topping
+                {
+                    ToppingID = 5,
+                    ToppingName = "Sausage",
+                    ToppingPrice = 0.29m,
+                    ToppingType = ToppingType.MEAT
+                },
+                new Topping
+                {
+                    ToppingID = 6,
+                    ToppingName = "Canadian Bacon",
+                    ToppingPrice = 0.29m,
+                    ToppingType = ToppingType.MEAT
+                },
+                new Topping
+                {
+                    ToppingID = 7,
+                    ToppingName = "Anchovies",
+                    ToppingPrice = 0.29m,
+                    ToppingType = ToppingType.MEAT
+                },
+                new Topping
+                {
+                    ToppingID = 8,
+                    ToppingName = "Mozzarella",
+                    ToppingPrice = 0m,
+                    ToppingType = ToppingType.CHEESE
+                },
+                new Topping
+                {
+                    ToppingID = 9,
+                    ToppingName = "Parmesan",
+                    ToppingPrice = 0m,
+                    ToppingType = ToppingType.CHEESE
+                },
+                new Topping
+                {
+                    ToppingID = 10,
+                    ToppingName = "Green Pepper",
+                    ToppingPrice = 0.19m,
+                    ToppingType = ToppingType.VEGGIE
+                },
+                new Topping
+                {
+                    ToppingID = 11,
+                    ToppingName = "Red Pepper",
+                    ToppingPrice = 0.19m,
+                    ToppingType = ToppingType.VEGGIE
+                },
+                new Topping
+                {
+                    ToppingID = 12,
+                    ToppingName = "Onion",
+                    ToppingPrice = 0.19m,
+                    ToppingType = ToppingType.VEGGIE
+                },
+                new Topping
+                {
+                    ToppingID = 13,
+                    ToppingName = "Red Onion",
+                    ToppingPrice = 0.19m,
+                    ToppingType = ToppingType.VEGGIE
+                },
+                new Topping
+                {
+                    ToppingID = 14,
+                    ToppingName = "Mushroom",
+                    ToppingPrice = 0.19m,
+                    ToppingType = ToppingType.VEGGIE
+                },
+                new Topping
+                {
+                    ToppingID = 15,
+                    ToppingName = "Olive",
+                    ToppingPrice = 0.19m,
+                    ToppingType = ToppingType.VEGGIE
+                },
+                new Topping
+                {
+                    ToppingID = 16,
+                    ToppingName = "Pineapple",
+                    ToppingPrice = 0.19m,
+                    ToppingType = ToppingType.VEGGIE
+                },
+                new Topping
+                {
+                    ToppingID = 17,
+                    ToppingName = "Tomato Sauce",
+                    ToppingPrice = 0m,
+                    ToppingType = ToppingType.SAUCE
+                },
+                new Topping
+                {
+                    ToppingID = 18,
+                    ToppingName = "Barbeque",
+                    ToppingPrice = 0.09m,
+                    ToppingType = ToppingType.SAUCE
+                },
+                new Topping
+                {
+                    ToppingID = 19,
+                    ToppingName = "Alfredo",
+                    ToppingPrice = 0.19m,
+                    ToppingType = ToppingType.SAUCE
+                },
+                new Topping
+                {
+                    ToppingID = 20,
+                    ToppingName = "Buffalo",
+                    ToppingPrice = 0.19m,
+                    ToppingType = ToppingType.SAUCE
+                },
+                new Topping
+                {
+                    ToppingID = 21,
+                    ToppingName = "Seasoned Crust",
+                    ToppingPrice = 0.49m,
+                    ToppingType = ToppingType.OTHER
+                }
+                );
+            modelBuilder.Entity<Size>().HasData(
+                new Size
+                {
+                    SizeId = 1,
+                    SizeName = "Mini",
+                    SizeInches = 8,
+                    SizePriceMultiplier = 0.50m,
+                },
+                new Size
+                {
+                    SizeId = 2,
+                    SizeName = "Small",
+                    SizeInches = 10,
+                    SizePriceMultiplier = 0.75m,
+                },
+                new Size
+                {
+                    SizeId = 3,
+                    SizeName = "Medium",
+                    SizeInches = 12,
+                    SizePriceMultiplier = 1m,
+                },
+                new Size
+                {
+                    SizeId = 4,
+                    SizeName = "Large",
+                    SizeInches = 14,
+                    SizePriceMultiplier = 1.25m,
+                }
+                );
+            modelBuilder.Entity<Crust>().HasData(
+                new Crust
+                {
+                    CrustId = 1,
+                    CrustName = "Original Crust",
+                    CrustPrice = 0m,
+                },
+                new Crust
+                {
+                    CrustId = 2,
+                    CrustName = "Pan Crust",
+                    CrustPrice = 0m,
+                },
+                new Crust
+                {
+                    CrustId = 3,
+                    CrustName = "Thin Crust",
+                    CrustPrice = 0m,
+                },
+                new Crust
+                {
+                    CrustId = 4,
+                    CrustName = "Stuffed Crust",
+                    CrustPrice = 1.00m,
+                },
+                new Crust
+                {
+                    CrustId = 5,
+                    CrustName = "Detroit Style",
+                    CrustPrice = 2.00m,
+                },
+                new Crust
+                {
+                    CrustId = 6,
+                    CrustName = "Chicago Style",
+                    CrustPrice = 4.00m,
                 }
                 );
             modelBuilder.Entity<Pizza>().HasData(

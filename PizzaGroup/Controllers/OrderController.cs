@@ -17,14 +17,17 @@ namespace PizzaGroup.Controllers
         {
             return View();
         }
-        public IActionResult ViewOrder() { 
-            return View(); 
+        public IActionResult ViewOrder() {
+            var pOrder = _context.Orders.ToList();
+            return View(pOrder); 
         }
+         
+
         [HttpPost]
         public async Task<IActionResult> AddOrder([Bind("customerID, PizzaID")] Order o) {
             //Use this to add to Orders in the Database
             
-                _context.Add(o);
+                _context.Orders.Add(o);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("index");
             
