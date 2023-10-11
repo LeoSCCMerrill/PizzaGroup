@@ -21,12 +21,19 @@ namespace PizzaGroup.Controllers
 
         public IActionResult Index()
         {
-            return View(new Pizza());
+            return View();
         }
 
         public IActionResult CustomPizzaView()
         {
-            return View();
+            var theModel = new CustomizeViewModel
+            {
+                Pizza = new Pizza { },
+                Sizes = _context.Sizes.ToList(),
+                Crusts = _context.Crusts.ToList(),
+                Toppings = _context.Toppings.ToList()
+            };
+            return View(theModel);
         }
 
         [Authorize(Roles="Manager")]
