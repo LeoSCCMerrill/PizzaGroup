@@ -29,7 +29,7 @@ namespace PizzaGroup.Controllers
             return View();
         }
 
-        [Authorize(Roles="Manager")]
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         public IActionResult DeletePizza(int PizzaID)
         {
