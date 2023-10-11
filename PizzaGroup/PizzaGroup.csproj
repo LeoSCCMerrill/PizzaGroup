@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Views\CustomPizza\" />
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
