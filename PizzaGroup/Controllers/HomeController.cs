@@ -32,14 +32,18 @@ namespace PizzaGroup.Controllers
         }
         public  IActionResult TestPizzaView()
         {
-            var theToppings =  _context.PizzaToppings
+            var thePizzaToppings =  _context.PizzaToppings
                 .Where(pt => pt.PizzaID == 1)
                 .ToList();
+            var theToppings = new List<Topping>();
+            foreach (PizzaTopping pizzaTopping in thePizzaToppings) {
+                var aTopping = _context.Toppings.Find(pizzaTopping.ToppingID);
+                theToppings.Add(aTopping);
+            }
             var theModel = new PizzaViewModel
             {
                 Pizza = _context.Pizzas.First(),
-                PizzaToppings = theToppings,
-                Toppings = _context.Toppings.ToList()
+                Toppings = theToppings
             };
             return View(theModel);
         }
