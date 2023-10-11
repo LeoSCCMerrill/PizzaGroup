@@ -6,6 +6,8 @@
         public string PizzaName { get; set; }
         public double PizzaPrice { get; set; }
         public string PizzaSize { get; set; }
+        public string PizzaCrust { get; set; }
+
         public ICollection<PizzaTopping>? PizzaToppings { get; set; }
     }
 }
