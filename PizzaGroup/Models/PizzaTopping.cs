@@ -2,6 +2,7 @@
 {
     public class PizzaTopping
     {
+        
         public int PizzaID { get; set; }
         public int ToppingID { get; set; }
 
