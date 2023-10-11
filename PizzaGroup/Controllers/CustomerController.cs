@@ -26,6 +26,22 @@ namespace PizzaGroup.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult Add(Pizza model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Add the pizza to the database
+                _context.Pizzas.Add(model);
+                _context.SaveChanges();
+
+                return RedirectToAction("TestPizzaView"); // Redirect to the TestPizzaView
+            }
+
+            return View("CustomPizzaView", model); // Show the form with validation errors
+        }
+
+
         [Authorize(Roles="Manager")]
         [HttpPost]
         public IActionResult DeletePizza(int PizzaID)
