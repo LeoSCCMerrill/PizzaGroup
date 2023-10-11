@@ -30,9 +30,9 @@ namespace PizzaGroup.Controllers
         [HttpPost]
         public IActionResult DeletePizza(int PizzaID)
         {
-            var pizza = _context.Pizza.Find(PizzaID);
+            var pizza = _context.Pizzas.Find(PizzaID);
 
-            _context.Pizza.Remove(pizza);
+            _context.Pizzas.Remove(pizza);
             _context.SaveChanges();
             
             return RedirectToAction("Index");
