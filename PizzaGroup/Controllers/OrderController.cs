@@ -16,8 +16,10 @@ namespace PizzaGroup.Controllers
         }
         public IActionResult Index()
         {
+            
             return View();
         }
+
         public IActionResult ViewOrder() {
             var pOrder = _context.Orders.ToList();
             return View(pOrder); 

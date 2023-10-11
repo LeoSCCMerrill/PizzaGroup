@@ -36,7 +36,7 @@ namespace PizzaGroup.Controllers
             return View(theModel);
         }
 
-        [Authorize(Roles="Manager")]
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         public IActionResult DeletePizza(int PizzaID)
         {
