@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using PizzaGroup.Data;
 using PizzaGroup.Models;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 
 namespace PizzaGroup.Controllers
 {
@@ -30,9 +31,13 @@ namespace PizzaGroup.Controllers
                 _context.Orders.Add(o);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("index");
-            
-         
-        }
+
         
+        }
+        public async Task<IActionResult> Edit(int Id) 
+        {
+            var std = _context.Orders.Where(o => o.customerID == Id).FirstOrDefault();
+            return RedirectToAction("Index");
+        }
     }
 }
