@@ -21,31 +21,22 @@ namespace PizzaGroup.Controllers
 
         public IActionResult Index()
         {
-            return View(new Pizza());
+            return View();
         }
 
         public IActionResult CustomPizzaView()
         {
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult Add(Pizza model)
-        {
-            if (ModelState.IsValid)
+            var theModel = new CustomizeViewModel
             {
-                // Add the pizza to the database
-                _context.Pizzas.Add(model);
-                _context.SaveChanges();
-
-                return RedirectToAction("TestPizzaView"); // Redirect to the TestPizzaView
-            }
-
-            return View("CustomPizzaView", model); // Show the form with validation errors
+                Pizza = new Pizza { },
+                Sizes = _context.Sizes.ToList(),
+                Crusts = _context.Crusts.ToList(),
+                Toppings = _context.Toppings.ToList()
+            };
+            return View(theModel);
         }
 
-
-        [Authorize(Roles="Manager")]
+        [Authorize(Roles = "Manager")]
         [HttpPost]
         public IActionResult DeletePizza(int PizzaID)
         {

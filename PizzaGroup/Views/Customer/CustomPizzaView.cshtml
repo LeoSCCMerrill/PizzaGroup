@@ -1,4 +1,5 @@
-﻿@model Pizza
+﻿
+@model CustomizeViewModel
 
 <body id="grad">
 
@@ -6,7 +7,7 @@
         <h1>Pizza Creation Station</h1>
         <h3>Fill out the form below to create your new Personal Favorite!</h3>
         <label>Name of Pizza:</label>
-        <input asp-for="PizzaName" />
+        <input asp-for=@Model.Pizza.PizzaName />
         <br />
         <br />
 
@@ -14,36 +15,13 @@
             <div class="column">
                 <h3>Meats</h3>
                 <br />
-                <input type="checkbox" name="Topping" value="pepperoni">
-                <label for="pepperoni">Pepperoni</label>
-
-                <input type="checkbox" name="Topping" value="sausage">
-                <label for="sausage">Sausage</label>
-
-                <input type="checkbox" name="Topping" value="hamburger">
-                <label for="hamburger">Hamburger</label>
-
-                <br />
-
-                <input type="checkbox" name="Topping" value="canadianBacon">
-                <label for="canadianBacon">Canadian Bacon</label>
-
-
-                <input type="checkbox" name="Topping" value="chicken">
-                <label for="chicken">Chicken</label>
-
-                <input type="checkbox" name="Topping" value="bacon">
-                <label for="bacon">Bacon</label>
-
-                <br />
-
-                <input type="checkbox" name="Topping" value="anchovies">
-                <label for="anchovies">Anchovies</label>
-
-                <input type="checkbox" name="Topping" value="proccuito">
-                <label for="proccuito">Proccuito</label>
-                <br>
-                <br />
+                @foreach (Topping topping in Model.Toppings) {
+                    if (topping.ToppingType == ToppingType.MEAT)
+                    {
+                        <input type="checkbox" name="Topping" value=@topping.ToppingName>
+                        <label for=@topping.ToppingName>@topping.ToppingName</label>
+                    }
+                }
                 <h3>Veggies</h3>
                 <br />
                 <input type="checkbox" name="Topping" value="tomatoes">
@@ -140,7 +118,7 @@
         </div>
 
         <label>Price: </label>
-        <input type="text" asp-for="PizzaPrice"  readonly/>
+        <input type="text" asp-for=@Model.Pizza.PizzaPrice  readonly/>
         <br />
         <br />
 
