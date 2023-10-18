@@ -38,12 +38,17 @@ namespace PizzaGroup.Controllers
 
         [Authorize(Roles = "Manager")]
         [HttpPost]
-        public IActionResult DeletePizza(int PizzaID)
+        public async Task<IActionResult> DeletePizza(int PizzaID)
         {
-            var pizza = _context.Pizzas.Find(PizzaID);
+            var pizza = await _context.Pizzas.FindAsync(PizzaID);
+
+            if (pizza == null)
+            {
+                return NotFound();
+            }
 
             _context.Pizzas.Remove(pizza);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             
             return RedirectToAction("Index");
         }
