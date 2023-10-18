@@ -9,11 +9,11 @@ using PizzaGroup.Data;
 
 #nullable disable
 
-namespace PizzaGroup.Data.Migrations
+namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231011181854_pizzaCrust")]
-    partial class pizzaCrust
+    [Migration("20231018182407_sizeCrustChanges1")]
+    partial class sizeCrustChanges1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,21 +54,21 @@ namespace PizzaGroup.Data.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "784af372-8092-41fc-87b0-2287fb548253",
+                            ConcurrencyStamp = "33e32c46-f84c-4e2c-855d-835abb885d2e",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "b946b5d3-85aa-4e5f-8e63-fef6b7732cb1",
+                            ConcurrencyStamp = "96859f68-b207-431f-8a5a-6c912c1523e1",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "192813a5-2366-4288-98e9-268ea4a1380e",
+                            ConcurrencyStamp = "8a0d9a1e-0f9b-4b43-ba28-9ff719823da3",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -201,6 +201,79 @@ namespace PizzaGroup.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("OrderPizza", b =>
+                {
+                    b.Property<int>("OrdersOrderID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PizzasPizzaID")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrdersOrderID", "PizzasPizzaID");
+
+                    b.HasIndex("PizzasPizzaID");
+
+                    b.ToTable("OrderPizza");
+                });
+
+            modelBuilder.Entity("PizzaGroup.Models.Crust", b =>
+                {
+                    b.Property<int>("CrustId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CrustId"), 1L, 1);
+
+                    b.Property<string>("CrustName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("CrustPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("CrustId");
+
+                    b.ToTable("Crusts");
+
+                    b.HasData(
+                        new
+                        {
+                            CrustId = 1,
+                            CrustName = "Original Crust",
+                            CrustPrice = 0m
+                        },
+                        new
+                        {
+                            CrustId = 2,
+                            CrustName = "Pan Crust",
+                            CrustPrice = 0m
+                        },
+                        new
+                        {
+                            CrustId = 3,
+                            CrustName = "Thin Crust",
+                            CrustPrice = 0m
+                        },
+                        new
+                        {
+                            CrustId = 4,
+                            CrustName = "Stuffed Crust",
+                            CrustPrice = 1.00m
+                        },
+                        new
+                        {
+                            CrustId = 5,
+                            CrustName = "Detroit Style",
+                            CrustPrice = 2.00m
+                        },
+                        new
+                        {
+                            CrustId = 6,
+                            CrustName = "Chicago Style",
+                            CrustPrice = 4.00m
+                        });
+                });
+
             modelBuilder.Entity("PizzaGroup.Models.Order", b =>
                 {
                     b.Property<int>("OrderID")
@@ -209,10 +282,10 @@ namespace PizzaGroup.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"), 1L, 1);
 
-                    b.Property<int>("PizzaID")
+                    b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
-                    b.Property<int>("customerID")
+                    b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
                     b.HasKey("OrderID");
@@ -228,22 +301,24 @@ namespace PizzaGroup.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PizzaID"), 1L, 1);
 
-                    b.Property<string>("PizzaCrust")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CrustId")
+                        .HasColumnType("int");
 
                     b.Property<string>("PizzaName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("PizzaPrice")
+                    b.Property<double?>("PizzaPrice")
                         .HasColumnType("float");
 
-                    b.Property<string>("PizzaSize")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SizeId")
+                        .HasColumnType("int");
 
                     b.HasKey("PizzaID");
+
+                    b.HasIndex("CrustId");
+
+                    b.HasIndex("SizeId");
 
                     b.ToTable("Pizzas");
 
@@ -251,10 +326,10 @@ namespace PizzaGroup.Data.Migrations
                         new
                         {
                             PizzaID = 1,
-                            PizzaCrust = "Classic",
+                            CrustId = 1,
                             PizzaName = "Custom 1",
                             PizzaPrice = 10.0,
-                            PizzaSize = "Medium"
+                            SizeId = 1
                         });
                 });
 
@@ -285,6 +360,59 @@ namespace PizzaGroup.Data.Migrations
                         });
                 });
 
+            modelBuilder.Entity("PizzaGroup.Models.Size", b =>
+                {
+                    b.Property<int>("SizeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SizeId"), 1L, 1);
+
+                    b.Property<int>("SizeInches")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SizeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("SizePriceMultiplier")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("SizeId");
+
+                    b.ToTable("Sizes");
+
+                    b.HasData(
+                        new
+                        {
+                            SizeId = 1,
+                            SizeInches = 8,
+                            SizeName = "Mini",
+                            SizePriceMultiplier = 0.50m
+                        },
+                        new
+                        {
+                            SizeId = 2,
+                            SizeInches = 10,
+                            SizeName = "Small",
+                            SizePriceMultiplier = 0.75m
+                        },
+                        new
+                        {
+                            SizeId = 3,
+                            SizeInches = 12,
+                            SizeName = "Medium",
+                            SizePriceMultiplier = 1m
+                        },
+                        new
+                        {
+                            SizeId = 4,
+                            SizeInches = 14,
+                            SizeName = "Large",
+                            SizePriceMultiplier = 1.25m
+                        });
+                });
+
             modelBuilder.Entity("PizzaGroup.Models.Topping", b =>
                 {
                     b.Property<int>("ToppingID")
@@ -297,6 +425,12 @@ namespace PizzaGroup.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<decimal>("ToppingPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ToppingType")
+                        .HasColumnType("int");
+
                     b.HasKey("ToppingID");
 
                     b.ToTable("Toppings");
@@ -305,17 +439,149 @@ namespace PizzaGroup.Data.Migrations
                         new
                         {
                             ToppingID = 1,
-                            ToppingName = "Pepperoni"
+                            ToppingName = "Pepperoni",
+                            ToppingPrice = 0.29m,
+                            ToppingType = 0
                         },
                         new
                         {
                             ToppingID = 2,
-                            ToppingName = "Beef"
+                            ToppingName = "Beef",
+                            ToppingPrice = 0.29m,
+                            ToppingType = 0
                         },
                         new
                         {
                             ToppingID = 3,
-                            ToppingName = "Do not use"
+                            ToppingName = "Bacon",
+                            ToppingPrice = 0.29m,
+                            ToppingType = 0
+                        },
+                        new
+                        {
+                            ToppingID = 4,
+                            ToppingName = "Chicken",
+                            ToppingPrice = 0.29m,
+                            ToppingType = 0
+                        },
+                        new
+                        {
+                            ToppingID = 5,
+                            ToppingName = "Sausage",
+                            ToppingPrice = 0.29m,
+                            ToppingType = 0
+                        },
+                        new
+                        {
+                            ToppingID = 6,
+                            ToppingName = "Canadian Bacon",
+                            ToppingPrice = 0.29m,
+                            ToppingType = 0
+                        },
+                        new
+                        {
+                            ToppingID = 7,
+                            ToppingName = "Anchovies",
+                            ToppingPrice = 0.29m,
+                            ToppingType = 0
+                        },
+                        new
+                        {
+                            ToppingID = 8,
+                            ToppingName = "Mozzarella",
+                            ToppingPrice = 0m,
+                            ToppingType = 1
+                        },
+                        new
+                        {
+                            ToppingID = 9,
+                            ToppingName = "Parmesan",
+                            ToppingPrice = 0m,
+                            ToppingType = 1
+                        },
+                        new
+                        {
+                            ToppingID = 10,
+                            ToppingName = "Green Pepper",
+                            ToppingPrice = 0.19m,
+                            ToppingType = 2
+                        },
+                        new
+                        {
+                            ToppingID = 11,
+                            ToppingName = "Red Pepper",
+                            ToppingPrice = 0.19m,
+                            ToppingType = 2
+                        },
+                        new
+                        {
+                            ToppingID = 12,
+                            ToppingName = "Onion",
+                            ToppingPrice = 0.19m,
+                            ToppingType = 2
+                        },
+                        new
+                        {
+                            ToppingID = 13,
+                            ToppingName = "Red Onion",
+                            ToppingPrice = 0.19m,
+                            ToppingType = 2
+                        },
+                        new
+                        {
+                            ToppingID = 14,
+                            ToppingName = "Mushroom",
+                            ToppingPrice = 0.19m,
+                            ToppingType = 2
+                        },
+                        new
+                        {
+                            ToppingID = 15,
+                            ToppingName = "Olive",
+                            ToppingPrice = 0.19m,
+                            ToppingType = 2
+                        },
+                        new
+                        {
+                            ToppingID = 16,
+                            ToppingName = "Pineapple",
+                            ToppingPrice = 0.19m,
+                            ToppingType = 2
+                        },
+                        new
+                        {
+                            ToppingID = 17,
+                            ToppingName = "Tomato Sauce",
+                            ToppingPrice = 0m,
+                            ToppingType = 3
+                        },
+                        new
+                        {
+                            ToppingID = 18,
+                            ToppingName = "Barbeque",
+                            ToppingPrice = 0.09m,
+                            ToppingType = 3
+                        },
+                        new
+                        {
+                            ToppingID = 19,
+                            ToppingName = "Alfredo",
+                            ToppingPrice = 0.19m,
+                            ToppingType = 3
+                        },
+                        new
+                        {
+                            ToppingID = 20,
+                            ToppingName = "Buffalo",
+                            ToppingPrice = 0.19m,
+                            ToppingType = 3
+                        },
+                        new
+                        {
+                            ToppingID = 21,
+                            ToppingName = "Seasoned Crust",
+                            ToppingPrice = 0.49m,
+                            ToppingType = 4
                         });
                 });
 
@@ -485,6 +751,40 @@ namespace PizzaGroup.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("OrderPizza", b =>
+                {
+                    b.HasOne("PizzaGroup.Models.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersOrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PizzaGroup.Models.Pizza", null)
+                        .WithMany()
+                        .HasForeignKey("PizzasPizzaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
+                {
+                    b.HasOne("PizzaGroup.Models.Crust", "PizzaCrust")
+                        .WithMany("Pizzas")
+                        .HasForeignKey("CrustId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PizzaGroup.Models.Size", "PizzaSize")
+                        .WithMany("Pizzas")
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PizzaCrust");
+
+                    b.Navigation("PizzaSize");
+                });
+
             modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
                 {
                     b.HasOne("PizzaGroup.Models.Pizza", "Pizza")
@@ -504,9 +804,19 @@ namespace PizzaGroup.Data.Migrations
                     b.Navigation("Topping");
                 });
 
+            modelBuilder.Entity("PizzaGroup.Models.Crust", b =>
+                {
+                    b.Navigation("Pizzas");
+                });
+
             modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
                 {
                     b.Navigation("PizzaToppings");
+                });
+
+            modelBuilder.Entity("PizzaGroup.Models.Size", b =>
+                {
+                    b.Navigation("Pizzas");
                 });
 
             modelBuilder.Entity("PizzaGroup.Models.Topping", b =>

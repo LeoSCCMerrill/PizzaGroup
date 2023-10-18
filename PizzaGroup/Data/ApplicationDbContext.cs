@@ -333,8 +333,8 @@ namespace PizzaGroup.Data
                     PizzaID = 1,
                     PizzaName = "Custom 1",
                     PizzaPrice = 10.00,
-                    PizzaSize = "Medium",
-                    PizzaCrust = "Classic"
+                    SizeId = 1,
+                    CrustId = 1
                 }
                 );
             modelBuilder.Entity<PizzaTopping>().HasData(

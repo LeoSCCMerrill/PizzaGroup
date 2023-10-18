@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PizzaGroup.Data;
 using PizzaGroup.Models;
 using System.Diagnostics;
@@ -32,19 +33,7 @@ namespace PizzaGroup.Controllers
         }
         public  IActionResult TestPizzaView()
         {
-            var thePizzaToppings =  _context.PizzaToppings
-                .Where(pt => pt.PizzaID == 1)
-                .ToList();
-            var theToppings = new List<Topping>();
-            foreach (PizzaTopping pizzaTopping in thePizzaToppings) {
-                var aTopping = _context.Toppings.Find(pizzaTopping.ToppingID);
-                theToppings.Add(aTopping);
-            }
-            var theModel = new PizzaViewModel
-            {
-                Pizza = _context.Pizzas.First(),
-                Toppings = theToppings
-            };
+            var theModel = _context.Pizzas.Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping).FirstOrDefault(p => p.PizzaID == 1);
             return View(theModel);
         }
     }

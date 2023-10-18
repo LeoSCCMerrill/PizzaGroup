@@ -2,9 +2,9 @@
 
 #nullable disable
 
-namespace PizzaGroup.Data.Migrations
+namespace PizzaGroup.Migrations
 {
-    public partial class MoreAccountWork : Migration
+    public partial class sizeCrustChanges1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,14 +13,21 @@ namespace PizzaGroup.Data.Migrations
                 keyColumn: "Id",
                 keyValue: "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
                 column: "ConcurrencyStamp",
-                value: "2e7c69fc-3856-4923-8515-9f9a8d3833b7");
+                value: "8a0d9a1e-0f9b-4b43-ba28-9ff719823da3");
+
+            migrationBuilder.UpdateData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
+                column: "ConcurrencyStamp",
+                value: "33e32c46-f84c-4e2c-855d-835abb885d2e");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
                 column: "ConcurrencyStamp",
-                value: "6bc95c27-10ea-4d58-95c1-19d2a1dec8ce");
+                value: "96859f68-b207-431f-8a5a-6c912c1523e1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -30,14 +37,21 @@ namespace PizzaGroup.Data.Migrations
                 keyColumn: "Id",
                 keyValue: "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
                 column: "ConcurrencyStamp",
-                value: "8dede8c8-2929-4b6f-8ebe-b81c15163dbc");
+                value: "f7746335-c09c-43e5-8560-47254aaae66f");
+
+            migrationBuilder.UpdateData(
+                table: "AspNetRoles",
+                keyColumn: "Id",
+                keyValue: "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
+                column: "ConcurrencyStamp",
+                value: "1cfe6f53-032f-4985-a3d4-b3fb64e50f83");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
                 column: "ConcurrencyStamp",
-                value: "a0bfa234-317b-4068-a727-82625cafc370");
+                value: "508e48c0-5ea3-4381-8843-7cfc2c252068");
         }
     }
 }

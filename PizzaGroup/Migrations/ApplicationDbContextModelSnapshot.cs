@@ -8,7 +8,7 @@ using PizzaGroup.Data;
 
 #nullable disable
 
-namespace PizzaGroup.Data.Migrations
+namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -52,21 +52,21 @@ namespace PizzaGroup.Data.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "9939d580-c30f-4b8f-980d-00f5925b6f00",
+                            ConcurrencyStamp = "33e32c46-f84c-4e2c-855d-835abb885d2e",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "c2f22047-3913-4b25-a9dd-8c3c98179d1d",
+                            ConcurrencyStamp = "96859f68-b207-431f-8a5a-6c912c1523e1",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "5abfc754-ff32-4536-9f8e-f9ce5a680578",
+                            ConcurrencyStamp = "8a0d9a1e-0f9b-4b43-ba28-9ff719823da3",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -199,6 +199,21 @@ namespace PizzaGroup.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("OrderPizza", b =>
+                {
+                    b.Property<int>("OrdersOrderID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PizzasPizzaID")
+                        .HasColumnType("int");
+
+                    b.HasKey("OrdersOrderID", "PizzasPizzaID");
+
+                    b.HasIndex("PizzasPizzaID");
+
+                    b.ToTable("OrderPizza");
+                });
+
             modelBuilder.Entity("PizzaGroup.Models.Crust", b =>
                 {
                     b.Property<int>("CrustId")
@@ -265,10 +280,10 @@ namespace PizzaGroup.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"), 1L, 1);
 
-                    b.Property<int>("PizzaID")
+                    b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
-                    b.Property<int>("customerID")
+                    b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
                     b.HasKey("OrderID");
@@ -284,22 +299,24 @@ namespace PizzaGroup.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PizzaID"), 1L, 1);
 
-                    b.Property<string>("PizzaCrust")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("CrustId")
+                        .HasColumnType("int");
 
                     b.Property<string>("PizzaName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("PizzaPrice")
+                    b.Property<double?>("PizzaPrice")
                         .HasColumnType("float");
 
-                    b.Property<string>("PizzaSize")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("SizeId")
+                        .HasColumnType("int");
 
                     b.HasKey("PizzaID");
+
+                    b.HasIndex("CrustId");
+
+                    b.HasIndex("SizeId");
 
                     b.ToTable("Pizzas");
 
@@ -307,10 +324,10 @@ namespace PizzaGroup.Data.Migrations
                         new
                         {
                             PizzaID = 1,
-                            PizzaCrust = "Classic",
+                            CrustId = 1,
                             PizzaName = "Custom 1",
                             PizzaPrice = 10.0,
-                            PizzaSize = "Medium"
+                            SizeId = 1
                         });
                 });
 
@@ -732,6 +749,40 @@ namespace PizzaGroup.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("OrderPizza", b =>
+                {
+                    b.HasOne("PizzaGroup.Models.Order", null)
+                        .WithMany()
+                        .HasForeignKey("OrdersOrderID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PizzaGroup.Models.Pizza", null)
+                        .WithMany()
+                        .HasForeignKey("PizzasPizzaID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
+                {
+                    b.HasOne("PizzaGroup.Models.Crust", "PizzaCrust")
+                        .WithMany("Pizzas")
+                        .HasForeignKey("CrustId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PizzaGroup.Models.Size", "PizzaSize")
+                        .WithMany("Pizzas")
+                        .HasForeignKey("SizeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PizzaCrust");
+
+                    b.Navigation("PizzaSize");
+                });
+
             modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
                 {
                     b.HasOne("PizzaGroup.Models.Pizza", "Pizza")
@@ -751,9 +802,19 @@ namespace PizzaGroup.Data.Migrations
                     b.Navigation("Topping");
                 });
 
+            modelBuilder.Entity("PizzaGroup.Models.Crust", b =>
+                {
+                    b.Navigation("Pizzas");
+                });
+
             modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
                 {
                     b.Navigation("PizzaToppings");
+                });
+
+            modelBuilder.Entity("PizzaGroup.Models.Size", b =>
+                {
+                    b.Navigation("Pizzas");
                 });
 
             modelBuilder.Entity("PizzaGroup.Models.Topping", b =>

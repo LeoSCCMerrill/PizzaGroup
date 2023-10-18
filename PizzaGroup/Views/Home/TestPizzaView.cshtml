@@ -1,8 +1,8 @@
-﻿@model PizzaViewModel
+﻿@model Pizza
 
-@Model.Pizza
+@Model.PizzaName
 
-@foreach(Topping topping in Model.Toppings)
+@foreach(PizzaTopping topping in Model.PizzaToppings)
 {    
-            @topping.ToppingName
+            @topping.Topping.ToppingName
 }
