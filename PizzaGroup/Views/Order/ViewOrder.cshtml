@@ -1,30 +1,47 @@
 ﻿@model List<Order>
 @ViewBag.Orders
 
-
-ALTER TABLE TO MAKE NICER AND ADD WHATEVER ELSE NEEDS TO GO HERE<br />
-<table style="border-width:1; border-color:"Black";>
+@if (Model.Count != 0){
+    <table style="border-width:1; border-color:"Black"; >
+    <thead>
     <tr>
         <th>Customer ID</th>
         <th>Pizza ID</th>
         <th>Price</th>
     </tr>
-    <tr>
+    </thead>
+    <tbody>
+    
         <form method="post">
             @foreach (var o in Model)
             {
         <tr>
-            <td>@o.CustomerID</td>
-            <td>@o.Pizzas[0]</td>
-            <td>GET PRICE SOMEHOW</td>
-            <td><button name=@o>DELETE</button></td>
-            <td><button name=@o>EDIT</button></td>
+            <td>
+                @o.CustomerID
+            </td>
+            @*<td>@o.Pizzas</td>*@
+            <td>
+                GET PRICE SOMEHOW
+            </td>
+            <td>
+                <button asp-action="Delete" asp-route-id="@o.OrderID">Delete</button>
+            </td>
+            <td>
+                <button name=@o>EDIT</button>
+            </td>
         <br/>
-        </tr>
+            </tr>
             }
-    </form>
-    </tr>
+        </form>
+    </tbody>
 </table>
     <form method="post">
     <button asp-action="" class="btn btn-primary" value="SUBMIT">SUBMIT</button>
     </form>
+
+}else{
+<h1>Nothing is here</h1>
+<form method="post">
+    <button asp-action="CustomPizzaView" asp-controller="Customer" class="btn btn-primary">Buy A Pizza</button>
+</form>
+}
