@@ -24,7 +24,7 @@ namespace PizzaGroup.Controllers
             return View();
         }
 
-        [HttpGet]
+        /*[HttpGet]
         public IActionResult CustomPizzaView()
         {
             ViewBag.Sizes = _context.Sizes.ToList();
@@ -37,6 +37,44 @@ namespace PizzaGroup.Controllers
         public IActionResult CustomPizzaView(Pizza model)
         {
             _context.Add(model);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+        }*/
+        [HttpGet]
+        public IActionResult CustomPizzaView()
+        {
+            ViewBag.Sizes = _context.Sizes.ToList();
+            ViewBag.Crusts = _context.Crusts.ToList();
+            ViewBag.Toppings = _context.Toppings.ToList();
+            List<ToppingList> theList = new List<ToppingList>(); 
+            foreach(Topping topping in _context.Toppings)
+            {
+                theList.Add(new ToppingList { Topping = topping, IsSelected=false});
+            }
+            var theModel = new CustomizeViewModel
+            {
+                Pizza = new Pizza(),
+                ToppingList = theList
+            };
+            return View(theModel);
+        }
+        [HttpPost]
+        public IActionResult CustomPizzaView(CustomizeViewModel model)
+        {
+            _context.Add(model.Pizza);
+            _context.SaveChanges();
+            foreach (ToppingList entry in model.ToppingList)
+            {
+                if (entry.IsSelected == true) 
+                {
+                    PizzaTopping pizzaTopping = new PizzaTopping
+                    {
+                        PizzaID = model.Pizza.PizzaID,
+                        ToppingID = entry.Topping.ToppingID,
+                    };
+                    _context.PizzaToppings.Add(pizzaTopping);
+                }
+            }
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

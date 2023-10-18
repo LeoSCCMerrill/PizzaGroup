@@ -1,8 +1,13 @@
 ﻿@model Pizza
 
 @Model.PizzaName
+<br />
 
 @foreach(PizzaTopping topping in Model.PizzaToppings)
 {    
             @topping.Topping.ToppingName
+            <br />
 }
+@Model.PizzaCrust.CrustName
+<br />
+@Model.PizzaSize.SizeName
