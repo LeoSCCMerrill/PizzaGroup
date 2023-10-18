@@ -783,6 +783,13 @@ namespace PizzaGroup.Migrations
                     b.Navigation("PizzaSize");
                 });
 
+            modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
+                {
+                    b.HasOne("PizzaGroup.Models.Order", null)
+                        .WithMany("Pizzas")
+                        .HasForeignKey("OrderID");
+                });
+
             modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
                 {
                     b.HasOne("PizzaGroup.Models.Pizza", "Pizza")
