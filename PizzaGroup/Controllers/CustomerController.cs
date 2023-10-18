@@ -24,6 +24,11 @@ namespace PizzaGroup.Controllers
             return View();
         }
 
+        public IActionResult Add() 
+        { 
+            return View();
+        }
+
         public IActionResult CustomPizzaView()
         {
             var theModel = new CustomizeViewModel
