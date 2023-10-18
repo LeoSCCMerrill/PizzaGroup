@@ -1,30 +1,29 @@
 ﻿@model List<Order>
 @ViewBag.Orders
 
-
-ALTER TABLE TO MAKE NICER AND ADD WHATEVER ELSE NEEDS TO GO HERE<br />
-<table style= border-width: 1; border-color: Black;>
+ALTER TABLE TO MAKE NICER AND ADD WHATEVER ELSE NEEDS TO GO HERE
+<br />
+<table style=border-width: 1; border-color: Black;>
     <tr>
         <th>Customer ID</th>
         <th>Pizza ID</th>
         <th>Price</th>
     </tr>
-    <tr>
-        <form method="post">
+        <form method="post" asp-controller="Order">
             @foreach (var o in Model)
             {
         <tr>
             <td>@o.CustomerID</td>
-            @*<td>@o.Pizzas[0]</td>*@
-            <td>GET PRICE SOMEHOW</td>
-            <td><button name=@o>DELETE</button></td>
-            <td><button name=@o>EDIT</button></td>
-        <br/>
+            <td>@o.Pizzas[0]</td>
+            <td>PizzaPrice</td>
+            <td><button asp-action="" name=@o>DELETE</button></td>
+            <td><button asp-action="Edit" name=@o>EDIT</button></td>
         </tr>
             }
-    </form>
-    </tr>
+        </form>
 </table>
-    <form method="post">
-    <button asp-action="" class="btn btn-primary" value="SUBMIT">SUBMIT</button>
-    </form>
+<br />
+
+<form method="post" asp-action="">
+    <button class="btn btn-primary" value="SUBMIT">SUBMIT</button>
+</form>
