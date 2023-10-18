@@ -36,7 +36,7 @@ namespace PizzaGroup.Controllers
         }
         public async Task<IActionResult> Edit(int Id) 
         {
-            var std = _context.Orders.Where(o => o.CustomerID == Id).FirstOrDefault();
+            var std =  _context.Orders.Where(o => o.CustomerID == Id).FirstOrDefault();
             return RedirectToAction("Index");
         }
     }
