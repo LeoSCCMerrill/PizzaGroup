@@ -12,8 +12,8 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231018181916_initial")]
-    partial class initial
+    [Migration("20231018192530_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,21 +54,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "1cfe6f53-032f-4985-a3d4-b3fb64e50f83",
+                            ConcurrencyStamp = "1aadb4a8-5e34-43fa-8c65-2a3f6c6c4251",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "508e48c0-5ea3-4381-8843-7cfc2c252068",
+                            ConcurrencyStamp = "3440a08e-fc17-4270-9f22-08e3596e605c",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "f7746335-c09c-43e5-8560-47254aaae66f",
+                            ConcurrencyStamp = "f9720276-22be-4b11-9992-562f99347a4f",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -330,33 +330,6 @@ namespace PizzaGroup.Migrations
                             PizzaName = "Custom 1",
                             PizzaPrice = 10.0,
                             SizeId = 1
-                        });
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
-                {
-                    b.Property<int>("PizzaID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ToppingID")
-                        .HasColumnType("int");
-
-                    b.HasKey("PizzaID", "ToppingID");
-
-                    b.HasIndex("ToppingID");
-
-                    b.ToTable("PizzaToppings");
-
-                    b.HasData(
-                        new
-                        {
-                            PizzaID = 1,
-                            ToppingID = 1
-                        },
-                        new
-                        {
-                            PizzaID = 1,
-                            ToppingID = 2
                         });
                 });
 
@@ -700,6 +673,21 @@ namespace PizzaGroup.Migrations
                         });
                 });
 
+            modelBuilder.Entity("PizzaTopping", b =>
+                {
+                    b.Property<int>("PizzasPizzaID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToppingsToppingID")
+                        .HasColumnType("int");
+
+                    b.HasKey("PizzasPizzaID", "ToppingsToppingID");
+
+                    b.HasIndex("ToppingsToppingID");
+
+                    b.ToTable("PizzaTopping");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -769,13 +757,13 @@ namespace PizzaGroup.Migrations
             modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
                 {
                     b.HasOne("PizzaGroup.Models.Crust", "PizzaCrust")
-                        .WithMany()
+                        .WithMany("Pizzas")
                         .HasForeignKey("CrustId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PizzaGroup.Models.Size", "PizzaSize")
-                        .WithMany()
+                        .WithMany("Pizzas")
                         .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -785,33 +773,29 @@ namespace PizzaGroup.Migrations
                     b.Navigation("PizzaSize");
                 });
 
-            modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
+            modelBuilder.Entity("PizzaTopping", b =>
                 {
-                    b.HasOne("PizzaGroup.Models.Pizza", "Pizza")
-                        .WithMany("PizzaToppings")
-                        .HasForeignKey("PizzaID")
+                    b.HasOne("PizzaGroup.Models.Pizza", null)
+                        .WithMany()
+                        .HasForeignKey("PizzasPizzaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PizzaGroup.Models.Topping", "Topping")
-                        .WithMany("PizzaToppings")
-                        .HasForeignKey("ToppingID")
+                    b.HasOne("PizzaGroup.Models.Topping", null)
+                        .WithMany()
+                        .HasForeignKey("ToppingsToppingID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Pizza");
-
-                    b.Navigation("Topping");
                 });
 
-            modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
+            modelBuilder.Entity("PizzaGroup.Models.Crust", b =>
                 {
-                    b.Navigation("PizzaToppings");
+                    b.Navigation("Pizzas");
                 });
 
-            modelBuilder.Entity("PizzaGroup.Models.Topping", b =>
+            modelBuilder.Entity("PizzaGroup.Models.Size", b =>
                 {
-                    b.Navigation("PizzaToppings");
+                    b.Navigation("Pizzas");
                 });
 #pragma warning restore 612, 618
         }

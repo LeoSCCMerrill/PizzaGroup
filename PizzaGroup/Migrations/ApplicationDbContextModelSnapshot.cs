@@ -52,21 +52,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "33e32c46-f84c-4e2c-855d-835abb885d2e",
+                            ConcurrencyStamp = "1aadb4a8-5e34-43fa-8c65-2a3f6c6c4251",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "96859f68-b207-431f-8a5a-6c912c1523e1",
+                            ConcurrencyStamp = "3440a08e-fc17-4270-9f22-08e3596e605c",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "8a0d9a1e-0f9b-4b43-ba28-9ff719823da3",
+                            ConcurrencyStamp = "f9720276-22be-4b11-9992-562f99347a4f",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -328,33 +328,6 @@ namespace PizzaGroup.Migrations
                             PizzaName = "Custom 1",
                             PizzaPrice = 10.0,
                             SizeId = 1
-                        });
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
-                {
-                    b.Property<int>("PizzaID")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ToppingID")
-                        .HasColumnType("int");
-
-                    b.HasKey("PizzaID", "ToppingID");
-
-                    b.HasIndex("ToppingID");
-
-                    b.ToTable("PizzaToppings");
-
-                    b.HasData(
-                        new
-                        {
-                            PizzaID = 1,
-                            ToppingID = 1
-                        },
-                        new
-                        {
-                            PizzaID = 1,
-                            ToppingID = 2
                         });
                 });
 
@@ -698,6 +671,21 @@ namespace PizzaGroup.Migrations
                         });
                 });
 
+            modelBuilder.Entity("PizzaTopping", b =>
+                {
+                    b.Property<int>("PizzasPizzaID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ToppingsToppingID")
+                        .HasColumnType("int");
+
+                    b.HasKey("PizzasPizzaID", "ToppingsToppingID");
+
+                    b.HasIndex("ToppingsToppingID");
+
+                    b.ToTable("PizzaTopping");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -783,30 +771,19 @@ namespace PizzaGroup.Migrations
                     b.Navigation("PizzaSize");
                 });
 
-            modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
+            modelBuilder.Entity("PizzaTopping", b =>
                 {
-                    b.HasOne("PizzaGroup.Models.Order", null)
-                        .WithMany("Pizzas")
-                        .HasForeignKey("OrderID");
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
-                {
-                    b.HasOne("PizzaGroup.Models.Pizza", "Pizza")
-                        .WithMany("PizzaToppings")
-                        .HasForeignKey("PizzaID")
+                    b.HasOne("PizzaGroup.Models.Pizza", null)
+                        .WithMany()
+                        .HasForeignKey("PizzasPizzaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PizzaGroup.Models.Topping", "Topping")
-                        .WithMany("PizzaToppings")
-                        .HasForeignKey("ToppingID")
+                    b.HasOne("PizzaGroup.Models.Topping", null)
+                        .WithMany()
+                        .HasForeignKey("ToppingsToppingID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Pizza");
-
-                    b.Navigation("Topping");
                 });
 
             modelBuilder.Entity("PizzaGroup.Models.Crust", b =>
@@ -814,19 +791,9 @@ namespace PizzaGroup.Migrations
                     b.Navigation("Pizzas");
                 });
 
-            modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
-                {
-                    b.Navigation("PizzaToppings");
-                });
-
             modelBuilder.Entity("PizzaGroup.Models.Size", b =>
                 {
                     b.Navigation("Pizzas");
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.Topping", b =>
-                {
-                    b.Navigation("PizzaToppings");
                 });
 #pragma warning restore 612, 618
         }

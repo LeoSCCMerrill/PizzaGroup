@@ -29,14 +29,30 @@ namespace PizzaGroup.Controllers
         {
             ViewBag.Sizes = _context.Sizes.ToList();
             ViewBag.Crusts = _context.Crusts.ToList();
-            ViewBag.Toppings = _context.Toppings.ToList();
-            var theModel = new Pizza();
+            ICollection<Topping> toppings = _context.Toppings.ToList();
+            IDictionary<Topping, bool> toppingDict = new Dictionary<Topping, bool>();
+            foreach (Topping topping in toppings)
+            {
+                toppingDict.Add(topping, false);
+            }
+            Pizza pizza = new();
+            CustomizeViewModel theModel = new()
+            {
+                Pizza = pizza,
+                ToppingDictionary = toppingDict
+            };
             return View(theModel);
         }
         [HttpPost]
-        public IActionResult CustomPizzaView(Pizza model)
+        public IActionResult CustomPizzaView(CustomizeViewModel model)
         {
-            _context.Add(model);
+            foreach (KeyValuePair<Topping, bool> topping in model.ToppingDictionary) {
+                if (topping.Value)
+                {
+                    model.Pizza.Toppings.Add(topping.Key);
+                }
+            }
+            _context.Add(model.Pizza);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

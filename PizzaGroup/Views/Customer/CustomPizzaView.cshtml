@@ -1,5 +1,5 @@
 ﻿
-@model Pizza
+@model CustomizeViewModel
 
 <body id="grad">
 
@@ -7,7 +7,7 @@
         <h1>Pizza Creation Station</h1>
         <h3>Fill out the form below to create your new Personal Favorite!</h3>
         <label>Name of Pizza:</label>
-        <input asp-for=@Model.PizzaName />
+        <input asp-for=@Model.Pizza.PizzaName />
         <br />
         <br />
 
@@ -15,22 +15,22 @@
             <div class="column">
                 <h3>Meats</h3>
                 <br />
-                @foreach (Topping topping in ViewBag.Toppings) {
-                    if (topping.ToppingType == ToppingType.MEAT)
+                @foreach (KeyValuePair<Topping, bool> topping in Model.ToppingDictionary) {
+                    if (topping.Key.ToppingType == ToppingType.MEAT)
                     {
-                        <input type="checkbox" name="Topping" value=@topping.ToppingID>
-                        <label>@topping.ToppingName</label>
+                        <input type="checkbox" name="@Model.ToppingDictionary[topping.Key]" value=@topping.Value>
+                        <label>@topping.Key.ToppingName</label>
                         <br />
                     }
                 }
                 <h3>Veggies</h3>
                 <br />
-                @foreach (Topping topping in ViewBag.Toppings)
+                @foreach (KeyValuePair<Topping, bool> topping in Model.ToppingDictionary)
                 {
-                    if (topping.ToppingType == ToppingType.VEGGIE)
+                    if (topping.Key.ToppingType == ToppingType.MEAT)
                     {
-                        <input type="checkbox" name="Topping" value=@topping.ToppingID>
-                        <label >@topping.ToppingName</label>
+                        <input type="checkbox" name="@Model.ToppingDictionary[topping.Key]" value=@topping.Value>
+                        <label>@topping.Key.ToppingName</label>
                         <br />
                     }
                 }
@@ -40,39 +40,39 @@
             <div class="column">
                 <h3>Sauce</h3>
                 <br />
-                @foreach (Topping topping in ViewBag.Toppings)
+                @foreach (KeyValuePair<Topping, bool> topping in Model.ToppingDictionary)
                 {
-                    if (topping.ToppingType == ToppingType.SAUCE)
+                    if (topping.Key.ToppingType == ToppingType.SAUCE)
                     {
-                        <input type="checkbox" name="Topping" value=@topping.ToppingID>
-                        <label >@topping.ToppingName</label>
+                        <input type="checkbox" name="@Model.ToppingDictionary[topping.Key]" value=@topping.Value>
+                        <label>@topping.Key.ToppingName</label>
                         <br />
                     }
                 }
                 <h3>Cheese</h3>
                 <br />
-                @foreach (Topping topping in ViewBag.Toppings)
+                @foreach (KeyValuePair<Topping, bool> topping in Model.ToppingDictionary)
                 {
-                    if (topping.ToppingType == ToppingType.CHEESE)
+                    if (topping.Key.ToppingType == ToppingType.CHEESE)
                     {
-                        <input type="checkbox" name="Topping" value=@topping.ToppingID>
-                        <label>@topping.ToppingName</label>
+                        <input type="checkbox" name="@Model.ToppingDictionary[topping.Key]" value=@topping.Value>
+                        <label>@topping.Key.ToppingName</label>
                         <br />
                     }
                 }
             </div>
 
             <div class="column">
-                <label asp-for="CrustId">Crust</label>
-                <select asp-for="CrustId" class="=form-control">
+                <label asp-for="Pizza.CrustId">Crust</label>
+                <select asp-for="Pizza.CrustId" class="=form-control">
                     @foreach (Crust crust in ViewBag.Crusts)
                     {
                         <option value="@crust.CrustId">@crust.CrustName</option>
                     }
                 </select>
          
-                <label asp-for="SizeId">Size</label>
-                <select asp-for="SizeId" class="=form-control">
+                <label asp-for="Pizza.SizeId">Size</label>
+                <select asp-for="Pizza.SizeId" class="=form-control">
                     @foreach (Size size in ViewBag.Sizes)
                     {
                         <option value="@size.SizeId">@size.SizeName</option>

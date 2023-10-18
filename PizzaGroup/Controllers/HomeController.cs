@@ -33,7 +33,7 @@ namespace PizzaGroup.Controllers
         }
         public  IActionResult TestPizzaView()
         {
-            var theModel = _context.Pizzas.Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping).FirstOrDefault(p => p.PizzaID == 1);
+            var theModel = _context.Pizzas.Include(p => p.Toppings).FirstOrDefault(p => p.PizzaID == 1);
             return View(theModel);
         }
     }

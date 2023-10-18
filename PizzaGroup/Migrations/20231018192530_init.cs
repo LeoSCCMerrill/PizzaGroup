@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PizzaGroup.Migrations
 {
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -265,24 +265,24 @@ namespace PizzaGroup.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PizzaToppings",
+                name: "PizzaTopping",
                 columns: table => new
                 {
-                    PizzaID = table.Column<int>(type: "int", nullable: false),
-                    ToppingID = table.Column<int>(type: "int", nullable: false)
+                    PizzasPizzaID = table.Column<int>(type: "int", nullable: false),
+                    ToppingsToppingID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PizzaToppings", x => new { x.PizzaID, x.ToppingID });
+                    table.PrimaryKey("PK_PizzaTopping", x => new { x.PizzasPizzaID, x.ToppingsToppingID });
                     table.ForeignKey(
-                        name: "FK_PizzaToppings_Pizzas_PizzaID",
-                        column: x => x.PizzaID,
+                        name: "FK_PizzaTopping_Pizzas_PizzasPizzaID",
+                        column: x => x.PizzasPizzaID,
                         principalTable: "Pizzas",
                         principalColumn: "PizzaID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PizzaToppings_Toppings_ToppingID",
-                        column: x => x.ToppingID,
+                        name: "FK_PizzaTopping_Toppings_ToppingsToppingID",
+                        column: x => x.ToppingsToppingID,
                         principalTable: "Toppings",
                         principalColumn: "ToppingID",
                         onDelete: ReferentialAction.Cascade);
@@ -293,9 +293,9 @@ namespace PizzaGroup.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "f7746335-c09c-43e5-8560-47254aaae66f", "Employee", "EMPLOYEE" },
-                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "1cfe6f53-032f-4985-a3d4-b3fb64e50f83", "Owner", "OWNER" },
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "508e48c0-5ea3-4381-8843-7cfc2c252068", "Manager", "MANAGER" }
+                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "f9720276-22be-4b11-9992-562f99347a4f", "Employee", "EMPLOYEE" },
+                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "1aadb4a8-5e34-43fa-8c65-2a3f6c6c4251", "Owner", "OWNER" },
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "3440a08e-fc17-4270-9f22-08e3596e605c", "Manager", "MANAGER" }
                 });
 
             migrationBuilder.InsertData(
@@ -375,16 +375,6 @@ namespace PizzaGroup.Migrations
                 columns: new[] { "PizzaID", "CrustId", "PizzaName", "PizzaPrice", "SizeId" },
                 values: new object[] { 1, 1, "Custom 1", 10.0, 1 });
 
-            migrationBuilder.InsertData(
-                table: "PizzaToppings",
-                columns: new[] { "PizzaID", "ToppingID" },
-                values: new object[] { 1, 1 });
-
-            migrationBuilder.InsertData(
-                table: "PizzaToppings",
-                columns: new[] { "PizzaID", "ToppingID" },
-                values: new object[] { 1, 2 });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -440,9 +430,9 @@ namespace PizzaGroup.Migrations
                 column: "SizeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PizzaToppings_ToppingID",
-                table: "PizzaToppings",
-                column: "ToppingID");
+                name: "IX_PizzaTopping_ToppingsToppingID",
+                table: "PizzaTopping",
+                column: "ToppingsToppingID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -466,7 +456,7 @@ namespace PizzaGroup.Migrations
                 name: "OrderPizza");
 
             migrationBuilder.DropTable(
-                name: "PizzaToppings");
+                name: "PizzaTopping");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
