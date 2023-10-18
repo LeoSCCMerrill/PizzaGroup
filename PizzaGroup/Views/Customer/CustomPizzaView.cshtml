@@ -56,29 +56,28 @@
                     if (topping.ToppingType == ToppingType.CHEESE)
                     {
                         <input type="checkbox" name="Topping" value=@topping.ToppingID>
-                        <label >@topping.ToppingName</label>
+                        <label>@topping.ToppingName</label>
                         <br />
                     }
                 }
             </div>
 
             <div class="column">
-                <h3>Crust</h3>
-                <br />
-                @foreach (Crust crust in ViewBag.Crusts)
-                {
-                        <input asp-for="CrustId" type="radio" name="Crust" value="@crust.CrustId">
-                        <label asp-for="CrustId">@crust.CrustName</label>
-                        <br />
-                }
-                <h3>Size</h3>
-                <br />
-                @foreach (Size size in ViewBag.Sizes)
-                {
-                    <input type="radio" name="Size" value=@size.SizeId>
-                    <label >@size.SizeName</label>
-                    <br />
-                }
+                <label asp-for="CrustId">Crust</label>
+                <select asp-for="CrustId" class="=form-control">
+                    @foreach (Crust crust in ViewBag.Crusts)
+                    {
+                        <option value="@crust.CrustId">@crust.CrustName</option>
+                    }
+                </select>
+         
+                <label asp-for="SizeId">Size</label>
+                <select asp-for="SizeId" class="=form-control">
+                    @foreach (Size size in ViewBag.Sizes)
+                    {
+                        <option value="@size.SizeId">@size.SizeName</option>
+                    }
+                </select>
 
             </div>
         </div>
