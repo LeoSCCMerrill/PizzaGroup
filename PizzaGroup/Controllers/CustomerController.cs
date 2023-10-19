@@ -24,21 +24,21 @@ namespace PizzaGroup.Controllers
             return View();
         }
 
-        public IActionResult Add() 
-        { 
-            return View();
-        }
-
+        [HttpGet]
         public IActionResult CustomPizzaView()
         {
-            var theModel = new CustomizeViewModel
-            {
-                Pizza = new Pizza { },
-                Sizes = _context.Sizes.ToList(),
-                Crusts = _context.Crusts.ToList(),
-                Toppings = _context.Toppings.ToList()
-            };
+            ViewBag.Sizes = _context.Sizes.ToList();
+            ViewBag.Crusts = _context.Crusts.ToList();
+            ViewBag.Toppings = _context.Toppings.ToList();
+            var theModel = new Pizza();
             return View(theModel);
+        }
+        [HttpPost]
+        public IActionResult CustomPizzaView(Pizza model)
+        {
+            _context.Add(model);
+            _context.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         [Authorize(Roles = "Manager")]
