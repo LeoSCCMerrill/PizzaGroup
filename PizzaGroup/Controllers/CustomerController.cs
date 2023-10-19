@@ -12,6 +12,7 @@ namespace PizzaGroup.Controllers
     {
         private RoleManager<IdentityRole> roleManager;
         private readonly ApplicationDbContext _context;
+        
 
         public CustomerController (RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
         {
@@ -19,10 +20,19 @@ namespace PizzaGroup.Controllers
             _context = context;
         }
 
+
         public IActionResult Index()
         {
-            return View();
+           return View();
         }
+
+        [HttpGet]  // retrieve the list of pizzas
+        public IActionResult ListPizzas()
+        {
+            List<Pizza> pizzas = _context.Pizzas.ToList();
+            return View(pizzas);
+        }
+
 
         [HttpGet]
         public IActionResult CustomPizzaView()
@@ -50,7 +60,7 @@ namespace PizzaGroup.Controllers
             _context.Pizzas.Remove(pizza);
             _context.SaveChanges();
             
-            return RedirectToAction("Index");
+            return RedirectToAction("ListPizzas");
         }
     }
 }
