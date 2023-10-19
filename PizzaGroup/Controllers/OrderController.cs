@@ -14,17 +14,18 @@ namespace PizzaGroup.Controllers
         public OrderController(ApplicationDbContext context) {
             _context = context;
         }
-        public IActionResult Index()
+
+        public IActionResult Index(int PizzaID)
         {
-            
-            return View();
+            var defaultPizzas = _context.Pizzas.Select(p => p.PizzaID == PizzaID);
+
+            return View(defaultPizzas);
         }
 
         public IActionResult ViewOrder() {
             var pOrder = _context.Orders.ToList();
             return View(pOrder);
         }
-         
 
         [HttpPost]
         public async Task<IActionResult> AddOrder([Bind("customerID, PizzaID")] Order o) {
@@ -32,10 +33,10 @@ namespace PizzaGroup.Controllers
             
                 _context.Orders.Add(o);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("index");
+                return RedirectToAction("ndex");
 
-        
         }
+
         public async Task<IActionResult> Edit(int Id) 
         {
             var std =  _context.Orders.Where(o => o.CustomerID == Id).FirstOrDefault();
