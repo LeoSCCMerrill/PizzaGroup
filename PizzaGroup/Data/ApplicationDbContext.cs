@@ -333,7 +333,7 @@ namespace PizzaGroup.Data
                     PizzaName = "Custom 1",
                     PizzaPrice = 10.00,
                     SizeId = 1,
-                    CrustId = 1
+                    CrustId = 1,
                 }
                 );
         }
