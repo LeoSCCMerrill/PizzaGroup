@@ -2,10 +2,10 @@
 {
     public class Size
     {
-        public int SizeId { get; set; }
-        public string SizeName { get; set; }
-        public int SizeInches { get; set; }
-        public Decimal SizePriceMultiplier { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Inches { get; set; }
+        public Decimal PriceMultiplier { get; set; }
         public ICollection<Pizza> Pizzas { get; set; } = new List<Pizza>();
     }
 }

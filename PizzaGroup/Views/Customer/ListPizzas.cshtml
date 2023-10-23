@@ -17,9 +17,9 @@
         @foreach (var pizza in @Model)
         {
             <tr>
-                <td>@pizza.PizzaName</td>
-                <td>@pizza.PizzaSize.SizeName</td>
-                <td >$ @pizza.PizzaPrice</td>
+                <td>@pizza.Name</td>
+                <td>@pizza.Size.Name</td>
+                <td >$ @pizza.Price</td>
                 <td>
                     <form method="post" asp-action="DeletePizza" asp-controller="Customer">
                         <button type="submit" class="btn btn-primary">Delete</button>

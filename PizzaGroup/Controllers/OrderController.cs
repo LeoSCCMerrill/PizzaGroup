@@ -17,7 +17,7 @@ namespace PizzaGroup.Controllers
 
         public IActionResult Index(int PizzaId)
         {
-            var defaultPizzas = _context.Pizzas.Select(p => p.PizzaId == PizzaId);
+            var defaultPizzas = _context.Pizzas.Select(p => p.Id == PizzaId);
 
             return View(defaultPizzas);
         }

@@ -8,7 +8,7 @@
         <h3>Fill out the form below to create your new Personal Favorite!</h3>
         <div asp-validation-summary="All" class="text-danger"></div>
         <label>Name of Pizza:</label>
-        <input asp-for=@Model.Pizza.PizzaName />
+        <input asp-for=@Model.Pizza.Name />
         <br />
         <br />
 
@@ -21,9 +21,9 @@
                     @if(Model.ToppingList[i].Topping.ToppingType == ToppingType.MEAT)
                     {
                         <div>
-                            @Html.HiddenFor(m => m.ToppingList[i].Topping.ToppingID)
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
                             @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
-                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.ToppingName)
+                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
                         </div>
                     }      
                 }
@@ -34,9 +34,9 @@
                     @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.VEGGIE)
                     {
                         <div>
-                            @Html.HiddenFor(m => m.ToppingList[i].Topping.ToppingID)
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
                             @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
-                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.ToppingName)
+                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
                         </div>
                     }
                 }
@@ -51,9 +51,9 @@
                     @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.SAUCE)
                     {
                         <div>
-                            @Html.HiddenFor(m => m.ToppingList[i].Topping.ToppingID)
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
                             @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
-                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.ToppingName)
+                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
                         </div>
                     }
                 }
@@ -64,9 +64,9 @@
                     @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.CHEESE)
                     {
                         <div>
-                            @Html.HiddenFor(m => m.ToppingList[i].Topping.ToppingID)
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
                             @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
-                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.ToppingName)
+                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
                         </div>
                     }
                 }
@@ -77,7 +77,7 @@
                 <select asp-for="@Model.Pizza.CrustId" class="=form-control">
                     @foreach (Crust crust in ViewBag.Crusts)
                     {
-                        <option value="@crust.CrustId">@crust.CrustName</option>
+                        <option value="@crust.Id">@crust.Name</option>
                     }
                 </select>
          
@@ -85,12 +85,12 @@
                 <select asp-for="@Model.Pizza.SizeId" class="=form-control">
                     @foreach (Size size in ViewBag.Sizes)
                     {
-                        <option value="@size.SizeId">@size.SizeName</option>
+                        <option value="@size.Id">@size.Name</option>
                     }
                 </select>
                 <div class="column">
-                    <label asp-for="@Model.Pizza.PizzaPrice">Price</label>
-                    <input asp-format="{0:C}" asp-for="@Model.Pizza.PizzaPrice" />
+                    <label asp-for="@Model.Pizza.Price">Price</label>
+                    <input asp-format="{0:C}" asp-for="@Model.Pizza.Price" />
                 </div>
 
             </div>
