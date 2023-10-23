@@ -1,5 +1,4 @@
 ﻿@model List<Pizza>
-@* @ViewBag.Pizzas *@
 
 <h1>Browse all of our Classic Pizzas Here!</h1>
 <body>
@@ -18,7 +17,7 @@
         {
             <tr>
                 <td>@pizza.PizzaName</td>
-                <td>@pizza.PizzaSize</td>
+                <td>@pizza.PizzaSize.SizeName</td>
                 <td>@pizza.PizzaPrice</td>
                 <td>
                     <form method="post" asp-action="DeletePizza" asp-controller="Customer">

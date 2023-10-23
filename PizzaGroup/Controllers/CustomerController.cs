@@ -4,6 +4,7 @@ using PizzaGroup.Data;
 using System.Reflection;
 using PizzaGroup.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace PizzaGroup.Controllers
 {
@@ -26,30 +27,14 @@ namespace PizzaGroup.Controllers
            return View();
         }
 
+
         [HttpGet]  // retrieve the list of pizzas
         public IActionResult ListPizzas()
         {
-            List<Pizza> pizzas = _context.Pizzas.ToList();
+            List<Pizza> pizzas = _context.Pizzas.Include(p => p.PizzaSize).ToList();
             return View(pizzas);
         }
-
-
-        [HttpGet]
-        public IActionResult CustomPizzaView()
-        {
-            ViewBag.Sizes = _context.Sizes.ToList();
-            ViewBag.Crusts = _context.Crusts.ToList();
-            ViewBag.Toppings = _context.Toppings.ToList();
-            var theModel = new Pizza();
-            return View(theModel);
-        }
-        [HttpPost]
-        public IActionResult CustomPizzaView(Pizza model)
-        {
-            _context.Add(model);
-            _context.SaveChanges();
-            return RedirectToAction("Index");
-        }*/
+        
         [HttpGet]
         public IActionResult CustomPizzaView()
         {
@@ -104,6 +89,21 @@ namespace PizzaGroup.Controllers
             await _context.SaveChangesAsync();
             
             return RedirectToAction("ListPizzas");
+        }
+
+        [HttpPost]
+        public IActionResult Add(Pizza model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Add the pizza to the database
+                _context.Pizzas.Add(model);
+                _context.SaveChanges();
+
+                return RedirectToAction("ListPizzas"); // Redirect to the ListPizzas
+            }
+
+            return View("ListPizzas", model); // Show the form with validation errors
         }
     }
 }
