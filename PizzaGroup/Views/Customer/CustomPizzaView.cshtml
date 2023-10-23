@@ -15,23 +15,28 @@
             <div class="column">
                 <h3>Meats</h3>
                 <br />
-                @foreach (KeyValuePair<Topping, bool> topping in Model.ToppingDictionary) {
-                    if (topping.Key.ToppingType == ToppingType.MEAT)
+                @for(int i = 0; i < Model.ToppingList.Count; i++)
+                {
+                    @if(Model.ToppingList[i].Topping.ToppingType == ToppingType.MEAT)
                     {
-                        <input type="checkbox" name="@Model.ToppingDictionary[topping.Key]" value=@topping.Value>
-                        <label>@topping.Key.ToppingName</label>
-                        <br />
-                    }
+                        <div>
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.ToppingID)
+                            @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
+                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.ToppingName)
+                        </div>
+                    }      
                 }
                 <h3>Veggies</h3>
                 <br />
-                @foreach (KeyValuePair<Topping, bool> topping in Model.ToppingDictionary)
+                @for (int i = 0; i < Model.ToppingList.Count; i++)
                 {
-                    if (topping.Key.ToppingType == ToppingType.MEAT)
+                    @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.VEGGIE)
                     {
-                        <input type="checkbox" name="@Model.ToppingDictionary[topping.Key]" value=@topping.Value>
-                        <label>@topping.Key.ToppingName</label>
-                        <br />
+                        <div>
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.ToppingID)
+                            @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
+                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.ToppingName)
+                        </div>
                     }
                 }
             </div>
@@ -40,39 +45,43 @@
             <div class="column">
                 <h3>Sauce</h3>
                 <br />
-                @foreach (KeyValuePair<Topping, bool> topping in Model.ToppingDictionary)
+                @for (int i = 0; i < Model.ToppingList.Count; i++)
                 {
-                    if (topping.Key.ToppingType == ToppingType.SAUCE)
+                    @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.SAUCE)
                     {
-                        <input type="checkbox" name="@Model.ToppingDictionary[topping.Key]" value=@topping.Value>
-                        <label>@topping.Key.ToppingName</label>
-                        <br />
+                        <div>
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.ToppingID)
+                            @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
+                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.ToppingName)
+                        </div>
                     }
                 }
                 <h3>Cheese</h3>
                 <br />
-                @foreach (KeyValuePair<Topping, bool> topping in Model.ToppingDictionary)
+                @for (int i = 0; i < Model.ToppingList.Count; i++)
                 {
-                    if (topping.Key.ToppingType == ToppingType.CHEESE)
+                    @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.CHEESE)
                     {
-                        <input type="checkbox" name="@Model.ToppingDictionary[topping.Key]" value=@topping.Value>
-                        <label>@topping.Key.ToppingName</label>
-                        <br />
+                        <div>
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.ToppingID)
+                            @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
+                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.ToppingName)
+                        </div>
                     }
                 }
             </div>
 
             <div class="column">
-                <label asp-for="Pizza.CrustId">Crust</label>
-                <select asp-for="Pizza.CrustId" class="=form-control">
+                <label asp-for="@Model.Pizza.CrustId">Crust</label>
+                <select asp-for="@Model.Pizza.CrustId" class="=form-control">
                     @foreach (Crust crust in ViewBag.Crusts)
                     {
                         <option value="@crust.CrustId">@crust.CrustName</option>
                     }
                 </select>
          
-                <label asp-for="Pizza.SizeId">Size</label>
-                <select asp-for="Pizza.SizeId" class="=form-control">
+                <label asp-for="@Model.Pizza.SizeId">Size</label>
+                <select asp-for="@Model.Pizza.SizeId" class="=form-control">
                     @foreach (Size size in ViewBag.Sizes)
                     {
                         <option value="@size.SizeId">@size.SizeName</option>

@@ -6,7 +6,10 @@
 
 <form class="form-horizontal" method="post">
 
-    @* <Label>Feel like i would just add a button to the list of pizzas available, then we add but i don't have that yet</Label><br /> *@
+    @foreach (var pizza in Model)
+    {
+        pizza.Pizzas.
+    }
 
     <label>CustomerID : </label>
     <input asp-for=@Model.CustomerID />

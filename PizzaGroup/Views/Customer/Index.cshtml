@@ -1,10 +1,32 @@
-﻿@model Pizza
+﻿@model List<Pizza>
 
 <h1>Browse all of our Classic Pizzas Here!</h1>
+<body>
 
-<p>Placeholder pizza</p>
-<form method="post" asp-action="DeletePizza" asp-controller="Customer">
-<button type="submit" class="btn btn-primary">Delete</button>
+    <form asp-controller="Customer" asp-action="ListPizzas" method="post">
+<table>
+    <thead>
+    <tr>
+        <th>Pizza</th>
+        <th>Size</th>
+        <th>Price</th>
+    </tr>
+        </thead>
+        <tbody>
+        @foreach (var pizza in @Model)
+        {
+            <tr>
+                <td>@pizza.PizzaName</td>
+                <td>@pizza.PizzaSize.SizeName</td>
+                <td>@pizza.PizzaPrice</td>
+                <td>
+                    <form method="post" asp-action="DeletePizza" asp-controller="Customer">
+                        <button type="submit" class="btn btn-primary">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+</table>
 </form>
-
-<p>under construction</p>
+</body>

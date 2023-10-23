@@ -4,6 +4,7 @@ using PizzaGroup.Data;
 using System.Reflection;
 using PizzaGroup.Models;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace PizzaGroup.Controllers
 {
@@ -12,6 +13,7 @@ namespace PizzaGroup.Controllers
     {
         private RoleManager<IdentityRole> roleManager;
         private readonly ApplicationDbContext _context;
+        
 
         public CustomerController (RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
         {
@@ -19,54 +21,89 @@ namespace PizzaGroup.Controllers
             _context = context;
         }
 
+
         public IActionResult Index()
         {
-            return View();
+           return View();
         }
 
+
+        [HttpGet]  // retrieve the list of pizzas
+        public IActionResult ListPizzas()
+        {
+            List<Pizza> pizzas = _context.Pizzas.Include(p => p.PizzaSize).ToList();
+            return View(pizzas);
+        }
+        
         [HttpGet]
         public IActionResult CustomPizzaView()
         {
             ViewBag.Sizes = _context.Sizes.ToList();
             ViewBag.Crusts = _context.Crusts.ToList();
-            ICollection<Topping> toppings = _context.Toppings.ToList();
-            IDictionary<Topping, bool> toppingDict = new Dictionary<Topping, bool>();
-            foreach (Topping topping in toppings)
+            ViewBag.Toppings = _context.Toppings.ToList();
+            List<ToppingList> theList = new List<ToppingList>(); 
+            foreach(Topping topping in _context.Toppings)
             {
-                toppingDict.Add(topping, false);
+                theList.Add(new ToppingList { Topping = topping, IsSelected=false});
             }
-            Pizza pizza = new();
-            CustomizeViewModel theModel = new()
+            var theModel = new CustomizeViewModel
             {
-                Pizza = pizza,
-                ToppingDictionary = toppingDict
+                Pizza = new Pizza(),
+                ToppingList = theList
             };
             return View(theModel);
         }
         [HttpPost]
         public IActionResult CustomPizzaView(CustomizeViewModel model)
         {
-            foreach (KeyValuePair<Topping, bool> topping in model.ToppingDictionary) {
-                if (topping.Value)
+            _context.Add(model.Pizza);
+            _context.SaveChanges();
+            foreach (ToppingList entry in model.ToppingList)
+            {
+                if (entry.IsSelected == true) 
                 {
-                    model.Pizza.Toppings.Add(topping.Key);
+                    PizzaTopping pizzaTopping = new PizzaTopping
+                    {
+                        PizzaID = model.Pizza.PizzaID,
+                        ToppingID = entry.Topping.ToppingID,
+                    };
+                    _context.PizzaToppings.Add(pizzaTopping);
                 }
             }
-            _context.Add(model.Pizza);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
         [Authorize(Roles = "Manager")]
         [HttpPost]
-        public IActionResult DeletePizza(int PizzaID)
+        public async Task<IActionResult> DeletePizza(int PizzaID)
         {
-            var pizza = _context.Pizzas.Find(PizzaID);
+            var pizza = await _context.Pizzas.FindAsync(PizzaID);
+
+            if (pizza == null)
+            {
+                return NotFound();
+            }
 
             _context.Pizzas.Remove(pizza);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
             
-            return RedirectToAction("Index");
+            return RedirectToAction("ListPizzas");
+        }
+
+        [HttpPost]
+        public IActionResult Add(Pizza model)
+        {
+            if (ModelState.IsValid)
+            {
+                // Add the pizza to the database
+                _context.Pizzas.Add(model);
+                _context.SaveChanges();
+
+                return RedirectToAction("ListPizzas"); // Redirect to the ListPizzas
+            }
+
+            return View("ListPizzas", model); // Show the form with validation errors
         }
     }
 }

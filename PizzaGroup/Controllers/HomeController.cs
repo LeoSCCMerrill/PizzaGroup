@@ -31,9 +31,12 @@ namespace PizzaGroup.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public  IActionResult TestPizzaView()
+        public  IActionResult TestPizzaView(int id)
         {
-            var theModel = _context.Pizzas.Include(p => p.Toppings).FirstOrDefault(p => p.PizzaID == 1);
+            var theModel = _context.Pizzas.Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping)
+                .Include(p => p.PizzaSize)
+                .Include(p => p.PizzaCrust)
+                .FirstOrDefault(p => p.PizzaID == id);
             return View(theModel);
         }
     }
