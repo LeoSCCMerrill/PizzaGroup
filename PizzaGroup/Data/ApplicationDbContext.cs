@@ -17,6 +17,8 @@ namespace PizzaGroup.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Crust> Crusts { get; set; }
         public DbSet<Size> Sizes { get; set; }
+        public DbSet<OrderPizza> OrderPizzas { get; set; }
+        public DbSet<PizzaTopping> PizzaToppings { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure the User entity
