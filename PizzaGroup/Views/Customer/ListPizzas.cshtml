@@ -11,6 +11,7 @@
         <th>Size</th>
         <th>Price</th>
         <th>Remove Pizza</th>
+        <th>Add To Cart</th>
     </tr>
         </thead>
         <tbody>
@@ -24,16 +25,16 @@
                     <form method="post" asp-action="DeletePizza" asp-controller="Customer">
                         <button type="submit" class="btn btn-primary">Delete</button>
                     </form>
-
                 </td>
                 <td>
-                    <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizza="@Model">
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </form>
-                </td>
+            <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizza="@Model">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </td>
             </tr>
         }
         </tbody>
 </table>
+
 </form>
 </body>
