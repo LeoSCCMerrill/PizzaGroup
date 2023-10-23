@@ -29,11 +29,13 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="ListPizzas">Pizza</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="CustomPizzaView">Custom Pizza</a>
-                        </li>
-                        @if (User.IsInRole("Manager") || User.IsInRole("Owner"))
+            
+@*          To access the following links you must be logged in AND be in the Manager or Owner role  *@              
+                        @if (User.Identity.IsAuthenticated && User.IsInRole("Manager") || User.IsInRole("Owner"))
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="CustomPizzaView">Custom Pizza</a>
+                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Management" asp-action="Index">Employee Management</a>
                             </li>
