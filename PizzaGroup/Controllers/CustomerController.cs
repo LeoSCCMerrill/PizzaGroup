@@ -81,7 +81,7 @@ namespace PizzaGroup.Controllers
                 }
                 _context.SaveChanges();
                 
-                return RedirectToAction("Index");
+                return RedirectToAction("ListPizzas");
             } else
             {
                 ViewBag.Sizes = _context.Sizes.ToList();
