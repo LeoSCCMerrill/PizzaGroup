@@ -87,6 +87,10 @@
                         <option value="@size.SizeId">@size.SizeName</option>
                     }
                 </select>
+                <div class="column">
+                    <label asp-for="@Model.Pizza.PizzaPrice">Price</label>
+                    <input asp-format="{0:C}" asp-for="@Model.Pizza.PizzaPrice" />
+                </div>
 
             </div>
         </div>
