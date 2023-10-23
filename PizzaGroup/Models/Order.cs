@@ -9,7 +9,7 @@ namespace PizzaGroup.Models
         [Required(ErrorMessage = "Please Enter A CustomerID")] 
         public int CustomerID { get; set; }
         public int EmployeeID { get; set; }
-        public ICollection<Pizza> Pizzas { get; set; }
+        public IList<Pizza> Pizzas { get; set; }
 
 
         

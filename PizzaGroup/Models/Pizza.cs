@@ -15,7 +15,8 @@ namespace PizzaGroup.Models
         [Required(ErrorMessage = "Please choose a crust")]
         public int CrustId { get; set; }
         public Crust PizzaCrust { get; set; }
-        public ICollection<Topping>? Toppings { get; set; } = new List<Topping>();
-        public ICollection<Order>? Orders { get; set; } = new List<Order>();
+        public IList<Topping>? Toppings { get; set; } = new List<Topping>();
+        public IList<Order>? Orders { get; set; } = new List<Order>();
+        public IList<PizzaTopping>? PizzaToppings { get; set; } = new List<PizzaTopping>();
     }
 }

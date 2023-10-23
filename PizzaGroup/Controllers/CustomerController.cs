@@ -60,7 +60,7 @@ namespace PizzaGroup.Controllers
             _context.SaveChanges();
             foreach (ToppingList entry in model.ToppingList)
             {
-                if (entry.IsSelected == true) 
+               /* if (entry.IsSelected == true) 
                 {
                     PizzaTopping pizzaTopping = new PizzaTopping
                     {
@@ -68,7 +68,7 @@ namespace PizzaGroup.Controllers
                         ToppingID = entry.Topping.ToppingID,
                     };
                     _context.PizzaToppings.Add(pizzaTopping);
-                }
+                }*/
             }
             _context.SaveChanges();
             return RedirectToAction("Index");
