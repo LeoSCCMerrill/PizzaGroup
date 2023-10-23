@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PizzaGroup.Migrations
 {
-    public partial class init : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -66,14 +66,14 @@ namespace PizzaGroup.Migrations
                 name: "Orders",
                 columns: table => new
                 {
-                    OrderID = table.Column<int>(type: "int", nullable: false)
+                    OrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerID = table.Column<int>(type: "int", nullable: false),
-                    EmployeeID = table.Column<int>(type: "int", nullable: false)
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
+                    EmployeeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Orders", x => x.OrderID);
+                    table.PrimaryKey("PK_Orders", x => x.OrderId);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,7 +216,7 @@ namespace PizzaGroup.Migrations
                 name: "Pizzas",
                 columns: table => new
                 {
-                    PizzaID = table.Column<int>(type: "int", nullable: false)
+                    PizzaId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     PizzaName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PizzaPrice = table.Column<double>(type: "float", nullable: true),
@@ -225,7 +225,7 @@ namespace PizzaGroup.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pizzas", x => x.PizzaID);
+                    table.PrimaryKey("PK_Pizzas", x => x.PizzaId);
                     table.ForeignKey(
                         name: "FK_Pizzas_Crusts_CrustId",
                         column: x => x.CrustId,
@@ -241,48 +241,48 @@ namespace PizzaGroup.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderPizza",
+                name: "OrderPizzas",
                 columns: table => new
                 {
-                    OrdersOrderID = table.Column<int>(type: "int", nullable: false),
-                    PizzasPizzaID = table.Column<int>(type: "int", nullable: false)
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    PizzaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderPizza", x => new { x.OrdersOrderID, x.PizzasPizzaID });
+                    table.PrimaryKey("PK_OrderPizzas", x => new { x.OrderId, x.PizzaId });
                     table.ForeignKey(
-                        name: "FK_OrderPizza_Orders_OrdersOrderID",
-                        column: x => x.OrdersOrderID,
+                        name: "FK_OrderPizzas_Orders_OrderId",
+                        column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "OrderID",
+                        principalColumn: "OrderId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderPizza_Pizzas_PizzasPizzaID",
-                        column: x => x.PizzasPizzaID,
+                        name: "FK_OrderPizzas_Pizzas_PizzaId",
+                        column: x => x.PizzaId,
                         principalTable: "Pizzas",
-                        principalColumn: "PizzaID",
+                        principalColumn: "PizzaId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "PizzaTopping",
+                name: "PizzaToppings",
                 columns: table => new
                 {
-                    PizzasPizzaID = table.Column<int>(type: "int", nullable: false),
-                    ToppingsToppingID = table.Column<int>(type: "int", nullable: false)
+                    PizzaId = table.Column<int>(type: "int", nullable: false),
+                    ToppingId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PizzaTopping", x => new { x.PizzasPizzaID, x.ToppingsToppingID });
+                    table.PrimaryKey("PK_PizzaToppings", x => new { x.PizzaId, x.ToppingId });
                     table.ForeignKey(
-                        name: "FK_PizzaTopping_Pizzas_PizzasPizzaID",
-                        column: x => x.PizzasPizzaID,
+                        name: "FK_PizzaToppings_Pizzas_PizzaId",
+                        column: x => x.PizzaId,
                         principalTable: "Pizzas",
-                        principalColumn: "PizzaID",
+                        principalColumn: "PizzaId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_PizzaTopping_Toppings_ToppingsToppingID",
-                        column: x => x.ToppingsToppingID,
+                        name: "FK_PizzaToppings_Toppings_ToppingId",
+                        column: x => x.ToppingId,
                         principalTable: "Toppings",
                         principalColumn: "ToppingID",
                         onDelete: ReferentialAction.Cascade);
@@ -293,9 +293,9 @@ namespace PizzaGroup.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "f9720276-22be-4b11-9992-562f99347a4f", "Employee", "EMPLOYEE" },
-                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "1aadb4a8-5e34-43fa-8c65-2a3f6c6c4251", "Owner", "OWNER" },
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "3440a08e-fc17-4270-9f22-08e3596e605c", "Manager", "MANAGER" }
+                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "7ce12bf0-f21e-4a12-b163-adc4cfb7df07", "Employee", "EMPLOYEE" },
+                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "70eab15d-1173-469b-9153-addda6a125e7", "Owner", "OWNER" },
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "bcf88164-3bd9-413d-bd7c-536f09e430bf", "Manager", "MANAGER" }
                 });
 
             migrationBuilder.InsertData(
@@ -372,7 +372,7 @@ namespace PizzaGroup.Migrations
 
             migrationBuilder.InsertData(
                 table: "Pizzas",
-                columns: new[] { "PizzaID", "CrustId", "PizzaName", "PizzaPrice", "SizeId" },
+                columns: new[] { "PizzaId", "CrustId", "PizzaName", "PizzaPrice", "SizeId" },
                 values: new object[] { 1, 1, "Custom 1", 10.0, 1 });
 
             migrationBuilder.CreateIndex(
@@ -415,9 +415,9 @@ namespace PizzaGroup.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderPizza_PizzasPizzaID",
-                table: "OrderPizza",
-                column: "PizzasPizzaID");
+                name: "IX_OrderPizzas_PizzaId",
+                table: "OrderPizzas",
+                column: "PizzaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Pizzas_CrustId",
@@ -430,9 +430,9 @@ namespace PizzaGroup.Migrations
                 column: "SizeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PizzaTopping_ToppingsToppingID",
-                table: "PizzaTopping",
-                column: "ToppingsToppingID");
+                name: "IX_PizzaToppings_ToppingId",
+                table: "PizzaToppings",
+                column: "ToppingId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -453,10 +453,10 @@ namespace PizzaGroup.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "OrderPizza");
+                name: "OrderPizzas");
 
             migrationBuilder.DropTable(
-                name: "PizzaTopping");
+                name: "PizzaToppings");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -2,26 +2,24 @@
 
 #nullable disable
 
-namespace PizzaGroup.Data.Migrations
+namespace PizzaGroup.Migrations
 {
-    public partial class addEmpIDToOrders : Migration
+    public partial class pizzaUserId : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "customerID",
-                table: "Orders",
-                newName: "CustomerID");
+            migrationBuilder.AlterColumn<string>(
+                name: "ToppingName",
+                table: "Toppings",
+                type: "nvarchar(max)",
+                nullable: true,
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)");
 
-            migrationBuilder.RenameColumn(
-                name: "PizzaID",
-                table: "Orders",
-                newName: "EmployeeID");
-
-            migrationBuilder.AddColumn<int>(
-                name: "OrderID",
+            migrationBuilder.AddColumn<string>(
+                name: "UserId",
                 table: "Pizzas",
-                type: "int",
+                type: "nvarchar(450)",
                 nullable: true);
 
             migrationBuilder.UpdateData(
@@ -29,79 +27,79 @@ namespace PizzaGroup.Data.Migrations
                 keyColumn: "Id",
                 keyValue: "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
                 column: "ConcurrencyStamp",
-                value: "f9a26cca-809d-4910-9e15-db76338ec90f");
+                value: "aebdd5f7-1dfd-4ec8-8527-c9b5ce85eb43");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
                 column: "ConcurrencyStamp",
-                value: "3ac3b150-3ada-4140-b306-cc00c0d759c3");
+                value: "9e503fb7-f413-4973-b776-a35e3420a7a5");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
                 column: "ConcurrencyStamp",
-                value: "e27dc38c-7b0f-4a44-ba75-f8a6b45e4ff3");
+                value: "fc9080b9-1912-4451-8e8e-61b3bc4cd5fd");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pizzas_OrderID",
+                name: "IX_Pizzas_UserId",
                 table: "Pizzas",
-                column: "OrderID");
+                column: "UserId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Pizzas_Orders_OrderID",
+                name: "FK_Pizzas_AspNetUsers_UserId",
                 table: "Pizzas",
-                column: "OrderID",
-                principalTable: "Orders",
-                principalColumn: "OrderID");
+                column: "UserId",
+                principalTable: "AspNetUsers",
+                principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Pizzas_Orders_OrderID",
+                name: "FK_Pizzas_AspNetUsers_UserId",
                 table: "Pizzas");
 
             migrationBuilder.DropIndex(
-                name: "IX_Pizzas_OrderID",
+                name: "IX_Pizzas_UserId",
                 table: "Pizzas");
 
             migrationBuilder.DropColumn(
-                name: "OrderID",
+                name: "UserId",
                 table: "Pizzas");
 
-            migrationBuilder.RenameColumn(
-                name: "CustomerID",
-                table: "Orders",
-                newName: "customerID");
-
-            migrationBuilder.RenameColumn(
-                name: "EmployeeID",
-                table: "Orders",
-                newName: "PizzaID");
+            migrationBuilder.AlterColumn<string>(
+                name: "ToppingName",
+                table: "Toppings",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "",
+                oldClrType: typeof(string),
+                oldType: "nvarchar(max)",
+                oldNullable: true);
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
                 column: "ConcurrencyStamp",
-                value: "5abfc754-ff32-4536-9f8e-f9ce5a680578");
+                value: "1568be70-fcaf-4872-8d6b-6e648e9228a8");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
                 column: "ConcurrencyStamp",
-                value: "9939d580-c30f-4b8f-980d-00f5925b6f00");
+                value: "6475a034-0e01-4a63-bdc9-a7cc74af4c86");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
                 column: "ConcurrencyStamp",
-                value: "c2f22047-3913-4b25-a9dd-8c3c98179d1d");
+                value: "e7312451-0c47-4c9d-bde6-0deff487c60b");
         }
     }
 }

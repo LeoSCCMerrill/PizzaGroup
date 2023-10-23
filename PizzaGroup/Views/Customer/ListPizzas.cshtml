@@ -1,15 +1,16 @@
 ﻿@model List<Pizza>
 
 <h1>Browse all of our Classic Pizzas Here!</h1>
-<body>
+<body id="grad">
 
     <form asp-controller="Customer" asp-action="ListPizzas" method="post">
-<table>
+ <table id="customers">
     <thead>
     <tr>
         <th>Pizza</th>
         <th>Size</th>
         <th>Price</th>
+        <th>Remove Pizza</th>
     </tr>
         </thead>
         <tbody>
@@ -18,7 +19,7 @@
             <tr>
                 <td>@pizza.PizzaName</td>
                 <td>@pizza.PizzaSize.SizeName</td>
-                <td>@pizza.PizzaPrice</td>
+                <td >$ @pizza.PizzaPrice</td>
                 <td>
                     <form method="post" asp-action="DeletePizza" asp-controller="Customer">
                         <button type="submit" class="btn btn-primary">Delete</button>

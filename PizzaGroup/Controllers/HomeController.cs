@@ -34,9 +34,9 @@ namespace PizzaGroup.Controllers
         public  IActionResult TestPizzaView(int id)
         {
             var theModel = _context.Pizzas.Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping)
-                .Include(p => p.PizzaSize)
-                .Include(p => p.PizzaCrust)
-                .FirstOrDefault(p => p.PizzaID == id);
+                .Include(p => p.Size)
+                .Include(p => p.Crust)
+                .FirstOrDefault(p => p.PizzaId == id);
             return View(theModel);
         }
     }

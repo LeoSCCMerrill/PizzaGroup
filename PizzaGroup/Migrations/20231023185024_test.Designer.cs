@@ -12,8 +12,8 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231023180713_linkingtables")]
-    partial class linkingtables
+    [Migration("20231023185024_test")]
+    partial class test
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,21 +54,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "6475a034-0e01-4a63-bdc9-a7cc74af4c86",
+                            ConcurrencyStamp = "70eab15d-1173-469b-9153-addda6a125e7",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "e7312451-0c47-4c9d-bde6-0deff487c60b",
+                            ConcurrencyStamp = "bcf88164-3bd9-413d-bd7c-536f09e430bf",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "1568be70-fcaf-4872-8d6b-6e648e9228a8",
+                            ConcurrencyStamp = "7ce12bf0-f21e-4a12-b163-adc4cfb7df07",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -261,19 +261,19 @@ namespace PizzaGroup.Migrations
 
             modelBuilder.Entity("PizzaGroup.Models.Order", b =>
                 {
-                    b.Property<int>("OrderID")
+                    b.Property<int>("OrderId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
 
-                    b.Property<int>("CustomerID")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<int>("EmployeeID")
+                    b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderID");
+                    b.HasKey("OrderId");
 
                     b.ToTable("Orders");
                 });
@@ -295,11 +295,11 @@ namespace PizzaGroup.Migrations
 
             modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
                 {
-                    b.Property<int>("PizzaID")
+                    b.Property<int>("PizzaId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PizzaID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PizzaId"), 1L, 1);
 
                     b.Property<int>("CrustId")
                         .HasColumnType("int");
@@ -314,7 +314,7 @@ namespace PizzaGroup.Migrations
                     b.Property<int>("SizeId")
                         .HasColumnType("int");
 
-                    b.HasKey("PizzaID");
+                    b.HasKey("PizzaId");
 
                     b.HasIndex("CrustId");
 
@@ -325,7 +325,7 @@ namespace PizzaGroup.Migrations
                     b.HasData(
                         new
                         {
-                            PizzaID = 1,
+                            PizzaId = 1,
                             CrustId = 1,
                             PizzaName = "Custom 1",
                             PizzaPrice = 10.0,
@@ -760,21 +760,21 @@ namespace PizzaGroup.Migrations
 
             modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
                 {
-                    b.HasOne("PizzaGroup.Models.Crust", "PizzaCrust")
+                    b.HasOne("PizzaGroup.Models.Crust", "Crust")
                         .WithMany("Pizzas")
                         .HasForeignKey("CrustId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PizzaGroup.Models.Size", "PizzaSize")
+                    b.HasOne("PizzaGroup.Models.Size", "Size")
                         .WithMany("Pizzas")
                         .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("PizzaCrust");
+                    b.Navigation("Crust");
 
-                    b.Navigation("PizzaSize");
+                    b.Navigation("Size");
                 });
 
             modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
