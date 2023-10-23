@@ -5,6 +5,7 @@ using System.Reflection;
 using PizzaGroup.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
 
 namespace PizzaGroup.Controllers
 {
@@ -24,7 +25,10 @@ namespace PizzaGroup.Controllers
 
         public IActionResult Index()
         {
-           return View();
+            List<Pizza> pizzas = _context.Pizzas.Include(p => p.PizzaSize)
+                .Include(p => p.PizzaCrust)
+                .Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping).ToList();
+            return View(pizzas);
         }
 
 
@@ -48,7 +52,10 @@ namespace PizzaGroup.Controllers
             }
             var theModel = new CustomizeViewModel
             {
-                Pizza = new Pizza(),
+                Pizza = new Pizza
+                {
+                    UserId = User.FindFirstValue(ClaimTypes.NameIdentifier),
+                },
                 ToppingList = theList
             };
             return View(theModel);
@@ -56,22 +63,33 @@ namespace PizzaGroup.Controllers
         [HttpPost]
         public IActionResult CustomPizzaView(CustomizeViewModel model)
         {
-            _context.Add(model.Pizza);
-            _context.SaveChanges();
-            foreach (ToppingList entry in model.ToppingList)
+            if(ModelState.IsValid)
             {
-               if (entry.IsSelected == true) 
+                _context.Add(model.Pizza);
+                _context.SaveChanges();
+                foreach (ToppingList entry in model.ToppingList)
                 {
-                    PizzaTopping pizzaTopping = new PizzaTopping
+                    if (entry.IsSelected == true)
                     {
-                        PizzaId = model.Pizza.PizzaId,
-                        ToppingId = entry.Topping.ToppingID,
-                    };
-                    _context.PizzaToppings.Add(pizzaTopping);
+                        PizzaTopping pizzaTopping = new PizzaTopping
+                        {
+                            PizzaId = model.Pizza.PizzaID,
+                            ToppingId = entry.Topping.ToppingID,
+                        };
+                        _context.PizzaToppings.Add(pizzaTopping);
+                    }
                 }
+                _context.SaveChanges();
+                
+                return RedirectToAction("Index");
+            } else
+            {
+                ViewBag.Sizes = _context.Sizes.ToList();
+                ViewBag.Crusts = _context.Crusts.ToList();
+                ViewBag.Toppings = _context.Toppings.ToList();
+                return View(model);
             }
-            _context.SaveChanges();
-            return RedirectToAction("ListPizzas");
+            
         }
 
         [Authorize(Roles = "Manager")]

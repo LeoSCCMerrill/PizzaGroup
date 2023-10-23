@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaGroup.Data;
 
@@ -11,9 +12,10 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231023184111_pizzaUserId")]
+    partial class pizzaUserId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,21 +54,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "70eab15d-1173-469b-9153-addda6a125e7",
+                            ConcurrencyStamp = "9e503fb7-f413-4973-b776-a35e3420a7a5",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "bcf88164-3bd9-413d-bd7c-536f09e430bf",
+                            ConcurrencyStamp = "fc9080b9-1912-4451-8e8e-61b3bc4cd5fd",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "7ce12bf0-f21e-4a12-b163-adc4cfb7df07",
+                            ConcurrencyStamp = "aebdd5f7-1dfd-4ec8-8527-c9b5ce85eb43",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -259,19 +261,19 @@ namespace PizzaGroup.Migrations
 
             modelBuilder.Entity("PizzaGroup.Models.Order", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("OrderID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderID"), 1L, 1);
 
-                    b.Property<int>("CustomerId")
+                    b.Property<int>("CustomerID")
                         .HasColumnType("int");
 
-                    b.Property<int>("EmployeeId")
+                    b.Property<int>("EmployeeID")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId");
+                    b.HasKey("OrderID");
 
                     b.ToTable("Orders");
                 });
@@ -293,11 +295,11 @@ namespace PizzaGroup.Migrations
 
             modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
                 {
-                    b.Property<int>("PizzaId")
+                    b.Property<int>("PizzaID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PizzaId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PizzaID"), 1L, 1);
 
                     b.Property<int>("CrustId")
                         .HasColumnType("int");
@@ -328,7 +330,7 @@ namespace PizzaGroup.Migrations
                     b.HasData(
                         new
                         {
-                            PizzaId = 1,
+                            PizzaID = 1,
                             CrustId = 1,
                             PizzaName = "Custom 1",
                             PizzaPrice = 10.0,
@@ -762,13 +764,13 @@ namespace PizzaGroup.Migrations
 
             modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
                 {
-                    b.HasOne("PizzaGroup.Models.Crust", "Crust")
+                    b.HasOne("PizzaGroup.Models.Crust", "PizzaCrust")
                         .WithMany("Pizzas")
                         .HasForeignKey("CrustId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PizzaGroup.Models.Size", "Size")
+                    b.HasOne("PizzaGroup.Models.Size", "PizzaSize")
                         .WithMany("Pizzas")
                         .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.Cascade)
