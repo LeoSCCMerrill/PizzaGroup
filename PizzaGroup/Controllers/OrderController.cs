@@ -41,9 +41,20 @@ namespace PizzaGroup.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddOrder([Bind("customerID, PizzaID")] Order o) {
+        public async Task<IActionResult> AddOrder(Pizza pizza, int id) {
             //Use this to add to Orders in the Database
+
+            Order oTemp = _context.Orders.Find();
+
+            Order o = new Order();
             
+            //o.CustomerID =;
+            //o.EmployeeID = 1;
+            //o.OrderStatus = "NOT YET"; 
+            //o.Pizzas.Add(pizza);
+
+
+
                 _context.Orders.Add(o);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("index");
