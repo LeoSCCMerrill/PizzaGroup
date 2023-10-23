@@ -36,7 +36,7 @@ namespace PizzaGroup.Controllers
             var theModel = _context.Pizzas.Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping)
                 .Include(p => p.Size)
                 .Include(p => p.Crust)
-                .FirstOrDefault(p => p.PizzaId == id);
+                .FirstOrDefault(p => p.Id == id);
             return View(theModel);
         }
     }

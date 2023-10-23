@@ -25,8 +25,8 @@ namespace PizzaGroup.Controllers
 
         public IActionResult Index()
         {
-            List<Pizza> pizzas = _context.Pizzas.Include(p => p.PizzaSize)
-                .Include(p => p.PizzaCrust)
+            List<Pizza> pizzas = _context.Pizzas.Include(p => p.Size)
+                .Include(p => p.Crust)
                 .Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping).ToList();
             return View(pizzas);
         }
@@ -73,8 +73,8 @@ namespace PizzaGroup.Controllers
                     {
                         PizzaTopping pizzaTopping = new PizzaTopping
                         {
-                            PizzaId = model.Pizza.PizzaID,
-                            ToppingId = entry.Topping.ToppingID,
+                            PizzaId = model.Pizza.Id,
+                            ToppingId = entry.Topping.Id,
                         };
                         _context.PizzaToppings.Add(pizzaTopping);
                     }
