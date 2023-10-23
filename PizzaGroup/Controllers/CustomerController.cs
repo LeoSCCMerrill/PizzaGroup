@@ -31,7 +31,7 @@ namespace PizzaGroup.Controllers
         [HttpGet]  // retrieve the list of pizzas
         public IActionResult ListPizzas()
         {
-            List<Pizza> pizzas = _context.Pizzas.Include(p => p.PizzaSize).ToList();
+            List<Pizza> pizzas = _context.Pizzas.Include(p => p.Size).ToList();
             return View(pizzas);
         }
         
@@ -64,7 +64,7 @@ namespace PizzaGroup.Controllers
                 {
                     PizzaTopping pizzaTopping = new PizzaTopping
                     {
-                        PizzaId = model.Pizza.PizzaID,
+                        PizzaId = model.Pizza.PizzaId,
                         ToppingId = entry.Topping.ToppingID,
                     };
                     _context.PizzaToppings.Add(pizzaTopping);
