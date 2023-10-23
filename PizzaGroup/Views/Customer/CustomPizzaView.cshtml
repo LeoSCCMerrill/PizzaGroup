@@ -6,6 +6,7 @@
     <form asp-controller="Customer" asp-action="CustomPizzaView" method="post">
         <h1>Pizza Creation Station</h1>
         <h3>Fill out the form below to create your new Personal Favorite!</h3>
+        <div asp-validation-summary="All" class="text-danger"></div>
         <label>Name of Pizza:</label>
         <input asp-for=@Model.Pizza.PizzaName />
         <br />
@@ -87,11 +88,15 @@
                         <option value="@size.SizeId">@size.SizeName</option>
                     }
                 </select>
+                <div class="column">
+                    <label asp-for="@Model.Pizza.PizzaPrice">Price</label>
+                    <input asp-format="{0:C}" asp-for="@Model.Pizza.PizzaPrice" />
+                </div>
 
             </div>
         </div>
 
-        
+        @Html.HiddenFor(m => m.Pizza.UserId)
 
         <button type="submit">Make That Pie!</button>
     </form>

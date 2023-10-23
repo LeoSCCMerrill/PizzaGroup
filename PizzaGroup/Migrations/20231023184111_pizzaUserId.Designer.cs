@@ -12,8 +12,8 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231023181209_Initial")]
-    partial class Initial
+    [Migration("20231023184111_pizzaUserId")]
+    partial class pizzaUserId
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,21 +54,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "feb803df-1fbc-4d93-afc1-d4f946c3dce6",
+                            ConcurrencyStamp = "9e503fb7-f413-4973-b776-a35e3420a7a5",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "08623613-86ca-4b1d-8cac-40334460665a",
+                            ConcurrencyStamp = "fc9080b9-1912-4451-8e8e-61b3bc4cd5fd",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "733afa15-27b6-48e1-b3ca-c1a1ff254342",
+                            ConcurrencyStamp = "aebdd5f7-1dfd-4ec8-8527-c9b5ce85eb43",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -314,11 +314,16 @@ namespace PizzaGroup.Migrations
                     b.Property<int>("SizeId")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("PizzaID");
 
                     b.HasIndex("CrustId");
 
                     b.HasIndex("SizeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Pizzas");
 
@@ -410,7 +415,6 @@ namespace PizzaGroup.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ToppingID"), 1L, 1);
 
                     b.Property<string>("ToppingName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("ToppingPrice")
@@ -772,9 +776,15 @@ namespace PizzaGroup.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PizzaGroup.Models.User", "User")
+                        .WithMany("Pizzas")
+                        .HasForeignKey("UserId");
+
                     b.Navigation("PizzaCrust");
 
                     b.Navigation("PizzaSize");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
@@ -807,6 +817,11 @@ namespace PizzaGroup.Migrations
                 });
 
             modelBuilder.Entity("PizzaGroup.Models.Size", b =>
+                {
+                    b.Navigation("Pizzas");
+                });
+
+            modelBuilder.Entity("PizzaGroup.Models.User", b =>
                 {
                     b.Navigation("Pizzas");
                 });

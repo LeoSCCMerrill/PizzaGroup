@@ -24,7 +24,7 @@ namespace PizzaGroup.Data
         {
             // Configure the User entity
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Order>().HasKey(o => o.OrderID);
+            modelBuilder.Entity<Order>().HasKey(o => o.OrderId);
             modelBuilder.Entity<Pizza>()
                 .HasMany(e => e.Toppings)
                 .WithMany(e => e.Pizzas)
@@ -329,11 +329,11 @@ namespace PizzaGroup.Data
             modelBuilder.Entity<Pizza>().HasData(
                 new Pizza
                 {
-                    PizzaID = 1,
+                    PizzaId = 1,
                     PizzaName = "Custom 1",
                     PizzaPrice = 10.00,
                     SizeId = 1,
-                    CrustId = 1
+                    CrustId = 1,
                 }
                 );
         }

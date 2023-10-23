@@ -6,6 +6,7 @@
     public class User : IdentityUser
     {
         [NotMapped]
-        public IList<string> RoleNames { get; set; }
+        public IList<string>? RoleNames { get; set; }
+        public IList<Pizza>? Pizzas { get; set; }
     }
 }
