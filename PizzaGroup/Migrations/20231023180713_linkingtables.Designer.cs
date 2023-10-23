@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaGroup.Data;
 
@@ -11,9 +12,10 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231023180713_linkingtables")]
+    partial class linkingtables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,21 +54,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "3ac3b150-3ada-4140-b306-cc00c0d759c3",
+                            ConcurrencyStamp = "6475a034-0e01-4a63-bdc9-a7cc74af4c86",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "e27dc38c-7b0f-4a44-ba75-f8a6b45e4ff3",
+                            ConcurrencyStamp = "e7312451-0c47-4c9d-bde6-0deff487c60b",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "f9a26cca-809d-4910-9e15-db76338ec90f",
+                            ConcurrencyStamp = "1568be70-fcaf-4872-8d6b-6e648e9228a8",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -299,12 +301,8 @@ namespace PizzaGroup.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PizzaID"), 1L, 1);
 
-                    b.Property<int?>("OrderID")
+                    b.Property<int>("CrustId")
                         .HasColumnType("int");
-
-                    b.Property<string>("PizzaCrust")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PizzaName")
                         .IsRequired()
@@ -741,14 +739,7 @@ namespace PizzaGroup.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
-                {
-                    b.HasOne("PizzaGroup.Models.Order", null)
-                        .WithMany("Pizzas")
-                        .HasForeignKey("OrderID");
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
+            modelBuilder.Entity("PizzaGroup.Models.OrderPizza", b =>
                 {
                     b.HasOne("PizzaGroup.Models.Order", "Order")
                         .WithMany()
@@ -805,12 +796,7 @@ namespace PizzaGroup.Migrations
                     b.Navigation("Topping");
                 });
 
-            modelBuilder.Entity("PizzaGroup.Models.Order", b =>
-                {
-                    b.Navigation("Pizzas");
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
+            modelBuilder.Entity("PizzaGroup.Models.Crust", b =>
                 {
                     b.Navigation("Pizzas");
                 });
