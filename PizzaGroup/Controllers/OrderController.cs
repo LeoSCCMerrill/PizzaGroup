@@ -14,10 +14,14 @@ namespace PizzaGroup.Controllers
         public OrderController(ApplicationDbContext context) {
             _context = context;
         }
-        public IActionResult Index()
+
+        public IActionResult Index(int PizzaID)
         {
-            return View();
+            var defaultPizzas = _context.Pizzas.Select(p => p.PizzaID == PizzaID);
+
+            return View(defaultPizzas);
         }
+
         public IActionResult ViewOrder() {
             List<Order> pOrder = _context.Orders.ToList();
             return View(pOrder);

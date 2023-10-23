@@ -14,10 +14,11 @@ namespace PizzaGroup.Data
         public DbSet<User> ApplicationUsers { get; set; }
         public DbSet<Pizza> Pizzas { get; set; }
         public DbSet<Topping> Toppings { get; set; }
-        public DbSet<PizzaTopping> PizzaToppings { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<Crust> Crusts { get; set; }
         public DbSet<Size> Sizes { get; set; }
+        public DbSet<OrderPizza> OrderPizzas { get; set; }
+        public DbSet<PizzaTopping> PizzaToppings { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure the User entity
@@ -100,16 +101,6 @@ namespace PizzaGroup.Data
                 RoleId = EMPLOYEE_ROLE_ID,
                 UserId = EMPLOYEE_ROLE_ID
             });
-            // configure the pizza topping relationship
-            modelBuilder.Entity<PizzaTopping>().HasKey(pt => new { pt.PizzaID, pt.ToppingID });
-            modelBuilder.Entity<PizzaTopping>()
-                .HasOne(pt => pt.Pizza)
-                .WithMany(p => p.PizzaToppings)
-                .HasForeignKey(pt => pt.PizzaID);
-            modelBuilder.Entity<PizzaTopping>()
-                .HasOne(pt => pt.Topping)
-                .WithMany(t => t.PizzaToppings)
-                .HasForeignKey(pt => pt.ToppingID);
             modelBuilder.Entity<Topping>().HasData(
                 new Topping
                 {
@@ -333,16 +324,10 @@ namespace PizzaGroup.Data
                     PizzaID = 1,
                     PizzaName = "Custom 1",
                     PizzaPrice = 10.00,
-                    PizzaSize = "Medium",
-                    PizzaCrust = "Classic"
+                    SizeId = 1,
+                    CrustId = 1
                 }
                 );
-            modelBuilder.Entity<PizzaTopping>().HasData(
-                new PizzaTopping { PizzaID = 1, ToppingID = 1 },
-                new PizzaTopping { PizzaID = 1, ToppingID = 2 }
-                );
-
-
         }
     }
 }

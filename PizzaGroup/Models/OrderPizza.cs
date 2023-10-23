@@ -1,10 +1,10 @@
 ﻿namespace PizzaGroup.Models
 {
-    public class PizzaTopping
+    public class OrderPizza
     {
+        public int OrderId { get; set; }
+        public Order Order { get; set; }
         public int PizzaId { get; set; }
         public Pizza Pizza { get; set; }
-        public int ToppingId { get; set; }
-        public Topping Topping { get; set; }
     }
 }

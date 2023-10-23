@@ -2,20 +2,24 @@
     ViewData["Title"] = "Home Page";
 }
 <link rel="stylesheet" href="~/css/site.css">
-
-
-<body>
+<head>
+    <div class="center">
+        <h2>Welcome to Hizza Pizza</h2>
+    </div>
+</head>
+<br />
+<body id ="grad">
+    
     <div class="container">
-        <img id="Logo" alt="Hizza Pizza logo" src="~/images/Logo.png" class="img-fluid rounded" />
         <main>
-            <div>
-                <h2 class="col-md-18">Welcome to Hizza Pizza</h2>
-                <div />
 
-                <div class="align-right">
+                <div class="twoColumns">
+                    <img id="Logo" alt="Hizza Pizza logo" src="~/images/Logo.png" class="img-fluid rounded" />
+                    <br /> <br />
+                    <img id="Logo" alt="Pizza on a workbench with flour" src="~/images/pizza.png" class="img-fluid  rounded" />
                 <h3 >We are located at:</h3>
-                <p>3920 N.44th Street</p>
-                <p>Lincoln, Ne. 68504</p>
+                <p>3920 N.44th Street<br />
+                   Lincoln, Ne. 68504</p>
             <br />
                 <h3>Phone Number:</h3>
                 <p>(402)555-5555</p>
@@ -26,3 +30,6 @@
         </main>
     </div>
 </body>
+
+@* pizza.png origionally sourced from pixabay.com for educational purposes.
+Logo.png was created using Dall-e AI image generagor by Madelon Watanabe. *@

@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\CustomPizza\**" />
+    <Content Remove="Views\CustomPizza\**" />
+    <EmbeddedResource Remove="Views\CustomPizza\**" />
+    <None Remove="Views\CustomPizza\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.19" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.19" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.19" />
@@ -18,7 +25,6 @@
 
   <ItemGroup>
     <Folder Include="Views\CustomPizza\" />
-    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
