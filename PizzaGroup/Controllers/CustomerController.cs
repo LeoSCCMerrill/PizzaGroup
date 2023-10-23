@@ -60,18 +60,18 @@ namespace PizzaGroup.Controllers
             _context.SaveChanges();
             foreach (ToppingList entry in model.ToppingList)
             {
-               /* if (entry.IsSelected == true) 
+               if (entry.IsSelected == true) 
                 {
                     PizzaTopping pizzaTopping = new PizzaTopping
                     {
-                        PizzaID = model.Pizza.PizzaID,
-                        ToppingID = entry.Topping.ToppingID,
+                        PizzaId = model.Pizza.PizzaID,
+                        ToppingId = entry.Topping.ToppingID,
                     };
                     _context.PizzaToppings.Add(pizzaTopping);
-                }*/
+                }
             }
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("ListPizzas");
         }
 
         [Authorize(Roles = "Manager")]

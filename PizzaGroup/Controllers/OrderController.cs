@@ -23,8 +23,21 @@ namespace PizzaGroup.Controllers
         }
 
         public IActionResult ViewOrder() {
-            var pOrder = _context.Orders.ToList();
+            List<Order> pOrder = _context.Orders.ToList();
             return View(pOrder);
+        }
+        public IActionResult Edit(int Id)
+        {
+            var eInfo = _context.Orders.Find(Id);
+            return View(eInfo);
+        }
+        [HttpPost, ActionName("Delete")]
+        public IActionResult Delete(int id)
+        {
+            Order order = _context.Orders.Find(id);
+            _context.Orders.Remove(order);
+            _context.SaveChanges();
+            return RedirectToAction("ViewOrder");
         }
 
         [HttpPost]
@@ -33,14 +46,11 @@ namespace PizzaGroup.Controllers
             
                 _context.Orders.Add(o);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("ndex");
+                return RedirectToAction("index");
 
         }
 
-        public async Task<IActionResult> Edit(int Id) 
-        {
-            var std =  _context.Orders.Where(o => o.CustomerID == Id).FirstOrDefault();
-            return RedirectToAction("Index");
-        }
+
+
     }
 }
