@@ -44,18 +44,19 @@ namespace PizzaGroup.Controllers
         public async Task<IActionResult> AddOrder(Pizza pizza, int id) {
             //Use this to add to Orders in the Database
 
-            Order oTemp = _context.Orders.Find();
+            Order? oTemp = _context.Orders.Where(o => o.CustomerID == id).FirstOrDefault();
 
-            Order o = new Order();
-            
-            //o.CustomerID =;
-            //o.EmployeeID = 1;
-            //o.OrderStatus = "NOT YET"; 
-            //o.Pizzas.Add(pizza);
+            if (oTemp == null)
+            {
+                //o.CustomerID =;
+                //o.EmployeeID = 1;
+                //o.OrderStatus = "NOT YET";
+                oTemp.Pizzas.Add(pizza);
 
+            }
 
-
-                _context.Orders.Add(o);
+            else oTemp.Pizzas.Add(pizza);
+            _context.Orders.Add(o);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("index");
 
