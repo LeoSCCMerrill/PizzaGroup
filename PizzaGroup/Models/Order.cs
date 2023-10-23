@@ -5,10 +5,10 @@ namespace PizzaGroup.Models
     public class Order
     {
         [Key]
-        public int OrderId { get; set; }
+        public int Id { get; set; }
         [Required(ErrorMessage = "Please Enter A CustomerID")] 
-        public int CustomerID { get; set; }
-        public int EmployeeID { get; set; }
+        public int CustomerId { get; set; }
+        public int EmployeeId { get; set; }
         public String OrderStatus { get; set; }
         public IList<Pizza> Pizzas { get; set; }
 

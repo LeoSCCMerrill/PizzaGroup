@@ -1,13 +1,13 @@
 ﻿@model Pizza
 
-@Model.PizzaName
+@Model.Name
 <br />
 
 @foreach(Topping topping in Model.Toppings)
 {    
-            @topping.ToppingName
+            @topping.Name
             <br />
 }
-@Model.Crust.CrustName
+@Model.Crust.Name
 <br />
-@Model.Size.SizeName
+@Model.Size.Name

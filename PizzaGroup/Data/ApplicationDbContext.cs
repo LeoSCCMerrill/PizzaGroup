@@ -24,7 +24,7 @@ namespace PizzaGroup.Data
         {
             // Configure the User entity
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Order>().HasKey(o => o.OrderId);
+            modelBuilder.Entity<Order>().HasKey(o => o.Id);
             modelBuilder.Entity<Pizza>()
                 .HasMany(e => e.Toppings)
                 .WithMany(e => e.Pizzas)
@@ -112,226 +112,226 @@ namespace PizzaGroup.Data
             modelBuilder.Entity<Topping>().HasData(
                 new Topping
                 {
-                    ToppingID = 1,
-                    ToppingName = "Pepperoni",
-                    ToppingPrice = 0.29m,
+                    Id = 1,
+                    Name = "Pepperoni",
+                    Price = 0.29m,
                     ToppingType = ToppingType.MEAT
                 },
                 new Topping
                 {
-                    ToppingID = 2,
-                    ToppingName = "Beef",
-                    ToppingPrice = 0.29m,
+                    Id = 2,
+                    Name = "Beef",
+                    Price = 0.29m,
                     ToppingType = ToppingType.MEAT
                 },
                 new Topping
                 {
-                    ToppingID = 3,
-                    ToppingName = "Bacon",
-                    ToppingPrice = 0.29m,
+                    Id = 3,
+                    Name = "Bacon",
+                    Price = 0.29m,
                     ToppingType = ToppingType.MEAT
                 },
                 new Topping
                 {
-                    ToppingID = 4,
-                    ToppingName = "Chicken",
-                    ToppingPrice = 0.29m,
+                    Id = 4,
+                    Name = "Chicken",
+                    Price = 0.29m,
                     ToppingType = ToppingType.MEAT
                 },
                 new Topping
                 {
-                    ToppingID = 5,
-                    ToppingName = "Sausage",
-                    ToppingPrice = 0.29m,
+                    Id = 5,
+                    Name = "Sausage",
+                    Price = 0.29m,
                     ToppingType = ToppingType.MEAT
                 },
                 new Topping
                 {
-                    ToppingID = 6,
-                    ToppingName = "Canadian Bacon",
-                    ToppingPrice = 0.29m,
+                    Id = 6,
+                    Name = "Canadian Bacon",
+                    Price = 0.29m,
                     ToppingType = ToppingType.MEAT
                 },
                 new Topping
                 {
-                    ToppingID = 7,
-                    ToppingName = "Anchovies",
-                    ToppingPrice = 0.29m,
+                    Id = 7,
+                    Name = "Anchovies",
+                    Price = 0.29m,
                     ToppingType = ToppingType.MEAT
                 },
                 new Topping
                 {
-                    ToppingID = 8,
-                    ToppingName = "Mozzarella",
-                    ToppingPrice = 0m,
+                    Id = 8,
+                    Name = "Mozzarella",
+                    Price = 0m,
                     ToppingType = ToppingType.CHEESE
                 },
                 new Topping
                 {
-                    ToppingID = 9,
-                    ToppingName = "Parmesan",
-                    ToppingPrice = 0m,
+                    Id = 9,
+                    Name = "Parmesan",
+                    Price = 0m,
                     ToppingType = ToppingType.CHEESE
                 },
                 new Topping
                 {
-                    ToppingID = 10,
-                    ToppingName = "Green Pepper",
-                    ToppingPrice = 0.19m,
+                    Id = 10,
+                    Name = "Green Pepper",
+                    Price = 0.19m,
                     ToppingType = ToppingType.VEGGIE
                 },
                 new Topping
                 {
-                    ToppingID = 11,
-                    ToppingName = "Red Pepper",
-                    ToppingPrice = 0.19m,
+                    Id = 11,
+                    Name = "Red Pepper",
+                    Price = 0.19m,
                     ToppingType = ToppingType.VEGGIE
                 },
                 new Topping
                 {
-                    ToppingID = 12,
-                    ToppingName = "Onion",
-                    ToppingPrice = 0.19m,
+                    Id = 12,
+                    Name = "Onion",
+                    Price = 0.19m,
                     ToppingType = ToppingType.VEGGIE
                 },
                 new Topping
                 {
-                    ToppingID = 13,
-                    ToppingName = "Red Onion",
-                    ToppingPrice = 0.19m,
+                    Id = 13,
+                    Name = "Red Onion",
+                    Price = 0.19m,
                     ToppingType = ToppingType.VEGGIE
                 },
                 new Topping
                 {
-                    ToppingID = 14,
-                    ToppingName = "Mushroom",
-                    ToppingPrice = 0.19m,
+                    Id = 14,
+                    Name = "Mushroom",
+                    Price = 0.19m,
                     ToppingType = ToppingType.VEGGIE
                 },
                 new Topping
                 {
-                    ToppingID = 15,
-                    ToppingName = "Olive",
-                    ToppingPrice = 0.19m,
+                    Id = 15,
+                    Name = "Olive",
+                    Price = 0.19m,
                     ToppingType = ToppingType.VEGGIE
                 },
                 new Topping
                 {
-                    ToppingID = 16,
-                    ToppingName = "Pineapple",
-                    ToppingPrice = 0.19m,
+                    Id = 16,
+                    Name = "Pineapple",
+                    Price = 0.19m,
                     ToppingType = ToppingType.VEGGIE
                 },
                 new Topping
                 {
-                    ToppingID = 17,
-                    ToppingName = "Tomato Sauce",
-                    ToppingPrice = 0m,
+                    Id = 17,
+                    Name = "Tomato Sauce",
+                    Price = 0m,
                     ToppingType = ToppingType.SAUCE
                 },
                 new Topping
                 {
-                    ToppingID = 18,
-                    ToppingName = "Barbeque",
-                    ToppingPrice = 0.09m,
+                    Id = 18,
+                    Name = "Barbeque",
+                    Price = 0.09m,
                     ToppingType = ToppingType.SAUCE
                 },
                 new Topping
                 {
-                    ToppingID = 19,
-                    ToppingName = "Alfredo",
-                    ToppingPrice = 0.19m,
+                    Id = 19,
+                    Name = "Alfredo",
+                    Price = 0.19m,
                     ToppingType = ToppingType.SAUCE
                 },
                 new Topping
                 {
-                    ToppingID = 20,
-                    ToppingName = "Buffalo",
-                    ToppingPrice = 0.19m,
+                    Id = 20,
+                    Name = "Buffalo",
+                    Price = 0.19m,
                     ToppingType = ToppingType.SAUCE
                 },
                 new Topping
                 {
-                    ToppingID = 21,
-                    ToppingName = "Seasoned Crust",
-                    ToppingPrice = 0.49m,
+                    Id = 21,
+                    Name = "Seasoned Crust",
+                    Price = 0.49m,
                     ToppingType = ToppingType.OTHER
                 }
                 );
             modelBuilder.Entity<Size>().HasData(
                 new Size
                 {
-                    SizeId = 1,
-                    SizeName = "Mini",
-                    SizeInches = 8,
-                    SizePriceMultiplier = 0.50m,
+                    Id = 1,
+                    Name = "Mini",
+                    Inches = 8,
+                    PriceMultiplier = 0.50m,
                 },
                 new Size
                 {
-                    SizeId = 2,
-                    SizeName = "Small",
-                    SizeInches = 10,
-                    SizePriceMultiplier = 0.75m,
+                    Id = 2,
+                    Name = "Small",
+                    Inches = 10,
+                    PriceMultiplier = 0.75m,
                 },
                 new Size
                 {
-                    SizeId = 3,
-                    SizeName = "Medium",
-                    SizeInches = 12,
-                    SizePriceMultiplier = 1m,
+                    Id = 3,
+                    Name = "Medium",
+                    Inches = 12,
+                    PriceMultiplier = 1m,
                 },
                 new Size
                 {
-                    SizeId = 4,
-                    SizeName = "Large",
-                    SizeInches = 14,
-                    SizePriceMultiplier = 1.25m,
+                    Id = 4,
+                    Name = "Large",
+                    Inches = 14,
+                    PriceMultiplier = 1.25m,
                 }
                 );
             modelBuilder.Entity<Crust>().HasData(
                 new Crust
                 {
-                    CrustId = 1,
-                    CrustName = "Original Crust",
-                    CrustPrice = 0m,
+                    Id = 1,
+                    Name = "Original Crust",
+                    Price = 0m,
                 },
                 new Crust
                 {
-                    CrustId = 2,
-                    CrustName = "Pan Crust",
-                    CrustPrice = 0m,
+                    Id = 2,
+                    Name = "Pan Crust",
+                    Price = 0m,
                 },
                 new Crust
                 {
-                    CrustId = 3,
-                    CrustName = "Thin Crust",
-                    CrustPrice = 0m,
+                    Id = 3,
+                    Name = "Thin Crust",
+                    Price = 0m,
                 },
                 new Crust
                 {
-                    CrustId = 4,
-                    CrustName = "Stuffed Crust",
-                    CrustPrice = 1.00m,
+                    Id = 4,
+                    Name = "Stuffed Crust",
+                    Price = 1.00m,
                 },
                 new Crust
                 {
-                    CrustId = 5,
-                    CrustName = "Detroit Style",
-                    CrustPrice = 2.00m,
+                    Id = 5,
+                    Name = "Detroit Style",
+                    Price = 2.00m,
                 },
                 new Crust
                 {
-                    CrustId = 6,
-                    CrustName = "Chicago Style",
-                    CrustPrice = 4.00m,
+                    Id = 6,
+                    Name = "Chicago Style",
+                    Price = 4.00m,
                 }
                 );
             modelBuilder.Entity<Pizza>().HasData(
                 new Pizza
                 {
-                    PizzaId = 1,
-                    PizzaName = "Custom 1",
-                    PizzaPrice = 10.00,
+                    Id = 1,
+                    Name = "Custom 1",
+                    Price = 10.00,
                     SizeId = 1,
                     CrustId = 1,
                 }

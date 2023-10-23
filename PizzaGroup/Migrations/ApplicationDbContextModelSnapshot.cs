@@ -52,21 +52,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "70eab15d-1173-469b-9153-addda6a125e7",
+                            ConcurrencyStamp = "da8b3395-1088-4f57-965f-c6ad54de7f20",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "bcf88164-3bd9-413d-bd7c-536f09e430bf",
+                            ConcurrencyStamp = "33654c18-87ac-4545-a084-bbec4fde36c8",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "7ce12bf0-f21e-4a12-b163-adc4cfb7df07",
+                            ConcurrencyStamp = "ef401261-0e00-40e1-b687-480794c265c5",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -201,69 +201,69 @@ namespace PizzaGroup.Migrations
 
             modelBuilder.Entity("PizzaGroup.Models.Crust", b =>
                 {
-                    b.Property<int>("CrustId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CrustId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("CrustName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("CrustPrice")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("CrustId");
+                    b.HasKey("Id");
 
                     b.ToTable("Crusts");
 
                     b.HasData(
                         new
                         {
-                            CrustId = 1,
-                            CrustName = "Original Crust",
-                            CrustPrice = 0m
+                            Id = 1,
+                            Name = "Original Crust",
+                            Price = 0m
                         },
                         new
                         {
-                            CrustId = 2,
-                            CrustName = "Pan Crust",
-                            CrustPrice = 0m
+                            Id = 2,
+                            Name = "Pan Crust",
+                            Price = 0m
                         },
                         new
                         {
-                            CrustId = 3,
-                            CrustName = "Thin Crust",
-                            CrustPrice = 0m
+                            Id = 3,
+                            Name = "Thin Crust",
+                            Price = 0m
                         },
                         new
                         {
-                            CrustId = 4,
-                            CrustName = "Stuffed Crust",
-                            CrustPrice = 1.00m
+                            Id = 4,
+                            Name = "Stuffed Crust",
+                            Price = 1.00m
                         },
                         new
                         {
-                            CrustId = 5,
-                            CrustName = "Detroit Style",
-                            CrustPrice = 2.00m
+                            Id = 5,
+                            Name = "Detroit Style",
+                            Price = 2.00m
                         },
                         new
                         {
-                            CrustId = 6,
-                            CrustName = "Chicago Style",
-                            CrustPrice = 4.00m
+                            Id = 6,
+                            Name = "Chicago Style",
+                            Price = 4.00m
                         });
                 });
 
             modelBuilder.Entity("PizzaGroup.Models.Order", b =>
                 {
-                    b.Property<int>("OrderId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
@@ -271,7 +271,11 @@ namespace PizzaGroup.Migrations
                     b.Property<int>("EmployeeId")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderId");
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
 
                     b.ToTable("Orders");
                 });
@@ -293,20 +297,20 @@ namespace PizzaGroup.Migrations
 
             modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
                 {
-                    b.Property<int>("PizzaId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PizzaId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("CrustId")
                         .HasColumnType("int");
 
-                    b.Property<string>("PizzaName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("PizzaPrice")
+                    b.Property<double?>("Price")
                         .HasColumnType("float");
 
                     b.Property<int>("SizeId")
@@ -315,7 +319,7 @@ namespace PizzaGroup.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("PizzaID");
+                    b.HasKey("Id");
 
                     b.HasIndex("CrustId");
 
@@ -328,10 +332,10 @@ namespace PizzaGroup.Migrations
                     b.HasData(
                         new
                         {
-                            PizzaId = 1,
+                            Id = 1,
                             CrustId = 1,
-                            PizzaName = "Custom 1",
-                            PizzaPrice = 10.0,
+                            Name = "Custom 1",
+                            Price = 10.0,
                             SizeId = 1
                         });
                 });
@@ -353,224 +357,224 @@ namespace PizzaGroup.Migrations
 
             modelBuilder.Entity("PizzaGroup.Models.Size", b =>
                 {
-                    b.Property<int>("SizeId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("SizeId"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("SizeInches")
+                    b.Property<int>("Inches")
                         .HasColumnType("int");
 
-                    b.Property<string>("SizeName")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("SizePriceMultiplier")
+                    b.Property<decimal>("PriceMultiplier")
                         .HasColumnType("decimal(18,2)");
 
-                    b.HasKey("SizeId");
+                    b.HasKey("Id");
 
                     b.ToTable("Sizes");
 
                     b.HasData(
                         new
                         {
-                            SizeId = 1,
-                            SizeInches = 8,
-                            SizeName = "Mini",
-                            SizePriceMultiplier = 0.50m
+                            Id = 1,
+                            Inches = 8,
+                            Name = "Mini",
+                            PriceMultiplier = 0.50m
                         },
                         new
                         {
-                            SizeId = 2,
-                            SizeInches = 10,
-                            SizeName = "Small",
-                            SizePriceMultiplier = 0.75m
+                            Id = 2,
+                            Inches = 10,
+                            Name = "Small",
+                            PriceMultiplier = 0.75m
                         },
                         new
                         {
-                            SizeId = 3,
-                            SizeInches = 12,
-                            SizeName = "Medium",
-                            SizePriceMultiplier = 1m
+                            Id = 3,
+                            Inches = 12,
+                            Name = "Medium",
+                            PriceMultiplier = 1m
                         },
                         new
                         {
-                            SizeId = 4,
-                            SizeInches = 14,
-                            SizeName = "Large",
-                            SizePriceMultiplier = 1.25m
+                            Id = 4,
+                            Inches = 14,
+                            Name = "Large",
+                            PriceMultiplier = 1.25m
                         });
                 });
 
             modelBuilder.Entity("PizzaGroup.Models.Topping", b =>
                 {
-                    b.Property<int>("ToppingID")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ToppingID"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("ToppingName")
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("ToppingPrice")
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ToppingType")
                         .HasColumnType("int");
 
-                    b.HasKey("ToppingID");
+                    b.HasKey("Id");
 
                     b.ToTable("Toppings");
 
                     b.HasData(
                         new
                         {
-                            ToppingID = 1,
-                            ToppingName = "Pepperoni",
-                            ToppingPrice = 0.29m,
+                            Id = 1,
+                            Name = "Pepperoni",
+                            Price = 0.29m,
                             ToppingType = 0
                         },
                         new
                         {
-                            ToppingID = 2,
-                            ToppingName = "Beef",
-                            ToppingPrice = 0.29m,
+                            Id = 2,
+                            Name = "Beef",
+                            Price = 0.29m,
                             ToppingType = 0
                         },
                         new
                         {
-                            ToppingID = 3,
-                            ToppingName = "Bacon",
-                            ToppingPrice = 0.29m,
+                            Id = 3,
+                            Name = "Bacon",
+                            Price = 0.29m,
                             ToppingType = 0
                         },
                         new
                         {
-                            ToppingID = 4,
-                            ToppingName = "Chicken",
-                            ToppingPrice = 0.29m,
+                            Id = 4,
+                            Name = "Chicken",
+                            Price = 0.29m,
                             ToppingType = 0
                         },
                         new
                         {
-                            ToppingID = 5,
-                            ToppingName = "Sausage",
-                            ToppingPrice = 0.29m,
+                            Id = 5,
+                            Name = "Sausage",
+                            Price = 0.29m,
                             ToppingType = 0
                         },
                         new
                         {
-                            ToppingID = 6,
-                            ToppingName = "Canadian Bacon",
-                            ToppingPrice = 0.29m,
+                            Id = 6,
+                            Name = "Canadian Bacon",
+                            Price = 0.29m,
                             ToppingType = 0
                         },
                         new
                         {
-                            ToppingID = 7,
-                            ToppingName = "Anchovies",
-                            ToppingPrice = 0.29m,
+                            Id = 7,
+                            Name = "Anchovies",
+                            Price = 0.29m,
                             ToppingType = 0
                         },
                         new
                         {
-                            ToppingID = 8,
-                            ToppingName = "Mozzarella",
-                            ToppingPrice = 0m,
+                            Id = 8,
+                            Name = "Mozzarella",
+                            Price = 0m,
                             ToppingType = 1
                         },
                         new
                         {
-                            ToppingID = 9,
-                            ToppingName = "Parmesan",
-                            ToppingPrice = 0m,
+                            Id = 9,
+                            Name = "Parmesan",
+                            Price = 0m,
                             ToppingType = 1
                         },
                         new
                         {
-                            ToppingID = 10,
-                            ToppingName = "Green Pepper",
-                            ToppingPrice = 0.19m,
+                            Id = 10,
+                            Name = "Green Pepper",
+                            Price = 0.19m,
                             ToppingType = 2
                         },
                         new
                         {
-                            ToppingID = 11,
-                            ToppingName = "Red Pepper",
-                            ToppingPrice = 0.19m,
+                            Id = 11,
+                            Name = "Red Pepper",
+                            Price = 0.19m,
                             ToppingType = 2
                         },
                         new
                         {
-                            ToppingID = 12,
-                            ToppingName = "Onion",
-                            ToppingPrice = 0.19m,
+                            Id = 12,
+                            Name = "Onion",
+                            Price = 0.19m,
                             ToppingType = 2
                         },
                         new
                         {
-                            ToppingID = 13,
-                            ToppingName = "Red Onion",
-                            ToppingPrice = 0.19m,
+                            Id = 13,
+                            Name = "Red Onion",
+                            Price = 0.19m,
                             ToppingType = 2
                         },
                         new
                         {
-                            ToppingID = 14,
-                            ToppingName = "Mushroom",
-                            ToppingPrice = 0.19m,
+                            Id = 14,
+                            Name = "Mushroom",
+                            Price = 0.19m,
                             ToppingType = 2
                         },
                         new
                         {
-                            ToppingID = 15,
-                            ToppingName = "Olive",
-                            ToppingPrice = 0.19m,
+                            Id = 15,
+                            Name = "Olive",
+                            Price = 0.19m,
                             ToppingType = 2
                         },
                         new
                         {
-                            ToppingID = 16,
-                            ToppingName = "Pineapple",
-                            ToppingPrice = 0.19m,
+                            Id = 16,
+                            Name = "Pineapple",
+                            Price = 0.19m,
                             ToppingType = 2
                         },
                         new
                         {
-                            ToppingID = 17,
-                            ToppingName = "Tomato Sauce",
-                            ToppingPrice = 0m,
+                            Id = 17,
+                            Name = "Tomato Sauce",
+                            Price = 0m,
                             ToppingType = 3
                         },
                         new
                         {
-                            ToppingID = 18,
-                            ToppingName = "Barbeque",
-                            ToppingPrice = 0.09m,
+                            Id = 18,
+                            Name = "Barbeque",
+                            Price = 0.09m,
                             ToppingType = 3
                         },
                         new
                         {
-                            ToppingID = 19,
-                            ToppingName = "Alfredo",
-                            ToppingPrice = 0.19m,
+                            Id = 19,
+                            Name = "Alfredo",
+                            Price = 0.19m,
                             ToppingType = 3
                         },
                         new
                         {
-                            ToppingID = 20,
-                            ToppingName = "Buffalo",
-                            ToppingPrice = 0.19m,
+                            Id = 20,
+                            Name = "Buffalo",
+                            Price = 0.19m,
                             ToppingType = 3
                         },
                         new
                         {
-                            ToppingID = 21,
-                            ToppingName = "Seasoned Crust",
-                            ToppingPrice = 0.49m,
+                            Id = 21,
+                            Name = "Seasoned Crust",
+                            Price = 0.49m,
                             ToppingType = 4
                         });
                 });
@@ -778,9 +782,9 @@ namespace PizzaGroup.Migrations
                         .WithMany("Pizzas")
                         .HasForeignKey("UserId");
 
-                    b.Navigation("PizzaCrust");
+                    b.Navigation("Crust");
 
-                    b.Navigation("PizzaSize");
+                    b.Navigation("Size");
 
                     b.Navigation("User");
                 });
