@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using PizzaGroup.Models;
 
 namespace PizzaGroup.Data
@@ -24,7 +25,14 @@ namespace PizzaGroup.Data
             // Configure the User entity
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Order>().HasKey(o => o.OrderID);
-
+            modelBuilder.Entity<Pizza>()
+                .HasMany(e => e.Toppings)
+                .WithMany(e => e.Pizzas)
+                .UsingEntity<PizzaTopping>();
+            modelBuilder.Entity<Order>()
+                .HasMany(e => e.Pizzas)
+                .WithMany(e => e.Orders)
+                .UsingEntity<OrderPizza>();
             modelBuilder.Entity<User>().HasKey(x => x.Id);
             const string OWNER_USER_ID = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11";
             const string OWNER_ROLE_ID = OWNER_USER_ID;
