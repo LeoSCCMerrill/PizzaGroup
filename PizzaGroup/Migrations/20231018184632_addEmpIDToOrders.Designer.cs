@@ -3,17 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaGroup.Data;
 
 #nullable disable
 
-namespace PizzaGroup.Migrations
+namespace PizzaGroup.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231018184632_addEmpIDToOrders")]
+    partial class addEmpIDToOrders
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -276,21 +278,6 @@ namespace PizzaGroup.Migrations
                     b.ToTable("Orders");
                 });
 
-            modelBuilder.Entity("PizzaGroup.Models.OrderPizza", b =>
-                {
-                    b.Property<int>("OrderId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PizzaId")
-                        .HasColumnType("int");
-
-                    b.HasKey("OrderId", "PizzaId");
-
-                    b.HasIndex("PizzaId");
-
-                    b.ToTable("OrderPizzas");
-                });
-
             modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
                 {
                     b.Property<int>("PizzaID")
@@ -310,17 +297,16 @@ namespace PizzaGroup.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("PizzaPrice")
+                    b.Property<double>("PizzaPrice")
                         .HasColumnType("float");
 
-                    b.Property<int>("SizeId")
-                        .HasColumnType("int");
+                    b.Property<string>("PizzaSize")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("PizzaID");
 
-                    b.HasIndex("CrustId");
-
-                    b.HasIndex("SizeId");
+                    b.HasIndex("OrderID");
 
                     b.ToTable("Pizzas");
 
@@ -328,26 +314,38 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             PizzaID = 1,
-                            CrustId = 1,
+                            PizzaCrust = "Classic",
                             PizzaName = "Custom 1",
                             PizzaPrice = 10.0,
-                            SizeId = 1
+                            PizzaSize = "Medium"
                         });
                 });
 
             modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
                 {
-                    b.Property<int>("PizzaId")
+                    b.Property<int>("PizzaID")
                         .HasColumnType("int");
 
-                    b.Property<int>("ToppingId")
+                    b.Property<int>("ToppingID")
                         .HasColumnType("int");
 
-                    b.HasKey("PizzaId", "ToppingId");
+                    b.HasKey("PizzaID", "ToppingID");
 
-                    b.HasIndex("ToppingId");
+                    b.HasIndex("ToppingID");
 
                     b.ToTable("PizzaToppings");
+
+                    b.HasData(
+                        new
+                        {
+                            PizzaID = 1,
+                            ToppingID = 1
+                        },
+                        new
+                        {
+                            PizzaID = 1,
+                            ToppingID = 2
+                        });
                 });
 
             modelBuilder.Entity("PizzaGroup.Models.Size", b =>
@@ -750,53 +748,15 @@ namespace PizzaGroup.Migrations
 
             modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
                 {
-                    b.HasOne("PizzaGroup.Models.Order", "Order")
-                        .WithMany()
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PizzaGroup.Models.Pizza", "Pizza")
-                        .WithMany()
-                        .HasForeignKey("PizzaId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Order");
-
-                    b.Navigation("Pizza");
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
-                {
-                    b.HasOne("PizzaGroup.Models.Crust", "PizzaCrust")
-                        .WithMany("Pizzas")
-                        .HasForeignKey("CrustId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("PizzaGroup.Models.Size", "PizzaSize")
-                        .WithMany("Pizzas")
-                        .HasForeignKey("SizeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PizzaCrust");
-
-                    b.Navigation("PizzaSize");
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.PizzaTopping", b =>
-                {
                     b.HasOne("PizzaGroup.Models.Pizza", "Pizza")
                         .WithMany("PizzaToppings")
-                        .HasForeignKey("PizzaId")
+                        .HasForeignKey("PizzaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PizzaGroup.Models.Topping", "Topping")
-                        .WithMany()
-                        .HasForeignKey("ToppingId")
+                        .WithMany("PizzaToppings")
+                        .HasForeignKey("ToppingID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -812,17 +772,12 @@ namespace PizzaGroup.Migrations
 
             modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
                 {
-                    b.Navigation("Pizzas");
-                });
-
-            modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
-                {
                     b.Navigation("PizzaToppings");
                 });
 
-            modelBuilder.Entity("PizzaGroup.Models.Size", b =>
+            modelBuilder.Entity("PizzaGroup.Models.Topping", b =>
                 {
-                    b.Navigation("Pizzas");
+                    b.Navigation("PizzaToppings");
                 });
 #pragma warning restore 612, 618
         }
