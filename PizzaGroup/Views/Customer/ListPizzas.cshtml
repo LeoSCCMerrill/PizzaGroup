@@ -13,9 +13,9 @@
    @*  This will only show up if you are logged in as a manager *@
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                 {
-        <th>Remove or Edit</th>
+        <th>Remove Pizza</th>
+        <th>Add To Cart</th>
                 }
-        <th>Add to Order</th>
     </tr>
         </thead>
         <tbody>
@@ -24,7 +24,7 @@
             <tr>
                 <td>@pizza.Name</td>
                 <td>@pizza.Size.Name</td>
-                <td >$ @pizza.Price</td>
+                <td>$ @pizza.Price</td>
                         @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                 {
                 <td>
@@ -35,17 +35,17 @@
                     <form method="post" asp-action="DeletePizza" asp-controller="Customer">
                         <button type="submit" class="btn btn-primary">Delete</button>
                     </form>
-
                 </td>
                 }
                 <td>
-                    <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizza="@Model">
-                        <button type="submit" class="btn btn-primary">Add</button>
-                    </form>
-                </td>
+            <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizza="@Model">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        </td>
             </tr>
         }
         </tbody>
 </table>
+
 </form>
 </body>

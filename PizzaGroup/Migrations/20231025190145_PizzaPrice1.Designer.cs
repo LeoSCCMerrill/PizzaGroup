@@ -12,8 +12,8 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231023191956_Initial")]
-    partial class Initial
+    [Migration("20231025190145_PizzaPrice1")]
+    partial class PizzaPrice1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,21 +54,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "145ab094-486a-428c-bb18-3c062a8a01c9",
+                            ConcurrencyStamp = "63160a87-5967-469c-b011-dac8d25fce22",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "f3e87531-6178-4855-83c0-40858ef25791",
+                            ConcurrencyStamp = "93e9537b-8ec7-4331-805a-941a3f2bb87a",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "615c17e7-dd8d-4e74-9622-f0fd1faed35f",
+                            ConcurrencyStamp = "f9f61689-b1f6-4814-96f9-f6d8ccc6572d",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -312,9 +312,6 @@ namespace PizzaGroup.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Price")
-                        .HasColumnType("float");
-
                     b.Property<int>("SizeId")
                         .HasColumnType("int");
 
@@ -337,7 +334,6 @@ namespace PizzaGroup.Migrations
                             Id = 1,
                             CrustId = 1,
                             Name = "Custom 1",
-                            Price = 10.0,
                             SizeId = 1
                         });
                 });
