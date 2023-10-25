@@ -123,5 +123,13 @@ namespace PizzaGroup.Controllers
 
             return View("ListPizzas", model); // Show the form with validation errors
         }
+
+        // If the shop is not open do not allow the customer to start an order
+        [HttpPost]
+        public IActionResult WereClosed()
+        {
+            var rightNow = DateTime.Now;
+            return View(); 
+        }
     }
 }
