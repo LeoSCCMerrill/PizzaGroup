@@ -1,1 +1,25 @@
 ﻿@model IList<Order>
+
+<link rel="stylesheet" href="~/css/site.css">
+
+<body id="grad">
+    <div class="center">
+        <h2>Welcome to Hizza Pizza</h2>
+    </div>
+    @foreach(Order order in Model)
+    {
+        <form asp-controller ="Employee" asp-action="ExpandOrder" method="get">
+            <div>
+                @foreach(Pizza pizza in order.Pizzas)
+                {
+                    <div>@pizza.Name</div>
+                    <div>@pizza.Crust.Name</div>
+                    @foreach(Topping topping in pizza.Toppings)
+                    {
+                        <div>@topping.Name</div>
+                    }
+                }
+            </div>
+        </form>
+    }
+</body>
