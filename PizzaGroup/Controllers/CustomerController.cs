@@ -94,9 +94,9 @@ namespace PizzaGroup.Controllers
 
         [Authorize(Roles = "Manager")]
         [HttpPost]
-        public async Task<IActionResult> DeletePizza(int PizzaID)
+        public IActionResult DeletePizza(int? Id)
         {
-            var pizza = await _context.Pizzas.FindAsync(PizzaID);
+            var pizza = _context.Pizzas.Find(Id);
 
             if (pizza == null)
             {
@@ -104,7 +104,7 @@ namespace PizzaGroup.Controllers
             }
 
             _context.Pizzas.Remove(pizza);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             
             return RedirectToAction("ListPizzas");
         }

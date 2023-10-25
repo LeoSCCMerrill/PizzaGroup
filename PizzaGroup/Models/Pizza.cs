@@ -16,16 +16,18 @@ namespace PizzaGroup.Models
         [Required(ErrorMessage = "Please choose a crust")]
         public int CrustId { get; set; }
         public Crust? Crust { get; set; }
+
+        private Decimal _Price;
         [NotMapped]
         public Decimal Price
         {
             get
             {
-                return IsAdmin ? Price : (5.0m + ToppingsPrice() + CrustPrice()) * (Size == null ? 1m : Size.PriceMultiplier);
+                return _Price;
             }
             set
             {
-
+                _Price = (IsAdmin ? value : 5.0m + ToppingsPrice() + CrustPrice()) * (Size == null ? 1m : Size.PriceMultiplier);
             }
         }
         public IList<Topping>? Toppings { get; set; } = new List<Topping>();

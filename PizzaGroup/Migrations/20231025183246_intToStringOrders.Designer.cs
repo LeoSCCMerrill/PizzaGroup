@@ -12,8 +12,8 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231025190145_PizzaPrice1")]
-    partial class PizzaPrice1
+    [Migration("20231025183246_intToStringOrders")]
+    partial class intToStringOrders
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,21 +54,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "63160a87-5967-469c-b011-dac8d25fce22",
+                            ConcurrencyStamp = "1cb42604-a426-4ad1-b4a0-b113f4e05dd5",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "93e9537b-8ec7-4331-805a-941a3f2bb87a",
+                            ConcurrencyStamp = "9ffb01bb-c7e3-4397-87e6-31755d5fa02f",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "f9f61689-b1f6-4814-96f9-f6d8ccc6572d",
+                            ConcurrencyStamp = "ff919812-174b-4390-8ddc-c785c4324baa",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -267,11 +267,13 @@ namespace PizzaGroup.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
+                    b.Property<string>("CustomerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
+                    b.Property<string>("EmployeeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OrderStatus")
                         .IsRequired()
@@ -312,6 +314,9 @@ namespace PizzaGroup.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double?>("Price")
+                        .HasColumnType("float");
+
                     b.Property<int>("SizeId")
                         .HasColumnType("int");
 
@@ -334,6 +339,7 @@ namespace PizzaGroup.Migrations
                             Id = 1,
                             CrustId = 1,
                             Name = "Custom 1",
+                            Price = 10.0,
                             SizeId = 1
                         });
                 });
