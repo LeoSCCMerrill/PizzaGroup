@@ -12,7 +12,7 @@ namespace PizzaGroup.Controllers
         public IActionResult Index()
         {
             IList<Order> orders = new List<Order>();
-            _context.Orders.Where(o => o.EmployeeId == 1);
+            _context.Orders.Where(o => o.EmployeeId == "1");
             return View();
         }
     }
