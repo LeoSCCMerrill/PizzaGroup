@@ -12,7 +12,7 @@ namespace PizzaGroup.Controllers
 {
     public class OrderController : Controller
     {
-        
+
         private UserManager<User> userManager;
         private RoleManager<IdentityRole> roleManager;
         private readonly ApplicationDbContext _context;
@@ -30,7 +30,8 @@ namespace PizzaGroup.Controllers
             return View(defaultPizzas);
         }
 
-        public IActionResult ViewOrder() {
+        public IActionResult ViewOrder()
+        {
             List<Order> pOrder = _context.Orders.ToList();
             return View(pOrder);
         }
@@ -49,11 +50,11 @@ namespace PizzaGroup.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddOrder(Pizza pizza, int id) {
+        public async Task<IActionResult> AddOrder(Pizza pizza, string id)
+        {
             //Use this to add to Orders in the Database
 
-            Order? order = _context.Orders.Where(o => o.CustomerId == "23").FirstOrDefault();
-
+            Order? order = _context.Orders.Where(o => o.CustomerId == id).FirstOrDefault();
 
             if (order == null)
             {
@@ -63,8 +64,9 @@ namespace PizzaGroup.Controllers
                 order.Pizzas.Add(pizza);
 
             }
-            else order.Pizzas.Add(pizza);   
-
+            else
+            {
+                order.Pizzas.Add(pizza);
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");

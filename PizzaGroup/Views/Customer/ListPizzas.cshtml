@@ -24,7 +24,7 @@
             <tr>
                 <td>@pizza.Name</td>
                 <td>@pizza.Size.Name</td>
-                <td >$ @pizza.Price</td>
+                <td>$ @pizza.Price</td>
                         @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                 {
                 <td>
