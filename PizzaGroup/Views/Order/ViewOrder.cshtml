@@ -11,7 +11,6 @@
     </tr>
     </thead>
     <tbody>
-    
         <form method="post">
             @foreach (var o in Model)
             {
@@ -30,11 +29,20 @@
                 <button name=@o>EDIT</button>
             </td>
         <br/>
-            </tr>
+        </tr>
             }
         </form>
     </tbody>
 </table>
+
+    <h3>Enter a Delivery Address</h3>
+<form method="post">
+    <label for="address">Address: </label>
+    <input type="text" name="address"/>
+    <label for="zipcode">Zipcode: </label>
+    <input type="text" name="zipcode"/>
+</form>
+
     <form method="post">
     <button asp-action="" class="btn btn-primary" value="SUBMIT">SUBMIT</button>
     </form>

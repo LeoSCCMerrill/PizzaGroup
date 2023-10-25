@@ -67,7 +67,7 @@ namespace PizzaGroup.Controllers
 
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("index");
+                return RedirectToAction("Index");
 
         }
 
