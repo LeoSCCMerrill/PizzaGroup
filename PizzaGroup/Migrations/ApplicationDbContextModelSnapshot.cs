@@ -52,21 +52,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "63160a87-5967-469c-b011-dac8d25fce22",
+                            ConcurrencyStamp = "a0f6557b-fee1-4ad4-a901-fa01d89245b6",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "93e9537b-8ec7-4331-805a-941a3f2bb87a",
+                            ConcurrencyStamp = "22059073-19ee-4a7d-84bd-7c8762e2cecf",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "f9f61689-b1f6-4814-96f9-f6d8ccc6572d",
+                            ConcurrencyStamp = "579744dc-8367-4108-895e-7ce158bdf6a9",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -265,15 +265,16 @@ namespace PizzaGroup.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EmployeeId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("OrderStatus")
+                    b.Property<string>("CustomerId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("EmployeeId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
