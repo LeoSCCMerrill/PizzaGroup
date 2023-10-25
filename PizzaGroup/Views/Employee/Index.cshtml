@@ -6,20 +6,29 @@
     <div class="center">
         <h2>Welcome to Hizza Pizza</h2>
     </div>
+    @{ Decimal totalPrice = 0.0m; }
     @foreach(Order order in Model)
     {
-        <form asp-controller ="Employee" asp-action="ExpandOrder" method="get">
+        
             <div>
-                @foreach(Pizza pizza in order.Pizzas)
+                @foreach (Pizza pizza in order.Pizzas)
                 {
                     <div>@pizza.Name</div>
                     <div>@pizza.Crust.Name</div>
-                    @foreach(Topping topping in pizza.Toppings)
+                    @foreach (Topping topping in pizza.Toppings)
                     {
                         <div>@topping.Name</div>
                     }
+                    <div>@pizza.Size</div>
+                    <div>@pizza.Price</div>
+                    totalPrice += pizza.Price;
+                    
                 }
+                <div>@order.OrderStatus</div>
+                <div>@totalPrice</div>
+            <form asp-controller="Employee" asp-action="Details" asp-route-orderId="@order.Id" method="get">
+                <button type="submit">Details</button>
+            </form>
             </div>
-        </form>
     }
 </body>

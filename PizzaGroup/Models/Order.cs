@@ -12,7 +12,6 @@ namespace PizzaGroup.Models
         public OrderStatus OrderStatus { get; set; }
         public IList<Pizza> Pizzas { get; set; }
 
-
         
     }
 }
