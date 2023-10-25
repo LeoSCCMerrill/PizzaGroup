@@ -39,25 +39,25 @@ namespace PizzaGroup.Controllers
                 .FirstOrDefault(p => p.Id == id);
             return View(theModel);
         }
-        public Decimal CalculatePrice(Pizza pizza)
-        {
-            Decimal price = 5.0m;
-            if (pizza.Toppings != null)
-            {
-                foreach (Topping topping in pizza.Toppings)
-                {
-                    price += topping.Price;
-                }
-            }
-            if (pizza.Crust != null)
-            {
-                price += pizza.Crust.Price;
-            }
-            if (pizza.Size != null)
-            {
-                price *= pizza.Size.PriceMultiplier;
-            }
-            return price;
-        }
+        //public Decimal CalculatePrice(Pizza pizza)
+        //{
+        //    Decimal price = 5.0m;
+        //    if (pizza.Toppings != null)
+        //    {
+        //        foreach (Topping topping in pizza.Toppings)
+        //        {
+        //            price += topping.Price;
+        //        }
+        //    }
+        //    if (pizza.Crust != null)
+        //    {
+        //        price += pizza.Crust.Price;
+        //    }
+        //    if (pizza.Size != null)
+        //    {
+        //        price *= pizza.Size.PriceMultiplier;
+        //    }
+        //    return price;
+        //}
     }
 }
