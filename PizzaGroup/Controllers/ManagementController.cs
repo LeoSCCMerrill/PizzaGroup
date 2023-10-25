@@ -90,6 +90,28 @@ namespace PizzaGroup.Controllers
             return View("CreateNewPizza", model); // Show the form with validation errors
         }
 
+
+        public IActionResult EditPizza(int id)
+        {
+            // Retrieve the selected Pizza by its Id
+            var pizza = _context.Pizzas.Find(id);
+            return View(pizza);
+
+        }
+        [HttpPost]
+        public IActionResult EditPizza(Pizza pizza, Crust crust)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Pizzas.Update(pizza);
+                _context.SaveChanges();
+
+                return RedirectToAction("ListPizzas");
+            }
+            return View(pizza);
+        }
+
+
         private async Task<UserViewModel> GetViewModel()
         {
             IList<User> users = new List<User>();
@@ -105,6 +127,7 @@ namespace PizzaGroup.Controllers
             };
             return viewModel;
         }
+
     }
    
 }
