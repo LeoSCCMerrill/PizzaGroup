@@ -331,7 +331,6 @@ namespace PizzaGroup.Data
                 {
                     Id = 1,
                     Name = "Custom 1",
-                    Price = 10.00,
                     SizeId = 1,
                     CrustId = 1,
                 }
