@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
@@ -12,7 +13,7 @@ namespace PizzaGroup.Controllers
 {
     public class OrderController : Controller
     {
-
+        
         private UserManager<User> userManager;
         private RoleManager<IdentityRole> roleManager;
         private readonly ApplicationDbContext _context;
@@ -29,11 +30,16 @@ namespace PizzaGroup.Controllers
 
             return View(defaultPizzas);
         }
-
+        
         public IActionResult ViewOrder()
         {
-            List<Order> pOrder = _context.Orders.ToList();
-            return View(pOrder);
+            //Get this fixed
+
+            string Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Order? pOrder = _context.Orders.Where(o => o.CustomerId == Id).FirstOrDefault();
+            
+            return View(pOrder); 
+            
         }
         public IActionResult Edit(int Id)
         {
@@ -50,31 +56,31 @@ namespace PizzaGroup.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddOrder(Pizza pizza, string id)
+        public async Task<IActionResult> AddOrder(int pizzaId)
         {
-            //Use this to add to Orders in the Database
-
+            Pizza? pizza = _context.Pizzas.Find(pizzaId);
+            string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (pizza == null)
+            {
+                return NotFound();
+            }
+            
             Order? order = _context.Orders.Where(o => o.CustomerId == id).FirstOrDefault();
-
+            
             if (order == null)
             {
-                order.CustomerId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                //order.EmployeeId = 
-                //order.OrderStatus //Employee edits;
-                order.Pizzas.Add(pizza);
-
-            }
-            else
-            {
+                order = new Order();
+                order.CustomerId = id;
+                order.EmployeeId = "Somethign New";
+                order.OrderStatus = "10 Minutes";
                 order.Pizzas.Add(pizza);
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
             }
-            return RedirectToAction("index");
+            order.Pizzas.Add(pizza);
+
+            return RedirectToAction("ViewOrder", order);
 
         }
-
-
-
     }
 }

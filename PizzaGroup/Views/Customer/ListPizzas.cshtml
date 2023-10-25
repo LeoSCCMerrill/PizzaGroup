@@ -10,6 +10,7 @@
         <th>Pizza</th>
         <th>Size</th>
         <th>Price</th>
+        <th>Add Pizza</th>
    @*  This will only show up if you are logged in as a manager *@
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                 {
@@ -34,7 +35,7 @@
                 </td>
                 }
                 <td>
-            <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizza="@Model">
+            <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id">
                 <button type="submit" class="btn btn-primary">Add</button>
             </form>
         </td>
