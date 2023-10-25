@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PizzaGroup.Migrations
 {
-    public partial class octtwothree : Migration
+    public partial class pizzaprice : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -68,9 +68,9 @@ namespace PizzaGroup.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CustomerId = table.Column<int>(type: "int", nullable: false),
-                    EmployeeId = table.Column<int>(type: "int", nullable: false),
-                    OrderStatus = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    CustomerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmployeeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -220,7 +220,6 @@ namespace PizzaGroup.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Price = table.Column<double>(type: "float", nullable: true),
                     SizeId = table.Column<int>(type: "int", nullable: false),
                     CrustId = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
@@ -300,9 +299,9 @@ namespace PizzaGroup.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "ef401261-0e00-40e1-b687-480794c265c5", "Employee", "EMPLOYEE" },
-                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "da8b3395-1088-4f57-965f-c6ad54de7f20", "Owner", "OWNER" },
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "33654c18-87ac-4545-a084-bbec4fde36c8", "Manager", "MANAGER" }
+                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "2ff7765a-39a0-4359-a252-cd5da77b9bcf", "Employee", "EMPLOYEE" },
+                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "d14fd07b-1a1a-4395-88ac-70b3db133eb4", "Owner", "OWNER" },
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "ca5a4772-bb41-4158-8f2e-30bb5cd8c1c0", "Manager", "MANAGER" }
                 });
 
             migrationBuilder.InsertData(
@@ -379,8 +378,8 @@ namespace PizzaGroup.Migrations
 
             migrationBuilder.InsertData(
                 table: "Pizzas",
-                columns: new[] { "Id", "CrustId", "Name", "Price", "SizeId", "UserId" },
-                values: new object[] { 1, 1, "Custom 1", 10.0, 1, null });
+                columns: new[] { "Id", "CrustId", "Name", "SizeId", "UserId" },
+                values: new object[] { 1, 1, "Custom 1", 1, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

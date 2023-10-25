@@ -277,6 +277,9 @@ namespace PizzaGroup.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("OrderStatus")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("Orders");
@@ -312,9 +315,6 @@ namespace PizzaGroup.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double?>("Price")
-                        .HasColumnType("float");
-
                     b.Property<int>("SizeId")
                         .HasColumnType("int");
 
@@ -337,7 +337,6 @@ namespace PizzaGroup.Migrations
                             Id = 1,
                             CrustId = 1,
                             Name = "Custom 1",
-                            Price = 10.0,
                             SizeId = 1
                         });
                 });
