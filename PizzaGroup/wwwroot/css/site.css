@@ -52,6 +52,10 @@ main {
     width: 33.33%;
     padding: 15px;
 }
+.btn-edit {
+    background-color: green;
+    color: white;
+}
 
 /* Clear floats after the columns */
 .row::after {

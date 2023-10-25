@@ -13,7 +13,7 @@
    @*  This will only show up if you are logged in as a manager *@
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                 {
-        <th>Remove Pizza</th>
+        <th>Remove or Edit</th>
                 }
         <th>Add to Order</th>
     </tr>
@@ -28,6 +28,10 @@
                         @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                 {
                 <td>
+                    <form method="post" asp-action="EditPizza" asp-controller="Management">
+                        <button type="submit" class="btn btn-edit">Edit Pizza</button>
+                    </form>
+                  <br/>
                     <form method="post" asp-action="DeletePizza" asp-controller="Customer">
                         <button type="submit" class="btn btn-primary">Delete</button>
                     </form>
