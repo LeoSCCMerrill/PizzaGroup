@@ -35,10 +35,40 @@ namespace PizzaGroup.Controllers
         [HttpGet]  // retrieve the list of pizzas
         public IActionResult ListPizzas()
         {
+            DateTime currentTime = DateTime.Now;
+            bool isShopOpen = IsShopOpen(currentTime);
+
+            if (!isShopOpen)
+            {
+                return RedirectToAction("WereClosed");
+            }
             IList<Pizza> pizzas = _context.Pizzas.Include(p => p.Size).ToList();
             return View(pizzas);
         }
-        
+
+        private bool IsShopOpen(DateTime currentTime)
+        {
+            DayOfWeek dayOfWeek = currentTime.DayOfWeek;
+            TimeSpan currentTimeOfDay = currentTime.TimeOfDay;
+
+            // Check if it's Sunday (shop is closed on Sundays)
+            if (dayOfWeek == DayOfWeek.Sunday)
+            {
+                return false;
+            }
+
+            // Check if the time is outside of the shop's opening hours (Monday - Saturday, 10:30 am to 9:00 pm)
+            TimeSpan openingTime = new TimeSpan(10, 30, 0);
+            TimeSpan closingTime = new TimeSpan(21, 0, 0);
+
+            if (currentTimeOfDay < openingTime || currentTimeOfDay > closingTime)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
         [HttpGet]
         public IActionResult CustomPizzaView()
         {
@@ -125,10 +155,9 @@ namespace PizzaGroup.Controllers
         }
 
         // If the shop is not open do not allow the customer to start an order
-        [HttpPost]
+        [HttpGet]
         public IActionResult WereClosed()
         {
-            var rightNow = DateTime.Now;
             return View(); 
         }
     }

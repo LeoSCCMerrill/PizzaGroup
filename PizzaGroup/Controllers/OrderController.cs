@@ -31,16 +31,16 @@ namespace PizzaGroup.Controllers
             return View(defaultPizzas);
         }
         
-        public IActionResult ViewOrder()
-        {
-            //Get this fixed
+        //public IActionResult ViewOrder()
+        //{
+        //    //Get this fixed
 
-            string Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            Order? pOrder = _context.Orders.Where(o => o.CustomerId == Id).FirstOrDefault();
+        //    string Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        //    Order? pOrder = _context.Orders.Where(o => o.CustomerId == Id).FirstOrDefault();
             
-            return View(pOrder); 
+        //    return View(pOrder); 
             
-        }
+        //}
         public IActionResult Edit(int Id)
         {
             var eInfo = _context.Orders.Find(Id);
@@ -64,21 +64,21 @@ namespace PizzaGroup.Controllers
             {
                 return NotFound();
             }
-            
+
             Order? order = _context.Orders.Where(o => o.CustomerId == id).FirstOrDefault();
-            
+
             if (order == null)
             {
                 order = new Order();
                 order.CustomerId = id;
-                order.EmployeeId = "Somethign New";
+                order.EmployeeId = "Something New";
                 order.OrderStatus = "10 Minutes";
                 order.Pizzas.Add(pizza);
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
 
-        }
+            }
 
 
             return RedirectToAction("ViewOrder", order);

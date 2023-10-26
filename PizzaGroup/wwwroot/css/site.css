@@ -68,6 +68,10 @@ main {
     background-image: linear-gradient(white, red);
 }
 
+#darkGrad {
+    background-image: linear-gradient(white, #002D62);
+}
+
 #customers {
     font-family: Arial, Helvetica, sans-serif;
     border-collapse: collapse;
