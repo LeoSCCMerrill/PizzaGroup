@@ -124,13 +124,13 @@ namespace PizzaGroup.Controllers
 
         [Authorize(Roles = "Manager")]
         [HttpPost]
-        public IActionResult DeletePizza(int? Id)
+        public IActionResult DeletePizza(int Id)
         {
             var pizza = _context.Pizzas.Find(Id);
 
             if (pizza == null)
             {
-                return NotFound();
+                return RedirectToAction("ListPizzas");
             }
 
             _context.Pizzas.Remove(pizza);
