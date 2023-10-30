@@ -9,12 +9,13 @@ namespace PizzaGroup.Models
         [Required(ErrorMessage = "Please Enter A CustomerID")] 
         public string CustomerId { get; set; }
         public string EmployeeId { get; set; }
-        public OrderStatus OrderStatus { get; set; }
+        public int OrderStatus { get; set; } // Change Back to OrderStatus Later
         public IList<Pizza> Pizzas { get; set; }
 
         public Order()
         {
             Pizzas = new List<Pizza>();
+             
         }
 
 

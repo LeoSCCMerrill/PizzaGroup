@@ -3,7 +3,7 @@
 <h1>Browse all of our Classic Pizzas Here!</h1>
 <body id="grad">
 
-    <form asp-controller="Customer" asp-action="ListPizzas" method="post">
+    @*<form asp-controller="Customer" asp-action="ListPizzas" method="post">*@
  <table id="customers">
     <thead>
     <tr>
@@ -40,13 +40,13 @@
                 }
                 <td>
             <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id">
-                <button type="submit" class="btn btn-primary">Add</button>
+                <button class="btn btn-primary">Add</button>
             </form>
-        </td>
+                </td>
             </tr>
         }
         </tbody>
 </table>
 
-</form>
+@*</form>*@
 </body>

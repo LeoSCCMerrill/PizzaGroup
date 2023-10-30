@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PizzaGroup.Migrations
 {
-    public partial class pizzaprice : Migration
+    public partial class test : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -299,9 +299,9 @@ namespace PizzaGroup.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "2ff7765a-39a0-4359-a252-cd5da77b9bcf", "Employee", "EMPLOYEE" },
-                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "d14fd07b-1a1a-4395-88ac-70b3db133eb4", "Owner", "OWNER" },
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "ca5a4772-bb41-4158-8f2e-30bb5cd8c1c0", "Manager", "MANAGER" }
+                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "d45bdbea-d7c2-44c3-9117-4775db0215c6", "Employee", "EMPLOYEE" },
+                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "109f4cae-0fd0-4e80-b9ff-a32b51270ba3", "Owner", "OWNER" },
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "0ec597ce-3177-43ed-83e8-77f22ba458d9", "Manager", "MANAGER" }
                 });
 
             migrationBuilder.InsertData(

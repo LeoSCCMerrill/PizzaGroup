@@ -11,6 +11,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace PizzaGroup.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         
@@ -31,16 +32,24 @@ namespace PizzaGroup.Controllers
             return View(defaultPizzas);
         }
         
-        //public IActionResult ViewOrder()
-        //{
-        //    //Get this fixed
+        public IActionResult ViewOrder()
+        {
+            //Get this fixed
 
-        //    string Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    Order? pOrder = _context.Orders.Where(o => o.CustomerId == Id).FirstOrDefault();
+            string Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Order? pOrder = _context.Orders.Where(o => o.CustomerId == Id).FirstOrDefault();
+            if (pOrder != null)
+            {
+                return View(pOrder);
+            }
+            else
+            {
+                Order o = new Order();
+                return View(o);
+            }
             
-        //    return View(pOrder); 
             
-        //}
+        }
         public IActionResult Edit(int Id)
         {
             var eInfo = _context.Orders.Find(Id);
@@ -72,16 +81,17 @@ namespace PizzaGroup.Controllers
                 order = new Order();
                 order.CustomerId = id;
                 order.EmployeeId = "Something New";
-                order.OrderStatus = "10 Minutes";
+                order.OrderStatus = 10;
                 order.Pizzas.Add(pizza);
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-
+            }
+            else
+            {
+                order.Pizzas.Add(pizza);
             }
 
-
-            return RedirectToAction("ViewOrder", order);
+            return View("ViewOrder", order);
 
         }
     }

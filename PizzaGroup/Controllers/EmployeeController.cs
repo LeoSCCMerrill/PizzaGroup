@@ -14,12 +14,12 @@ namespace PizzaGroup.Controllers
             _context = context;
         }
 
-        [HttpGet]
-        public IActionResult Index()
-        {
-            IList<Order> orders = _context.Orders.Where(o => o.EmployeeId.Equals(User.FindFirstValue(ClaimTypes.NameIdentifier)) && o.OrderStatus != OrderStatus.DELIVERED).ToList();
-            return View(orders);
-        }
+        //[HttpGet]
+        //public IActionResult Index()
+        //{
+        //    IList<Order> orders = _context.Orders.Where(o => o.EmployeeId.Equals(User.FindFirstValue(ClaimTypes.NameIdentifier)) && o.OrderStatus != OrderStatus.DELIVERED).ToList();
+        //    return View(orders);
+        //}
         [HttpGet]
         public IActionResult Details(int orderId)
         {
@@ -31,7 +31,7 @@ namespace PizzaGroup.Controllers
         {
             Order order = _context.Orders.Find(orderId);
             if (order != null) { 
-                order.OrderStatus = status;
+                //order.OrderStatus = status;
             }
             _context.SaveChanges();
             return RedirectToAction("Details", orderId);
