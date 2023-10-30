@@ -12,8 +12,8 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231025192546_pizza-price")]
-    partial class pizzaprice
+    [Migration("20231030183815_OrderChange")]
+    partial class OrderChange
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,21 +54,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "d14fd07b-1a1a-4395-88ac-70b3db133eb4",
+                            ConcurrencyStamp = "44b1c3ec-69fc-4a25-beed-b18ad66fd4b0",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "ca5a4772-bb41-4158-8f2e-30bb5cd8c1c0",
+                            ConcurrencyStamp = "c2005201-14ff-4142-8f31-cf6f15acb4ea",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "2ff7765a-39a0-4359-a252-cd5da77b9bcf",
+                            ConcurrencyStamp = "24dfe32a-5f6e-4563-b821-48bd829cc974",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -272,7 +272,6 @@ namespace PizzaGroup.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmployeeId")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrderStatus")

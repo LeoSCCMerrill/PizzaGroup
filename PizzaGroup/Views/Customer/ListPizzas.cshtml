@@ -11,12 +11,12 @@
         <th>Size</th>
         <th>Price</th>
         <th>Add Pizza</th>
+        <th>Remove Pizza</th>
    @*  This will only show up if you are logged in as a manager *@
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                     {
-                        <th>Remove Pizza</th>
+                        
                     }
-                    <th>Add To Cart</th>
     </tr>
         </thead>
         <tbody>
@@ -25,28 +25,29 @@
             <tr>
                 <td>@pizza.Name</td>
                 <td>@pizza.Size.Name</td>
-                <td>$ @pizza.Price</td>
-                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
+                <td>@pizza.Price.ToString("c")</td>
+                <td>
+                    <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id">
+                        <button type="submit" class="btn btn-primary">Add to Order</button>
+                    </form>
+                </td>
+                @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner") || pizza.UserId != null))
                 {
                 <td>
                     <form method="post" asp-action="EditPizza" asp-controller="Management">
                         <button type="submit" class="btn btn-edit">Edit Pizza</button>
                     </form>
                   <br/>
-                    <form method="post" asp-action="DeletePizza" asp-controller="Customer">
+                    <form method="get" asp-action="DeletePizza" asp-controller="Customer" asp-route-id="@pizza.Id">
                         <button type="submit" class="btn btn-primary">Delete</button>
                     </form>
                 </td>
                 }
-                <td>
-            <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id">
-                <button type="submit" class="btn btn-primary">Add</button>
-            </form>
-        </td>
+                
             </tr>
         }
         </tbody>
 </table>
-
 </form>
+<a asp-action="CustomPizzaView" asp-controller="Customer" class="btn btn-primary">Create new Pizza!</a>
 </body>
