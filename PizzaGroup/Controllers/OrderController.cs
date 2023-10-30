@@ -72,7 +72,7 @@ namespace PizzaGroup.Controllers
                 order = new Order();
                 order.CustomerId = id;
                 order.EmployeeId = "Something New";
-                order.OrderStatus = "10 Minutes";
+                order.OrderStatus = OrderStatus.SUBMITTED;
                 order.Pizzas.Add(pizza);
                 _context.Orders.Add(order);
                 await _context.SaveChangesAsync();
