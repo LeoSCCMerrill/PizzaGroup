@@ -15,12 +15,17 @@ namespace PizzaGroup.Controllers
     {
         private readonly RoleManager<IdentityRole> roleManager;
         private readonly ApplicationDbContext _context;
-        
+        private readonly IDictionary<int, Crust> _crusts;
+        private readonly IDictionary<int, Size> _sizes;
+        private readonly IDictionary<int, Topping> _toppings;
 
         public CustomerController (RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
         {
             this.roleManager = roleManager;
             _context = context;
+            _crusts = _context.Crusts.ToDictionary(crust => crust.Id, crust => crust);
+            _sizes = _context.Sizes.ToDictionary(size => size.Id, size => size);
+            _toppings = _context.Toppings.ToDictionary(topping => topping.Id, topping => topping);
         }
 
         [HttpGet]
@@ -91,11 +96,11 @@ namespace PizzaGroup.Controllers
         [HttpGet]
         public IActionResult CustomPizzaView()
         {
-            ViewBag.Sizes = _context.Sizes.ToList();
-            ViewBag.Crusts = _context.Crusts.ToList();
-            ViewBag.Toppings = _context.Toppings.ToList();
+            ViewBag.Sizes = _sizes.Values;
+            ViewBag.Crusts = _crusts.Values;
+            ViewBag.Toppings = _toppings.Values;
             List<ToppingList> theList = new List<ToppingList>(); 
-            foreach(Topping topping in _context.Toppings)
+            foreach(Topping topping in _toppings.Values)
             {
                 theList.Add(new ToppingList { Topping = topping, IsSelected=false});
             }
@@ -121,7 +126,7 @@ namespace PizzaGroup.Controllers
                 {
                     if (entry.IsSelected == true)
                     {
-                        PizzaTopping pizzaTopping = new PizzaTopping
+                        PizzaTopping pizzaTopping = new()
                         {
                             PizzaId = model.Pizza.Id,
                             ToppingId = entry.Topping.Id,
@@ -130,9 +135,9 @@ namespace PizzaGroup.Controllers
                         _context.PizzaToppings.Add(pizzaTopping);
                     }
                 }
-                price += _context.Crusts.Find(model.Pizza.CrustId).Price;
+                price += _crusts[model.Pizza.CrustId].Price;
                 price += 5.0m;
-                price *= _context.Sizes.Find(model.Pizza.SizeId).PriceMultiplier;
+                price *= _sizes[model.Pizza.SizeId].PriceMultiplier;
                 model.Pizza.Price = price;
                 _context.Update(model.Pizza);
                 _context.SaveChanges();
@@ -140,9 +145,9 @@ namespace PizzaGroup.Controllers
                 return RedirectToAction("ListPizzas");
             } else
             {
-                ViewBag.Sizes = _context.Sizes.ToList();
-                ViewBag.Crusts = _context.Crusts.ToList();
-                ViewBag.Toppings = _context.Toppings.ToList();
+                ViewBag.Sizes = _sizes.Values;
+                ViewBag.Crusts = _crusts.Values;
+                ViewBag.Toppings = _toppings.Values;
                 return View(model);
             }
             
@@ -158,21 +163,21 @@ namespace PizzaGroup.Controllers
                 .FirstOrDefault(p => p.Id == id);
             return View(model);
         }
-        /*[HttpPost]
+        [HttpPost]
         public IActionResult DeletePizza(Pizza model)
         {
-            var pizza = _context.Pizzas.Find(Id);
-
-            if (pizza == null)
+            if(model != null)
             {
-                return RedirectToAction("ListPizzas");
+                var pizzaId = model.Id;
+                _context.Pizzas.Remove(model);
+                foreach (var pt in _context.PizzaToppings.Where(pt => pt.PizzaId == pizzaId).ToList())
+                {
+                    _context.PizzaToppings.Remove(pt);
+                }
+                _context.SaveChanges();
             }
-
-            _context.Pizzas.Remove(pizza);
-            _context.SaveChanges();
-            
-            return RedirectToAction("ListPizzas");
-        }*/
+            return RedirectToAction("ListPizzas");           
+        }
 
        
 
