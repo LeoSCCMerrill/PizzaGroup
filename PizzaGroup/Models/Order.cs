@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PizzaGroup.Models
-{
+namespace PizzaGroup.Models;
+//{
     public class Order
     {
         [Key]
@@ -21,4 +21,4 @@ namespace PizzaGroup.Models
 
         
     }
-}
+
