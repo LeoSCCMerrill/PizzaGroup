@@ -1,0 +1,25 @@
+﻿@model Pizza
+
+@if(Model.UserId == ViewBag.UserId)
+{
+    <form method="post" asp-action="DeletePizza" asp-controller="Customer" >
+        @Model.Name
+        <br />
+
+        @foreach (Topping topping in Model.Toppings)
+        {
+            @topping.Name
+            <br />
+        }
+        @Model.Crust.Name
+        <br />
+        @Model.Size.Name
+        <br />
+        @Model.Price.ToString("c")
+        <br />
+        <p>Delete this Pizza?</p>
+        <br />
+        <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">No</a>
+        <button type="submit" class="btn btn-secondary">Yes</button>
+    </form>
+}

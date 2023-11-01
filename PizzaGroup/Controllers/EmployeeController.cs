@@ -21,25 +21,29 @@ namespace PizzaGroup.Controllers
         //    return View(orders);
         //}
         [HttpGet]
-        public IActionResult Details(int orderId)
+        public IActionResult Details(Order order)
         {
-            Order order = _context.Orders.Find(orderId);
             return View(order);
         }
         [HttpPost]
-        public IActionResult UpdateStatus(int orderId, OrderStatus status)
+        public IActionResult EditOrder(Order order) 
         {
-            Order order = _context.Orders.Find(orderId);
+            return View(order);
+        }
+        [HttpPost]
+        public IActionResult UpdateStatus(Order order, OrderStatus status)
+        {
             if (order != null) { 
                 //order.OrderStatus = status;
             }
+            _context.Update(order);
             _context.SaveChanges();
-            return RedirectToAction("Details", orderId);
+            return RedirectToAction("Details", order);
         }
         [HttpPost]
-        public IActionResult Delete(int orderId)
+        public IActionResult Delete(Order order)
         {
-            _context.Orders.Remove(_context.Orders.Find(orderId));
+            _context.Orders.Remove(order);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

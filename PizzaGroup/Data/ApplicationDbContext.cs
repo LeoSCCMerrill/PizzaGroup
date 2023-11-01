@@ -333,6 +333,7 @@ namespace PizzaGroup.Data
                     Name = "Custom 1",
                     SizeId = 1,
                     CrustId = 1,
+                    Price = 5.0m
                 }
                 );
         }

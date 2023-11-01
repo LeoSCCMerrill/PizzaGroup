@@ -1,21 +1,24 @@
 ﻿@model Pizza
 
-<h2>Edit Pizza</h2>
+<h2>Edit Pizza: @Model.Name</h2>
 
 <form asp-action="EditPizza" method="post">
 	<div asp-validation-summary="All" class="text-danger"></div>
-	<input type="hidden" asp-for="Id" />
+	<input type="hidden" asp-for="@Model.Id" />
 
 	<div class="form-group">
-		<label asp-for="Name">Pizza Name</label>
-		<input asp-for="Name" class="form-control" />
+		<label asp-for="@Model.Name">Pizza Name</label>
+		<input asp-for="@Model.Name" class="form-control">@Model.Name</input>
 	</div>
 
 	<div class="form-control">
-		<label asp-for="Price">Price</label>
-		<input asp-for="Price" class="form-control" />
+		<label asp-for="@Model.Price">Price</label>
+		<input asp-for="@Model.Price" class="form-control" />
 	</div>
-
-	<button type="submit" class="btn btn-edit">Edit</button>
+	
+	<input type="hidden" asp-for="CrustId" />
+	<input type="hidden" asp-for="SizeId" />
+	<button asp-controller="Customer" asp-action="ListPizzas" class="btn btn-edit">Edit</button>
 	<a asp-controller="Customer" asp-action="ListPizzas" class="btn btn-primary">Cancel</a>
+
 </form>
