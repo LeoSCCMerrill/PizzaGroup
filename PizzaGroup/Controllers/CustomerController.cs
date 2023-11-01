@@ -163,21 +163,21 @@ namespace PizzaGroup.Controllers
                 .FirstOrDefault(p => p.Id == id);
             return View(model);
         }
-        /*[HttpPost]
+        [HttpPost]
         public IActionResult DeletePizza(Pizza model)
         {
-            var pizza = _context.Pizzas.Find(Id);
-
-            if (pizza == null)
+            if(model != null)
             {
-                return RedirectToAction("ListPizzas");
+                var pizzaId = model.Id;
+                _context.Pizzas.Remove(model);
+                foreach (var pt in _context.PizzaToppings.Where(pt => pt.PizzaId == pizzaId).ToList())
+                {
+                    _context.PizzaToppings.Remove(pt);
+                }
+                _context.SaveChanges();
             }
-
-            _context.Pizzas.Remove(pizza);
-            _context.SaveChanges();
-            
-            return RedirectToAction("ListPizzas");
-        }*/
+            return RedirectToAction("ListPizzas");           
+        }
 
        
 

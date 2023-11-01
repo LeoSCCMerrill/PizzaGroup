@@ -32,18 +32,22 @@
                         <button type="submit" class="btn btn-primary">Add to Order</button>
                     </form>
                 </td>
-                @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner") || pizza.UserId != null))
+                @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                 {
                 <td>
-                                <a asp-controller="Management" asp-action="EditPizza" asp-route-id="@pizza.Id">
+                    <a asp-controller="Management" asp-action="EditPizza" asp-route-id="@pizza.Id">
                        Edit Pizza
                     </a>
                 </td>
                 <td>
-                    <form method="post" asp-action="DeletePizza" asp-controller="Customer">
-                        <button type="submit" class="btn btn-primary">Delete</button>
-                    </form>
+                    <a asp-action="DeletePizza" asp-controller="Customer" asp-route-id="@pizza.Id" class="btn btn-primary">Delete</a>
                 </td>
+                } else if (pizza.UserId != null)
+                {
+                    <td>
+                        <a asp-action="DeletePizza" asp-controller="Customer" asp-route-id="@pizza.Id" class="btn btn-primary">Delete</a>
+                    </td>
+                    
                 }
                 
             </tr>
