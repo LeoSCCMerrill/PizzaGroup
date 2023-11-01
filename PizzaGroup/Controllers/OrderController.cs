@@ -46,6 +46,7 @@ namespace PizzaGroup.Controllers
             var eInfo = _context.Orders.Find(Id);
             return View(eInfo);
         }
+
         [HttpPost, ActionName("Delete")]
         public IActionResult Delete(int id)
         {

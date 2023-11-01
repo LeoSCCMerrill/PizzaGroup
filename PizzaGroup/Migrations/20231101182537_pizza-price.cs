@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PizzaGroup.Migrations
 {
-    public partial class OrderChange : Migration
+    public partial class pizzaprice : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -222,6 +222,7 @@ namespace PizzaGroup.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SizeId = table.Column<int>(type: "int", nullable: false),
                     CrustId = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
@@ -299,9 +300,9 @@ namespace PizzaGroup.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "24dfe32a-5f6e-4563-b821-48bd829cc974", "Employee", "EMPLOYEE" },
-                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "44b1c3ec-69fc-4a25-beed-b18ad66fd4b0", "Owner", "OWNER" },
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "c2005201-14ff-4142-8f31-cf6f15acb4ea", "Manager", "MANAGER" }
+                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "0d497156-09fa-422c-9946-b574f3e4cc87", "Employee", "EMPLOYEE" },
+                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "19bc488e-92f4-4fe6-a8db-ac559f398834", "Owner", "OWNER" },
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "626523b0-9077-45f8-bef7-2f6a90bdb35a", "Manager", "MANAGER" }
                 });
 
             migrationBuilder.InsertData(
@@ -378,8 +379,8 @@ namespace PizzaGroup.Migrations
 
             migrationBuilder.InsertData(
                 table: "Pizzas",
-                columns: new[] { "Id", "CrustId", "Name", "SizeId", "UserId" },
-                values: new object[] { 1, 1, "Custom 1", 1, null });
+                columns: new[] { "Id", "CrustId", "Name", "Price", "SizeId", "UserId" },
+                values: new object[] { 1, 1, "Custom 1", 5.0m, 1, null });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

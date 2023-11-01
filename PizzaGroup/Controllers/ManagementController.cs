@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PizzaGroup.Data;
 using PizzaGroup.Models;
 
@@ -90,23 +91,29 @@ namespace PizzaGroup.Controllers
             return View("CreateNewPizza", model); // Show the form with validation errors
         }
 
-
+        [Authorize(Roles = "Owner, Manager")]
+        [HttpGet]
         public IActionResult EditPizza(int id)
         {
+            
             // Retrieve the selected Pizza by its Id
-            var pizza = _context.Pizzas.Find(id);
+            var pizza = _context.Pizzas.Include(p => p.Size).Include(p => p.Crust).FirstOrDefault(p => p.Id == id);
+           
             return View(pizza);
 
         }
+        [Authorize(Roles = "Owner, Manager")]
         [HttpPost]
         public IActionResult EditPizza(Pizza pizza, Crust crust)
         {
+              
             if (ModelState.IsValid)
-            {
+            { 
+ 
                 _context.Pizzas.Update(pizza);
                 _context.SaveChanges();
 
-                return RedirectToAction("ListPizzas");
+                return RedirectToAction("ListPizzas", "Customer");
             }
             return View(pizza);
         }
