@@ -3,7 +3,7 @@
 @if(Model.UserId == ViewBag.UserId)
 {
     <form method="post" asp-action="DeletePizza" asp-controller="Customer" >
-        @Model.Name
+        <h2>@Model.Name</h2>
         <br />
 
         @foreach (Topping topping in Model.Toppings)
@@ -11,9 +11,9 @@
             @topping.Name
             <br />
         }
-        @Model.Crust.Name
+        <h5>@Model.Crust.Name</h5>
         <br />
-        @Model.Size.Name
+        <h5>@Model.Size.Name</h5>
         <br />
         @Model.Price.ToString("c")
         <br />

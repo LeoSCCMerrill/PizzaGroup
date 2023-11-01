@@ -14,32 +14,36 @@ namespace PizzaGroup.Controllers
             _context = context;
         }
 
+        //[HttpGet]
+        //public IActionResult Index()
+        //{
+        //    IList<Order> orders = _context.Orders.Where(o => o.EmployeeId.Equals(User.FindFirstValue(ClaimTypes.NameIdentifier)) && o.OrderStatus != OrderStatus.DELIVERED).ToList();
+        //    return View(orders);
+        //}
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Details(Order order)
         {
-            IList<Order> orders = _context.Orders.Where(o => o.EmployeeId.Equals(User.FindFirstValue(ClaimTypes.NameIdentifier)) && o.OrderStatus != OrderStatus.DELIVERED).ToList();
-            return View(orders);
-        }
-        [HttpGet]
-        public IActionResult Details(int orderId)
-        {
-            Order order = _context.Orders.Find(orderId);
             return View(order);
         }
         [HttpPost]
-        public IActionResult UpdateStatus(int orderId, OrderStatus status)
+        public IActionResult EditOrder(Order order) 
         {
-            Order order = _context.Orders.Find(orderId);
-            if (order != null) { 
-                order.OrderStatus = status;
-            }
-            _context.SaveChanges();
-            return RedirectToAction("Details", orderId);
+            return View(order);
         }
         [HttpPost]
-        public IActionResult Delete(int orderId)
+        public IActionResult UpdateStatus(Order order, OrderStatus status)
         {
-            _context.Orders.Remove(_context.Orders.Find(orderId));
+            if (order != null) { 
+                //order.OrderStatus = status;
+            }
+            _context.Update(order);
+            _context.SaveChanges();
+            return RedirectToAction("Details", order);
+        }
+        [HttpPost]
+        public IActionResult Delete(Order order)
+        {
+            _context.Orders.Remove(order);
             _context.SaveChanges();
             return RedirectToAction("Index");
         }

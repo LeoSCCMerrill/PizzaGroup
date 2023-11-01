@@ -11,11 +11,12 @@
         <th>Size</th>
         <th>Price</th>
         <th>Add Pizza</th>
-        <th>Remove Pizza</th>
+       
    @*  This will only show up if you are logged in as a manager *@
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                     {
-                        
+                        <th>Edit Pizza</th>
+                        <th>Remove Pizza</th>
                     }
     </tr>
         </thead>
@@ -31,19 +32,28 @@
                         <button type="submit" class="btn btn-primary">Add to Order</button>
                     </form>
                 </td>
-                @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner") || pizza.UserId != null))
+                @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                 {
                 <td>
-                    <form method="post" asp-action="EditPizza" asp-controller="Management">
-                        <button type="submit" class="btn btn-edit">Edit Pizza</button>
-                    </form>
-                  <br/>
-                    <form method="get" asp-action="DeletePizza" asp-controller="Customer" asp-route-id="@pizza.Id">
-                        <button type="submit" class="btn btn-primary">Delete</button>
-                    </form>
+                    <a asp-controller="Management" asp-action="EditPizza" asp-route-id="@pizza.Id">
+                       Edit Pizza
+                    </a>
                 </td>
+                <td>
+                    <a asp-action="DeletePizza" asp-controller="Customer" asp-route-id="@pizza.Id" class="btn btn-primary">Delete</a>
+                </td>
+                } else if (pizza.UserId != null)
+                {
+                    <td>
+                        <a asp-action="DeletePizza" asp-controller="Customer" asp-route-id="@pizza.Id" class="btn btn-primary">Delete</a>
+                    </td>
+                    
                 }
-                
+                <td>
+            <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id">
+                <button class="btn btn-primary">Add</button>
+            </form>
+                </td>
             </tr>
         }
         </tbody>
