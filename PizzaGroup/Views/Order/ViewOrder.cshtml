@@ -7,6 +7,7 @@
     <tr>
         <th>Pizza ID</th>
         <th>Price</th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
@@ -14,11 +15,17 @@
             @*foreach (var o in Model.Pizzas)*@
             {
         <tr>
+            <td>
 
+            </td>
             <td>
                 <button asp-action="Delete" asp-route-id="@Model.Id">Delete</button>
             </td>
-        <br/>
+            <td>
+                <input type="radio" name="pickup"/> <label> Pickup</label>
+                <br/>
+                <input type="radio" name="delivery"/> <label> Delivery</label>
+            </td>
         </tr>
             }
         </form>
@@ -27,9 +34,10 @@
 
     <h3>Enter a Delivery Address</h3>
 <form method="post" asp-controller="Order">
-    <label for="address">Address: </label>
+    <label>Address: </label>
     <input type="text" name="address"/>
-    <label for="zipcode">Zipcode: </label>
+    <br>
+    <label>Zipcode: </label>
     <input type="text" name="zipcode"/>
 </form>
 
