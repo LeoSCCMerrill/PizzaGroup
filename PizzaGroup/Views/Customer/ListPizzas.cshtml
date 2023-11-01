@@ -11,7 +11,7 @@
         <th>Size</th>
         <th>Price</th>
         <th>Add Pizza</th>
-        <th>Remove Pizza</th>
+       
    @*  This will only show up if you are logged in as a manager *@
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                     {

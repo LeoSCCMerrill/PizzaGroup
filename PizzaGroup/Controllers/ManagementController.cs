@@ -95,9 +95,10 @@ namespace PizzaGroup.Controllers
         [HttpGet]
         public IActionResult EditPizza(int id)
         {
+            
             // Retrieve the selected Pizza by its Id
             var pizza = _context.Pizzas.Include(p => p.Size).Include(p => p.Crust).FirstOrDefault(p => p.Id == id);
-            
+           
             return View(pizza);
 
         }
@@ -105,14 +106,14 @@ namespace PizzaGroup.Controllers
         [HttpPost]
         public IActionResult EditPizza(Pizza pizza, Crust crust)
         {
-            
+              
             if (ModelState.IsValid)
             { 
-    // need to set isAdmin to true
+ 
                 _context.Pizzas.Update(pizza);
                 _context.SaveChanges();
 
-                return RedirectToAction("ListPizzas");
+                return RedirectToAction("ListPizzas", "Customer");
             }
             return View(pizza);
         }
