@@ -16,49 +16,11 @@ namespace PizzaGroup.Models
         [Required(ErrorMessage = "Please choose a crust")]
         public int CrustId { get; set; }
         public Crust? Crust { get; set; }
-
-        private Decimal _Price;
-        [NotMapped]
-        public Decimal Price
-        {
-            get
-            {
-                return _Price;
-            }
-            set
-            {
-                _Price = (IsAdmin ? value : 5.0m + ToppingsPrice() + CrustPrice()) * (Size == null ? 1m : Size.PriceMultiplier);
-            }
-        }
+        public Decimal Price { get; set; } = 0.0m;
         public IList<Topping>? Toppings { get; set; } = new List<Topping>();
         public IList<Order>? Orders { get; set; } = new List<Order>();
         public IList<PizzaTopping>? PizzaToppings { get; set; } = new List<PizzaTopping>();
         public string? UserId { get; set; }
         public User? User { get; set; }
-        [NotMapped]
-        public Boolean IsAdmin { get; set; } = false;
-
-        private Decimal ToppingsPrice()
-        {
-            Decimal toppingsPrice = 0.0m;
-            if (Toppings != null)
-            {
-                foreach (Topping topping in Toppings)
-                {
-                    toppingsPrice += topping.Price;
-                }
-            }
-            return toppingsPrice;
-        }
-
-        private Decimal CrustPrice()
-        {
-            Decimal toppingsPrice = 0.0m;
-            if (Crust != null)
-            {
-                toppingsPrice += Crust.Price;
-            }
-            return toppingsPrice;
-        }
     }
 }

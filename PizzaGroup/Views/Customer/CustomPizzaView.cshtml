@@ -21,6 +21,7 @@
                     @if(Model.ToppingList[i].Topping.ToppingType == ToppingType.MEAT)
                     {
                         <div>
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Price)
                             @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
                             @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
                             @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
@@ -34,6 +35,7 @@
                     @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.VEGGIE)
                     {
                         <div>
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Price)
                             @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
                             @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
                             @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
@@ -51,6 +53,7 @@
                     @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.SAUCE)
                     {
                         <div>
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Price)
                             @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
                             @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
                             @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
@@ -64,6 +67,7 @@
                     @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.CHEESE)
                     {
                         <div>
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Price)
                             @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
                             @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
                             @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
