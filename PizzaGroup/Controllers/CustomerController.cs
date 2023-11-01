@@ -174,6 +174,8 @@ namespace PizzaGroup.Controllers
             return RedirectToAction("ListPizzas");
         }*/
 
+       
+
         [HttpPost]
         public IActionResult Add(Pizza model)
         {
