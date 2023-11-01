@@ -116,6 +116,7 @@ namespace PizzaGroup.Controllers
             {
                 _context.Add(model.Pizza);
                 _context.SaveChanges();
+                Decimal price = 0.0m;
                 foreach (ToppingList entry in model.ToppingList)
                 {
                     if (entry.IsSelected == true)
@@ -125,9 +126,15 @@ namespace PizzaGroup.Controllers
                             PizzaId = model.Pizza.Id,
                             ToppingId = entry.Topping.Id,
                         };
+                        price += entry.Topping.Price;
                         _context.PizzaToppings.Add(pizzaTopping);
                     }
                 }
+                price += _context.Crusts.Find(model.Pizza.CrustId).Price;
+                price += 5.0m;
+                price *= _context.Sizes.Find(model.Pizza.SizeId).PriceMultiplier;
+                model.Pizza.Price = price;
+                _context.Update(model.Pizza);
                 _context.SaveChanges();
                 
                 return RedirectToAction("ListPizzas");
