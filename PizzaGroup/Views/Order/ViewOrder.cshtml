@@ -11,13 +11,12 @@
     </thead>
     <tbody>
         <form method="post">
-            @*foreach (var o in Model.Pizzas)*@
+            @foreach (var o in @Model.Pizzas)
             {
         <tr>
-
-            <td>
-                <button asp-action="Delete" asp-route-id="@Model.Id">Delete</button>
-            </td>
+        <td>@o.Id</td>
+        <td>@o.Price</td>
+        <td><button asp-action="Delete" asp-route-pizza="@Model.Pizzas.IndexOf(o)">Delete</button></td>
         <br/>
         </tr>
             }
