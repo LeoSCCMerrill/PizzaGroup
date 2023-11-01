@@ -7,17 +7,9 @@ namespace PizzaGroup.Models
         [Key]
         public int Id { get; set; }
         [Required(ErrorMessage = "Please Enter A CustomerID")] 
-        public string CustomerId { get; set; }
-        public string EmployeeId { get; set; }
+        public string? CustomerId { get; set; }
+        public string? EmployeeId { get; set; }
         public OrderStatus OrderStatus { get; set; }
-        public IList<Pizza> Pizzas { get; set; }
-
-        public Order()
-        {
-            Pizzas = new List<Pizza>();
-        }
-
-
-        
+        public IList<Pizza> Pizzas { get; set; } = new List<Pizza>();
     }
 }

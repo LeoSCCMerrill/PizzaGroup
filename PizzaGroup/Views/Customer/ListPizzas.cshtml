@@ -10,14 +10,14 @@
         <th>Pizza</th>
         <th>Size</th>
         <th>Price</th>
-        
+        <th>Add Pizza</th>
+        <th>Remove Pizza</th>
    @*  This will only show up if you are logged in as a manager *@
                     @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                     {
                         <th>Edit Pizza</th>
                         <th>Remove Pizza</th>
                     }
-                    <th>Add To Cart</th>
     </tr>
         </thead>
         <tbody>
@@ -26,8 +26,13 @@
             <tr>
                 <td>@pizza.Name</td>
                 <td>@pizza.Size.Name</td>
-                <td>$ @pizza.Price</td>
-                        @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
+                <td>@pizza.Price.ToString("c")</td>
+                <td>
+                    <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id">
+                        <button type="submit" class="btn btn-primary">Add to Order</button>
+                    </form>
+                </td>
+                @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner") || pizza.UserId != null))
                 {
                 <td>
                                 <a asp-controller="Management" asp-action="EditPizza" asp-route-id="@pizza.Id">
@@ -40,15 +45,11 @@
                     </form>
                 </td>
                 }
-                <td>
-            <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id">
-                <button type="submit" class="btn btn-primary">Add</button>
-            </form>
-        </td>
+                
             </tr>
         }
         </tbody>
 </table>
-
 </form>
+<a asp-action="CustomPizzaView" asp-controller="Customer" class="btn btn-primary">Create new Pizza!</a>
 </body>

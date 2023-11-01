@@ -6,6 +6,7 @@ using PizzaGroup.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
+using NuGet.Packaging;
 
 namespace PizzaGroup.Controllers
 {
@@ -35,15 +36,33 @@ namespace PizzaGroup.Controllers
         [HttpGet]  // retrieve the list of pizzas
         public IActionResult ListPizzas()
         {
+
             DateTime currentTime = DateTime.Now;
             bool isShopOpen = IsShopOpen(currentTime);
 
             if (!isShopOpen)
             {
                 return RedirectToAction("WereClosed");
+            } else
+            {
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                IList<Pizza> pizzas = _context.Pizzas.Include(p => p.Size)
+                .Include(p => p.Crust)
+                .Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping)
+                .Where(p => p.UserId == null)
+                .ToList();
+
+                IList<Pizza> userPizzas = _context.Pizzas.Include(p => p.Size)
+                .Include(p => p.Crust)
+                .Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping)
+                .Where(p => p.UserId == userId)
+                .ToList();
+
+                pizzas.AddRange(userPizzas);
+                return View(pizzas);
             }
-            IList<Pizza> pizzas = _context.Pizzas.Include(p => p.Size).ToList();
-            return View(pizzas);
+            
         }
 
         private bool IsShopOpen(DateTime currentTime)
@@ -122,22 +141,31 @@ namespace PizzaGroup.Controllers
             
         }
 
-        [Authorize(Roles = "Manager")]
-        [HttpPost]
-        public IActionResult DeletePizza(int? Id)
+        [HttpGet]
+        public IActionResult DeletePizza(int id)
+        {
+            ViewBag.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Pizza model = _context.Pizzas.Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping)
+                .Include(p => p.Size)
+                .Include(p => p.Crust)
+                .FirstOrDefault(p => p.Id == id);
+            return View(model);
+        }
+        /*[HttpPost]
+        public IActionResult DeletePizza(Pizza model)
         {
             var pizza = _context.Pizzas.Find(Id);
 
             if (pizza == null)
             {
-                return NotFound();
+                return RedirectToAction("ListPizzas");
             }
 
             _context.Pizzas.Remove(pizza);
             _context.SaveChanges();
             
             return RedirectToAction("ListPizzas");
-        }
+        }*/
 
        
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PizzaGroup.Migrations
 {
-    public partial class pizzaprice : Migration
+    public partial class OrderChange : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -69,7 +69,7 @@ namespace PizzaGroup.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CustomerId = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    EmployeeId = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmployeeId = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OrderStatus = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -299,9 +299,9 @@ namespace PizzaGroup.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "2ff7765a-39a0-4359-a252-cd5da77b9bcf", "Employee", "EMPLOYEE" },
-                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "d14fd07b-1a1a-4395-88ac-70b3db133eb4", "Owner", "OWNER" },
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "ca5a4772-bb41-4158-8f2e-30bb5cd8c1c0", "Manager", "MANAGER" }
+                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "24dfe32a-5f6e-4563-b821-48bd829cc974", "Employee", "EMPLOYEE" },
+                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "44b1c3ec-69fc-4a25-beed-b18ad66fd4b0", "Owner", "OWNER" },
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "c2005201-14ff-4142-8f31-cf6f15acb4ea", "Manager", "MANAGER" }
                 });
 
             migrationBuilder.InsertData(
