@@ -75,7 +75,7 @@ namespace PizzaGroup.Controllers
                         {
                             Quantity = pizza.Value,
                             PizzaId = pizza.Key,
-                            OrderId = order.Id,
+                            OrderId = order2.Id,
                         };
                         _context.OrderPizzas.Add(orderPizza); 
                 }
