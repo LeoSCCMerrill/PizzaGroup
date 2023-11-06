@@ -41,38 +41,35 @@ namespace PizzaGroup.Controllers
             //Get this fixed
 
             Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
-                
+
 
             return View(order);
 
 
         }
-        
 
-            public IActionResult Edit(int Id)
+
+        public IActionResult Edit(int Id)
         {
             var eInfo = _context.Orders.Find(Id);
             return View(eInfo);
         }
 
-        public IActionResult SubmitOrder() {
+        public IActionResult SubmitOrder()
+        {
             Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
-            
             _context.Add(order);
-
-              
-                _context.SaveChanges();
-                
-                foreach (var pizza in order.Pizzas)
+            _context.SaveChanges();
+            foreach (var pizza in order.Pizzas)
+            {
+                OrderPizza orderPizza = new()
                 {
-                        OrderPizza orderPizza = new()
-                        {
-                            Quantity = pizza.Value,
-                            PizzaId = pizza.Key,
-                            OrderId = order.Id,
-                        };
-                        _context.OrderPizzas.Add(orderPizza); 
-                }
+                    Quantity = pizza.Value,
+                    PizzaId = pizza.Key,
+                    OrderId = order.Id,
+                };
+                _context.OrderPizzas.Add(orderPizza);
+            }
 
             _context.SaveChanges();
 
@@ -82,11 +79,6 @@ namespace PizzaGroup.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult Delete(Pizza pizza)
         {
-            //I don't know why i made it to delete the entire order. Needs to remove the pizza.  Fix Later.
-            //Order order = _context.Orders.Find(id);
-            //_context.Orders.Remove(order);
-            //_context.SaveChanges();
-
             Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);  // The button shouldn't pop up unless there is something add validation just in case later
             IList<Pizza> pizzaList = order.PizzaList;
             IDictionary<int, int> pizzaDictionary = order.Pizzas;
@@ -108,21 +100,16 @@ namespace PizzaGroup.Controllers
             {
                 return NotFound();
             }
-
-
             Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
-
-
-                if (order == null) 
+            if (order == null)
             {
-                    order = new Order();
-                    order.CustomerId = id;
-                    order.EmployeeId = "Something New";
-                //order.OrderStatus = ;
-                
-                HttpContext.Session.Set(SessionKeyOrder, order);
-
-                }
+                order = new Order
+                {
+                    CustomerId = id,
+                    EmployeeId = "Something New"
+                };
+                HttpContext.Session.Set<Order>(SessionKeyOrder, order);
+            }
             if (order.Pizzas.ContainsKey(pizza.Id))
             {
                 order.Pizzas[pizza.Id]++;
@@ -131,28 +118,27 @@ namespace PizzaGroup.Controllers
             {
                 order.Pizzas.Add(pizza.Id, 1);
             }
-            //order.Pizzas.Add(pizza); //Shouldn't be able to get a null?
             order.PizzaList.Add(pizza);
-            HttpContext.Session.Set(SessionKeyOrder, order);
-            
+            HttpContext.Session.Set<Order>(SessionKeyOrder, order);
+
             return View("ViewOrder", order);
 
         }
     }
 }
-        public static class SessionExtensions
-        {
-            public static void Set<T>(this ISession session, string key, T value)
-            {
-                session.SetString(key, JsonSerializer.Serialize(value));
-            }
+public static class SessionExtensions
+{
+    public static void Set<T>(this ISession session, string key, T value)
+    {
+        session.SetString(key, JsonSerializer.Serialize(value));
+    }
 
-            public static T? Get<T>(this ISession session, string key)
-            {
-                var value = session.GetString(key);
-                return value == null ? default : JsonSerializer.Deserialize<T>(value);
-            }
-        }
+    public static T? Get<T>(this ISession session, string key)
+    {
+        var value = session.GetString(key);
+        return value == null ? default : JsonSerializer.Deserialize<T>(value);
+    }
+}
 
-    
+
 
