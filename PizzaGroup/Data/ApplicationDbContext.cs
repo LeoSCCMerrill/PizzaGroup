@@ -24,13 +24,12 @@ namespace PizzaGroup.Data
         {
             // Configure the User entity
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Order>().HasKey(o => o.Id);
             modelBuilder.Entity<Pizza>()
                 .HasMany(e => e.Toppings)
                 .WithMany(e => e.Pizzas)
                 .UsingEntity<PizzaTopping>();
             modelBuilder.Entity<Order>()
-                .HasMany(e => e.Pizzas)
+                .HasMany(e => e.PizzaList)
                 .WithMany(e => e.Orders)
                 .UsingEntity<OrderPizza>();
             modelBuilder.Entity<User>().HasKey(x => x.Id);

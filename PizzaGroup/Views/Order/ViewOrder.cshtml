@@ -11,12 +11,12 @@
     </thead>
     <tbody>
         <form method="post">
-            @foreach (var o in @Model.Pizzas)
+            @foreach (var pizza in @Model.PizzaList)
             {
         <tr>
-        <td>@o.Id</td>
-        <td>@o.Price</td>
-        <td><button asp-action="Delete" asp-route-pizza="@Model.Pizzas.IndexOf(o)">Delete</button></td>
+        <td>@pizza.Id</td>
+        <td>@pizza.Price</td>
+        <td><button asp-action="Delete" asp-route-pizza="@pizza">Delete</button></td>
         <br/>
         </tr>
             }
@@ -32,8 +32,8 @@
     <input type="text" name="zipcode"/>
 </form>
 
-    <form method="post">
-    <button asp-action="" class="btn btn-primary" value="SUBMIT">SUBMIT</button>
+    <form method="post" asp-action="SubmitOrder" asp-controller="Order">
+    <button  class="btn btn-primary" value="SUBMIT">SUBMIT</button>
     </form>
 
 }else{
