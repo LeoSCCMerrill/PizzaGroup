@@ -12,8 +12,8 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231101190109_Initial")]
-    partial class Initial
+    [Migration("20231106200706_orders")]
+    partial class orders
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,21 +54,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "04120ce7-2146-427f-9df9-65cc3284c9d7",
+                            ConcurrencyStamp = "309a4397-5e50-4bc4-a13c-1c8fec597a1f",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "8078838d-2c9c-4a4b-a310-f81cfa2e060a",
+                            ConcurrencyStamp = "b0de08f6-71aa-461b-8e83-1e8a00eea660",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "9f081fe2-a007-41e8-ab4e-57237a5cd8a2",
+                            ConcurrencyStamp = "f77541af-9161-4174-8529-a444c3b9086f",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -272,6 +272,7 @@ namespace PizzaGroup.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EmployeeId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrderStatus")
@@ -288,6 +289,9 @@ namespace PizzaGroup.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("PizzaId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
                         .HasColumnType("int");
 
                     b.HasKey("OrderId", "PizzaId");

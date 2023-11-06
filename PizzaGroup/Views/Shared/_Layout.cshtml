@@ -34,7 +34,7 @@
                         @if (User.IsInRole("Manager") || User.IsInRole("Owner"))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="CustomPizzaView">Custom Pizza</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Management" asp-action="CreateNewPizza">New Default Pizza</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Management" asp-action="Index">Employee Management</a>

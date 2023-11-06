@@ -11,7 +11,7 @@
     {
         
             <div>
-                @foreach (Pizza pizza in order.Pizzas)
+                @foreach (var pizza in order.PizzaList)
                 {
                     <div>@pizza.Name</div>
                     <div>@pizza.Crust.Name</div>

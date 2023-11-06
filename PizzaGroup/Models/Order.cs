@@ -1,15 +1,27 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace PizzaGroup.Models
+namespace PizzaGroup.Models;
+//{
+public class Order
 {
-    public class Order
+    [Key]
+    public int Id { get; set; }
+    [Required(ErrorMessage = "Please Enter A CustomerID")]
+    public string CustomerId { get; set; }
+    public string EmployeeId { get; set; }
+    public OrderStatus OrderStatus { get; set; } // Change Back to OrderStatus Later
+    [NotMapped]
+    public IDictionary<int, int> Pizzas { get; set; }
+    [NotMapped]
+    public IList<Pizza> PizzaList { get; set; }
+    public Order()
     {
-        [Key]
-        public int Id { get; set; }
-        [Required(ErrorMessage = "Please Enter A CustomerID")] 
-        public string? CustomerId { get; set; }
-        public string? EmployeeId { get; set; }
-        public OrderStatus OrderStatus { get; set; }
-        public IList<Pizza> Pizzas { get; set; } = new List<Pizza>();
+        Pizzas = new Dictionary<int, int>();
+        PizzaList = new List<Pizza>();
     }
+
+
+
 }
+

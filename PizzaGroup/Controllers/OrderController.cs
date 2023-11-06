@@ -8,12 +8,17 @@ using PizzaGroup.Models;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.AspNetCore.Session;
+using System.Text.Json;
 
 namespace PizzaGroup.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
-        
+        public const string SessionKeyOrder = "_Order";
         private UserManager<User> userManager;
         private RoleManager<IdentityRole> roleManager;
         private readonly ApplicationDbContext _context;
@@ -30,31 +35,69 @@ namespace PizzaGroup.Controllers
 
             return View(defaultPizzas);
         }
-        
-        //public IActionResult ViewOrder()
-        //{
-        //    //Get this fixed
 
-        //    string Id = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        //    Order? pOrder = _context.Orders.Where(o => o.CustomerId == Id).FirstOrDefault();
-            
-        //    return View(pOrder); 
-            
-        //}
-        public IActionResult Edit(int Id)
+        public IActionResult ViewOrder()
+        {
+            //Get this fixed
+
+            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+                
+
+            return View(order);
+
+
+        }
+        
+
+            public IActionResult Edit(int Id)
         {
             var eInfo = _context.Orders.Find(Id);
             return View(eInfo);
         }
 
-        [HttpPost, ActionName("Delete")]
-        public IActionResult Delete(int id)
-        {
-            Order order = _context.Orders.Find(id);
-            _context.Orders.Remove(order);
+        public IActionResult SubmitOrder() {
+            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+            
+            _context.Add(order);
+
+              
+                _context.SaveChanges();
+                
+                foreach (var pizza in order.Pizzas)
+                {
+                        OrderPizza orderPizza = new()
+                        {
+                            Quantity = pizza.Value,
+                            PizzaId = pizza.Key,
+                            OrderId = order.Id,
+                        };
+                        _context.OrderPizzas.Add(orderPizza); 
+                }
+
             _context.SaveChanges();
-            return RedirectToAction("ViewOrder");
+
+            return RedirectToAction("index", "Home");
         }
+
+        [HttpPost, ActionName("Delete")]
+        public IActionResult Delete(Pizza pizza)
+        {
+            //I don't know why i made it to delete the entire order. Needs to remove the pizza.  Fix Later.
+            //Order order = _context.Orders.Find(id);
+            //_context.Orders.Remove(order);
+            //_context.SaveChanges();
+
+            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);  // The button shouldn't pop up unless there is something add validation just in case later
+            IList<Pizza> pizzaList = order.PizzaList;
+            IDictionary<int, int> pizzaDictionary = order.Pizzas;
+            pizzaDictionary.Remove(pizza.Id);
+            pizzaList.Remove(pizza);
+            //order.Pizzas.Remove();
+            HttpContext.Session.Set(SessionKeyOrder, order);
+            return RedirectToAction("ViewOrder", order);
+        }
+
+
 
         [HttpPost]
         public async Task<IActionResult> AddOrder(int pizzaId)
@@ -66,24 +109,50 @@ namespace PizzaGroup.Controllers
                 return NotFound();
             }
 
-            Order? order = _context.Orders.Where(o => o.CustomerId == id).FirstOrDefault();
 
-            if (order == null)
+            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+
+
+                if (order == null) 
             {
-                order = new Order();
-                order.CustomerId = id;
-                order.EmployeeId = "Something New";
-                order.OrderStatus = OrderStatus.SUBMITTED;
-                order.Pizzas.Add(pizza);
-                _context.Orders.Add(order);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
+                    order = new Order();
+                    order.CustomerId = id;
+                    order.EmployeeId = "Something New";
+                //order.OrderStatus = ;
+                
+                HttpContext.Session.Set(SessionKeyOrder, order);
 
+                }
+            if (order.Pizzas.ContainsKey(pizza.Id))
+            {
+                order.Pizzas[pizza.Id]++;
             }
-
-
-            return RedirectToAction("ViewOrder", order);
+            else
+            {
+                order.Pizzas.Add(pizza.Id, 1);
+            }
+            //order.Pizzas.Add(pizza); //Shouldn't be able to get a null?
+            order.PizzaList.Add(pizza);
+            HttpContext.Session.Set(SessionKeyOrder, order);
+            
+            return View("ViewOrder", order);
 
         }
     }
 }
+        public static class SessionExtensions
+        {
+            public static void Set<T>(this ISession session, string key, T value)
+            {
+                session.SetString(key, JsonSerializer.Serialize(value));
+            }
+
+            public static T? Get<T>(this ISession session, string key)
+            {
+                var value = session.GetString(key);
+                return value == null ? default : JsonSerializer.Deserialize<T>(value);
+            }
+        }
+
+    
+
