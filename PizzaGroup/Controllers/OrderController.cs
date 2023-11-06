@@ -41,6 +41,7 @@ namespace PizzaGroup.Controllers
             //Get this fixed
 
             Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+
                 
 
             return View(order);
@@ -57,8 +58,13 @@ namespace PizzaGroup.Controllers
 
         public IActionResult SubmitOrder() {
             Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
-            
-            _context.Add(order);
+
+            Order order2 = new Order
+            {
+                CustomerId = order.CustomerId,
+                EmployeeId = order.EmployeeId,
+            };
+            _context.Add(order2);
 
               
                 _context.SaveChanges();
