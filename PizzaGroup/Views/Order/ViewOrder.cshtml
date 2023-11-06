@@ -16,13 +16,13 @@
             @foreach (var pizza in @Model.PizzaList)
             {
         <tr>
-        <td>@o.Id</td>
-        <td>@o.Price</td>
+        <td>@pizza.Id</td>
+        <td>@pizza.Price</td>
         <td><input type="radio" name="delivery" /><label> Delivery</label>
             <br/>
             <input type="radio" name="pickup" /><label> Pickup</label>
         </td>
-        <td><button asp-action="Delete" asp-route-pizza="@Model.Pizzas.IndexOf(o)">Delete</button></td>
+        <td><button asp-action="Delete" asp-route-pizza="@Model.PizzaList">Delete</button></td>
         <br/>
         </tr>
             }
