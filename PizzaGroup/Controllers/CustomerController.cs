@@ -136,7 +136,7 @@ namespace PizzaGroup.Controllers
                     }
                 }
                 price += _crusts[model.Pizza.CrustId].Price;
-                price += 5.0m;
+                price += 10.0m;
                 price *= _sizes[model.Pizza.SizeId].PriceMultiplier;
                 model.Pizza.Price = price;
                 _context.Update(model.Pizza);
