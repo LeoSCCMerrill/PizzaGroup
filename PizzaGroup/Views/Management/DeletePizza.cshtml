@@ -1,8 +1,8 @@
 ﻿@model Pizza
 
-@if(Model != null && Model.UserId == ViewBag.UserId)
+@if (Model != null)
 {
-    <form method="post" asp-action="DeletePizza" asp-controller="Customer" >
+    <form method="post" asp-action="DeletePizza" asp-controller="Customer">
         <h2>@Model.Name</h2>
         <br />
 
@@ -23,7 +23,8 @@
         <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">No</a>
         <button type="submit" class="btn btn-secondary">Yes</button>
     </form>
-} else
+}
+else
 {
     <h1>Nothing here sorry.</h1>
 }

@@ -1,7 +1,7 @@
 ﻿@model Order
 @ViewBag.Orders
 
-@if (Model.Pizzas.Count() != 0){
+@if (@Model != null){
     <table style="border-width:1; border-color:"Black"; >
     <thead>
     <tr>
@@ -13,7 +13,7 @@
     </thead>
     <tbody>
         <form method="post">
-            @foreach (var o in @Model.Pizzas)
+            @foreach (var pizza in @Model.PizzaList)
             {
         <tr>
         <td>@o.Id</td>
@@ -40,13 +40,13 @@
     <br/>
 @*</form>*@
 
-    <form method="post">
-    <button asp-action="" class="btn btn-primary" value="SUBMIT">SUBMIT</button>
+    <form method="post" asp-action="SubmitOrder" asp-controller="Order">
+    <button  class="btn btn-primary" value="SUBMIT">SUBMIT</button>
     </form>
 
 }else{
 <h1>Nothing is here</h1>
 <form method="post">
-    <button asp-action="CustomPizzaView" asp-controller="Customer" class="btn btn-primary">Buy A Pizza</button>
+    <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Buy A Pizza</a>
 </form>
 }

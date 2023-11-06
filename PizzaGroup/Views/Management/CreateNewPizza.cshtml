@@ -1,13 +1,13 @@
-﻿@model Pizza
-
+﻿@model CustomizeViewModel
 
 <body id="grad">
 
-    <form asp-controller="Management" asp-action="Add" method="post">
+    <form asp-controller="Customer" asp-action="CustomPizzaView" method="post">
         <h1>Pizza Creation Station</h1>
-        <h3>Fill out the form below to create a new custom pie for our customers.</h3>
+        <h3>Fill out the form below to create your new Personal Favorite!</h3>
+        <div asp-validation-summary="All" class="text-danger"></div>
         <label>Name of Pizza:</label>
-        <input asp-for="Name" />
+        <input asp-for=@Model.Pizza.Name />
         <br />
         <br />
 
@@ -15,135 +15,86 @@
             <div class="column">
                 <h3>Meats</h3>
                 <br />
-                <input type="checkbox" name="Topping" value="pepperoni">
-                <label for="pepperoni">Pepperoni</label>
-
-                <input type="checkbox" name="Topping" value="sausage">
-                <label for="sausage">Sausage</label>
-
-                <input type="checkbox" name="Topping" value="hamburger">
-                <label for="hamburger">Hamburger</label>
-
-                <br />
-
-                <input type="checkbox" name="Topping" value="canadianBacon">
-                <label for="canadianBacon">Canadian Bacon</label>
-
-
-                <input type="checkbox" name="Topping" value="chicken">
-                <label for="chicken">Chicken</label>
-
-                <input type="checkbox" name="Topping" value="bacon">
-                <label for="bacon">Bacon</label>
-
-                <br />
-
-                <input type="checkbox" name="Topping" value="anchovies">
-                <label for="anchovies">Anchovies</label>
-
-                <input type="checkbox" name="Topping" value="proccuito">
-                <label for="proccuito">Proccuito</label>
-                <br>
-                <br />
+                @for (int i = 0; i < Model.ToppingList.Count; i++)
+                {
+                    @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.MEAT)
+                    {
+                        <div>
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Price)
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
+                            @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
+                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
+                        </div>
+                    }
+                }
                 <h3>Veggies</h3>
                 <br />
-                <input type="checkbox" name="Topping" value="tomatoes">
-                <label for="tomatoes">Tomatoes</label>
-
-                <input type="checkbox" name="Topping" value="olives">
-                <label for="olives">Olives</label>
-
-                <input type="checkbox" name="Topping" value="bellPepper">
-                <label for="bellPepper">Bell Pepper</label>
-
-                <input type="checkbox" name="Topping" value="porccini">
-                <label for="porccini">Porccini</label>
-
-                <input type="checkbox" name="Topping" value="onion">
-                <label for="onion">Onion</label>
-
-                <input type="checkbox" name="Topping" value="mushroom">
-                <label for="mushroom">Mushroom</label>
-
-                <input type="checkbox" name="Topping" value="jalapeno">
-                <label for="jalapeno">Jalapeno</label>
-
-                <input type="checkbox" name="Topping" value="chives">
-                <label for="chives">Chives</label>
-                <br />
+                @for (int i = 0; i < Model.ToppingList.Count; i++)
+                {
+                    @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.VEGGIE)
+                    {
+                        <div>
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Price)
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
+                            @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
+                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
+                        </div>
+                    }
+                }
             </div>
 
 
             <div class="column">
                 <h3>Sauce</h3>
                 <br />
-                <input type="checkbox" name="Topping" value="marinara">
-                <label for="marinara">Marinara</label>
-
-                <input type="checkbox" name="Topping" value="ranch">
-                <label for="ranch">Ranch</label>
-
-                <input type="checkbox" name="Topping" value="bbq">
-                <label for="bbq">Barbeque</label>
-
-                <br />
-
-                <input type="checkbox" name="Topping" value="garlic">
-                <label for="garlic">Garlic</label>
-
-                <input type="checkbox" name="Topping" value="alfredo">
-                <label for="alfredo">Alfredo</label>
-                <br />
-                <br />
+                @for (int i = 0; i < Model.ToppingList.Count; i++)
+                {
+                    @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.SAUCE)
+                    {
+                        <div>
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Price)
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
+                            @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
+                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
+                        </div>
+                    }
+                }
                 <h3>Cheese</h3>
                 <br />
-                <input type="checkbox" name="Topping" value="mozzerella">
-                <label for="mozzerella">Mozzerella</label>
-
-                <input type="checkbox" name="Topping" value="asiago">
-                <label for="asiago">Asiago</label>
-
-                <input type="checkbox" name="Topping" value="parmesean">
-                <label for="parmesean">Parmesean</label>
-
-                <input type="checkbox" name="Topping" value="fontina">
-                <label for="fontina">Fontina</label>
-
-                <input type="checkbox" name="Topping" value="smokedGouda">
-                <label for="smokedGouda">Smoked Gouda</label>
-
-                <input type="checkbox" name="Topping" value="government">
-                <label for="government">Government</label>
-                <br />
+                @for (int i = 0; i < Model.ToppingList.Count; i++)
+                {
+                    @if (Model.ToppingList[i].Topping.ToppingType == ToppingType.CHEESE)
+                    {
+                        <div>
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Price)
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
+                            @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
+                            @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
+                        </div>
+                    }
+                }
             </div>
 
             <div class="column">
-                <h3>Crust</h3>
-                <br />
-                <input type="radio" name="crust" value="classic">
-                <label for="classic">Classic</label>
+                <label asp-for="@Model.Pizza.CrustId">Crust</label>
+                <select asp-for="@Model.Pizza.CrustId" class="=form-control">
+                    @foreach (Crust crust in ViewBag.Crusts)
+                    {
+                        <option value="@crust.Id">@crust.Name</option>
+                    }
+                </select>
 
-                <input type="radio" name="crust" value="thin">
-                <label for="thin">Thin Crust</label>
-                <br />
-                <input type="radio" name="crust" value="deepDish">
-                <label for="deepDish">Deep Dish</label>
-
-                <input type="radio" name="crust" value="stuffed">
-                <label for="stuffed">Stuffed</label>
-
-                <input type="radio" name="crust" value="chicago">
-                <label for="chicago">Chicago Deep Dish</label>
-                <br />
-                <br />
-
+                <label asp-for="@Model.Pizza.SizeId">Size</label>
+                <select asp-for="@Model.Pizza.SizeId" class="=form-control">
+                    @foreach (Size size in ViewBag.Sizes)
+                    {
+                        <option value="@size.Id">@size.Name</option>
+                    }
+                </select>
             </div>
         </div>
 
-        <label>Price: </label>
-        <input asp-for="@Model.Price" />
-        <br />
-        <br />
+        @Html.HiddenFor(m => m.Pizza.UserId)
 
         <button type="submit">Make That Pie!</button>
     </form>
