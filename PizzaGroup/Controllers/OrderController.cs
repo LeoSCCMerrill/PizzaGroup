@@ -58,18 +58,27 @@ namespace PizzaGroup.Controllers
         public IActionResult SubmitOrder()
         {
             Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
-            _context.Add(order);
-            _context.SaveChanges();
-            foreach (var pizza in order.Pizzas)
+
+            Order order2 = new Order
             {
-                OrderPizza orderPizza = new()
+                CustomerId = order.CustomerId,
+                EmployeeId = order.EmployeeId,
+            };
+            _context.Add(order2);
+
+              
+                _context.SaveChanges();
+                
+                foreach (var pizza in order.Pizzas)
                 {
-                    Quantity = pizza.Value,
-                    PizzaId = pizza.Key,
-                    OrderId = order.Id,
-                };
-                _context.OrderPizzas.Add(orderPizza);
-            }
+                        OrderPizza orderPizza = new()
+                        {
+                            Quantity = pizza.Value,
+                            PizzaId = pizza.Key,
+                            OrderId = order2.Id,
+                        };
+                        _context.OrderPizzas.Add(orderPizza); 
+                }
 
             _context.SaveChanges();
 
