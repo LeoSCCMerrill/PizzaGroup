@@ -1,13 +1,12 @@
 ﻿@model Order
 @ViewBag.Orders
 
-@if (@Model != null){
-    <table style="border-width:1; border-color:"Black"; >
+@if (@Model != null && Model.PizzaList.Count > 0){
+    <table id="customers" >
     <thead>
     <tr>
-        <th>Pizza ID</th>
+        <th>Pizza</th>
         <th>Price</th>
-        <th>Delivery/Pickup</th>
         <th></th>
     </tr>
     </thead>
@@ -16,19 +15,38 @@
             @foreach (var pizza in @Model.PizzaList)
             {
         <tr>
-        <td>@pizza.Id</td>
-        <td>@pizza.Price</td>
-        <td><input type="radio" name="delivery" /><label> Delivery</label>
-            <br/>
-            <input type="radio" name="pickup" /><label> Pickup</label>
-        </td>
-        <td><button asp-action="Delete" asp-route-pizza="@Model.PizzaList">Delete</button></td>
-        <br/>
+            <td>@pizza.Name</td>
+            <td>@pizza.Price</td>
+            <td><button asp-action="Delete" asp-route-id="@pizza.Id">Delete</button></td>
         </tr>
             }
         </form>
     </tbody>
 </table>
+
+    <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Add another pizza</a>
+    <br />
+
+    <input type="radio" name="orderType" value="delivery"/>
+
+    <label> Delivery</label>
+    <br />
+    <input type="radio" name="orderType" value="pickup" checked/>
+
+    <label> Pickup</label>
+
+    
+    decimal total = 0.0m;
+    foreach (var pizza in Model.PizzaList)
+    {
+        total += pizza.Price;
+    }
+    <h3>Total: @total.ToString("c")</h3>
+    
+        
+    
+
+    
 
     <h3>Enter a Delivery Address</h3>
 @*<form method="post" asp-controller="Order">*@

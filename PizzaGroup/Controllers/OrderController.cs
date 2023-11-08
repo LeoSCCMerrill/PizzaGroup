@@ -93,16 +93,24 @@ namespace PizzaGroup.Controllers
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult Delete(Pizza pizza)
+        public IActionResult Delete(int id)
         {
             Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);  // The button shouldn't pop up unless there is something add validation just in case later
             IList<Pizza> pizzaList = order.PizzaList;
             IDictionary<int, int> pizzaDictionary = order.Pizzas;
-            pizzaDictionary.Remove(pizza.Id);
+            var pizza = pizzaList.FirstOrDefault(p => p.Id == id);
+            if (pizzaDictionary[id] > 1)
+            {
+                pizzaDictionary[id]--;
+            } else
+            {
+                pizzaDictionary.Remove(id);
+            }
+            
             pizzaList.Remove(pizza);
-            //order.Pizzas.Remove();
             HttpContext.Session.Set(SessionKeyOrder, order);
-            return RedirectToAction("ViewOrder", order);
+            return RedirectToAction("ViewOrder");
+
         }
 
 
