@@ -59,31 +59,30 @@ namespace PizzaGroup.Controllers
         {
             
             Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
-            if(order.PizzaList.Count > 0)
+            Order order2 = new Order
             {
-                Order order2 = new Order
+                CustomerId = order.CustomerId,
+                EmployeeId = order.EmployeeId,
+            };
+            _context.Add(order2);
+
+
+            _context.SaveChanges();
+
+            foreach (var pizza in order.Pizzas)
+            {
+                OrderPizza orderPizza = new()
                 {
-                    CustomerId = order.CustomerId,
-                    EmployeeId = order.EmployeeId,
+                    Quantity = pizza.Value,
+                    PizzaId = pizza.Key,
+                    OrderId = order2.Id,
                 };
-                _context.Add(order2);
+                _context.OrderPizzas.Add(orderPizza);
 
-
-                _context.SaveChanges();
-
-                foreach (var pizza in order.Pizzas)
-                {
-                    OrderPizza orderPizza = new()
-                    {
-                        Quantity = pizza.Value,
-                        PizzaId = pizza.Key,
-                        OrderId = order2.Id,
-                    };
-                    _context.OrderPizzas.Add(orderPizza);
-                }
-
-                _context.SaveChanges();
+            _context.SaveChanges();
             }
+            
+            HttpContext.Session.Remove(SessionKeyOrder);
 
             return RedirectToAction("index", "Home");
         }
