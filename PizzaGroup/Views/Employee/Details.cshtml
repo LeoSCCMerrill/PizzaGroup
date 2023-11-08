@@ -1,35 +1,82 @@
-﻿@model IList<Order>
-@*
+﻿@model Order
+
 <h1>Details</h1>
-<bodyid ="grad"
+<body id="grad">
 
-    <form>
-        <tr>
-            <th>Pizza</th>
-            <th>Size</th>
-            <th>Crust</th>
-            <th>Sauce</th>
-            <th>Meat</th>
-            <th>Veggies</th>
-            <th>Cheese</th>
-        </tr>
-        @foreach (Order order in Model)
-        {
-                <div>
-                @foreach (Pizza pizza in order.PizzaList)
-                {
-                                <tr>
-                            <td>@pizza.Name</td>
-                            <td>@pizza.Size</td>
-                            <td>@pizza.Crust</td>
-                            <td>@pizza</td>
-                        </tr>
-                }
-            </div>
-        }
+	<form>
+		<table>
+		<tr>
+			<th>Pizza</th>
+			<th>Size</th>
+			<th>Crust</th>
+			<th>Sauce</th>
+			<th>Meat</th>
+			<th>Veggies</th>
+			<th>Cheese</th>
+		</tr>
+		<div>
+			@foreach (Pizza pizza in Model.PizzaList)
+			{
+				<tr>
+					<td>@pizza.Name</td>
+					<td>@pizza.Size</td>
+					<td>@pizza.Crust</td>
+					@foreach (PizzaTopping pizzaTopping in pizza.PizzaToppings)
+					{
+						<td>@pizzaTopping.Topping.Name</td>
 
-    </form>
-</bodyid>
-*@
+						<td>
+							@for (int i = 0; i < pizza.Toppings.Count; i++)
+							{
+								@if (pizza.Toppings[i].ToppingType == ToppingType.SAUCE)
+								{
+
+									@pizza.Toppings[i].Name
+								}
+							}
+						</td>
+						<td>
+							@for (int i = 0; i < pizza.Toppings.Count; i++)
+							{
+								@if (pizza.Toppings[i].ToppingType == ToppingType.MEAT)
+								{
+
+									@pizza.Toppings[i].Name
+								}
+							}
+						</td>
+						<td>
+							@for (int i = 0; i < pizza.Toppings.Count; i++)
+							{
+								@if (pizza.Toppings[i].ToppingType == ToppingType.VEGGIE)
+								{
+
+									@pizza.Toppings[i].Name
+								}
+							}
+						</td>
+						<td>
+							@for (int i = 0; i < pizza.Toppings.Count; i++)
+							{
+								@if (pizza.Toppings[i].ToppingType == ToppingType.CHEESE)
+								{
+
+									@pizza.Toppings[i].Name
+								}
+							}
+						</td>
+					}
+
+
+				</tr>
+			}
+
+		</div>
+		</table>
+	</form>
+	<br />
+	<button type="submit">Pizza Finished</button>
+</body>
+
 
 
