@@ -9,7 +9,6 @@ namespace PizzaGroup.Models
         public int Id { get; set; } //PK
         [Required(ErrorMessage = "Please enter a pizza name")]
         public string? Name { get; set; }
-
         [Required(ErrorMessage = "Please choose a size")]
         public int SizeId { get; set; }
         public Size? Size { get; set; }
