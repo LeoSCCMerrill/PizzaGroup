@@ -3,7 +3,7 @@
 
 @if (@Model != null && Model.PizzaList.Count > 0){
     <table id="customers" >
-    <thead>
+        <thead>
     <tr>
         <th>Pizza</th>
         <th>Price</th>
@@ -12,13 +12,23 @@
     </thead>
     <tbody>
         <form method="post">
-            @foreach (var pizza in @Model.PizzaList)
-            {
-        <tr>
-            <td>@pizza.Name</td>
-            <td>@pizza.Price</td>
-            <td><button asp-action="Delete" asp-route-id="@pizza.Id">Delete</button></td>
-        </tr>
+                @{
+                    int counter = 0;
+                    int lastPizzaId = 0;
+                }
+
+            @foreach (var pizza in @Model.PizzaList.OrderBy(p => p.Id))
+            { if(@lastPizzaId != pizza.Id)
+                {
+                    counter = 0;
+                }
+                lastPizzaId = pizza.Id;
+                counter++;
+            <tr>
+                <td>@pizza.Name (@counter of @Model.Pizzas[pizza.Id])</td>
+                <td>@pizza.Price</td>
+                <td><button asp-action="Delete" asp-route-id="@pizza.Id">Delete</button></td>
+            </tr>
             }
         </form>
     </tbody>
