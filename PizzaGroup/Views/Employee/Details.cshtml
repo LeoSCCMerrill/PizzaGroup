@@ -1,6 +1,5 @@
 ﻿@model IList<Order>
-
-
+@*
 <h1>Details</h1>
 <bodyid ="grad"
 
@@ -14,19 +13,23 @@
             <th>Veggies</th>
             <th>Cheese</th>
         </tr>
-        @foreach (Order order in Model){
-            <div>
-                 @foreach (Pizza pizza in order.Pizzas)
-            {
-                        <tr>
-                    <td>@pizza.Name</td>
-                    <td>@pizza.Size</td>
-                    <td>@pizza.Crust</td>
-                    <td>@pizza.Sau</td>
-                </tr>
-            }
-        </div>
+        @foreach (Order order in Model)
+        {
+                <div>
+                @foreach (Pizza pizza in order.PizzaList)
+                {
+                                <tr>
+                            <td>@pizza.Name</td>
+                            <td>@pizza.Size</td>
+                            <td>@pizza.Crust</td>
+                            <td>@pizza</td>
+                        </tr>
+                }
+            </div>
         }
-        
+
     </form>
 </bodyid>
+*@
+
+

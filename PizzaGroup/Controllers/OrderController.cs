@@ -41,31 +41,58 @@ namespace PizzaGroup.Controllers
             //Get this fixed
 
             Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
-                
+
 
             return View(order);
 
 
         }
+
+
         public IActionResult Edit(int Id)
         {
             var eInfo = _context.Orders.Find(Id);
             return View(eInfo);
         }
 
+        public IActionResult SubmitOrder()
+        {
+            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+
+            Order order2 = new Order
+            {
+                CustomerId = order.CustomerId,
+                EmployeeId = order.EmployeeId,
+            };
+            _context.Add(order2);
+
+              
+                _context.SaveChanges();
+                
+                foreach (var pizza in order.Pizzas)
+                {
+                        OrderPizza orderPizza = new()
+                        {
+                            Quantity = pizza.Value,
+                            PizzaId = pizza.Key,
+                            OrderId = order2.Id,
+                        };
+                        _context.OrderPizzas.Add(orderPizza); 
+                }
+
+            _context.SaveChanges();
+
+            return RedirectToAction("index", "Home");
+        }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult Delete(int pizza)
+        public IActionResult Delete(Pizza pizza)
         {
-            //I don't know why i made it to delete the entire order. Needs to remove the pizza.  Fix Later.
-            //Order order = _context.Orders.Find(id);
-            //_context.Orders.Remove(order);
-            //_context.SaveChanges();
-
             Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);  // The button shouldn't pop up unless there is something add validation just in case later
-
-            IList<Pizza> p = order.Pizzas;
-            p.Remove(p[pizza]);
+            IList<Pizza> pizzaList = order.PizzaList;
+            IDictionary<int, int> pizzaDictionary = order.Pizzas;
+            pizzaDictionary.Remove(pizza.Id);
+            pizzaList.Remove(pizza);
             //order.Pizzas.Remove();
             HttpContext.Session.Set(SessionKeyOrder, order);
             return RedirectToAction("ViewOrder", order);
@@ -82,54 +109,45 @@ namespace PizzaGroup.Controllers
             {
                 return NotFound();
             }
-
-
-            Order? order = _context.Orders.Where(o => o.CustomerId == id).FirstOrDefault();
-            
-            if (HttpContext.Session.Get<Order>(SessionKeyOrder) == null)
+            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+            if (order == null)
+            {
+                order = new Order
                 {
-                if (order == null)
-                {
-                    order = new Order();
-                    order.CustomerId = id;
-                    order.EmployeeId = "Something New";
-                    order.OrderStatus = 10;
-                    //order.Pizzas.Add(pizza);
-
-                    _context.Orders.Add(order);
-                    await _context.SaveChangesAsync();
-                }
+                    CustomerId = id,
+                    EmployeeId = "Something New"
+                };
+                HttpContext.Session.Set<Order>(SessionKeyOrder, order);
+            }
+            if (order.Pizzas.ContainsKey(pizza.Id))
+            {
+                order.Pizzas[pizza.Id]++;
             }
             else
             {
-                
-                order = HttpContext.Session.Get<Order>(SessionKeyOrder);
-                
-                //order.Pizzas.Add(pizza);
+                order.Pizzas.Add(pizza.Id, 1);
             }
+            order.PizzaList.Add(pizza);
+            HttpContext.Session.Set<Order>(SessionKeyOrder, order);
 
-            order.Pizzas.Add(pizza); //Shouldn't be able to get a null?
-            
-            HttpContext.Session.Set(SessionKeyOrder, order);
-            
             return View("ViewOrder", order);
 
         }
     }
 }
-        public static class SessionExtensions
-        {
-            public static void Set<T>(this ISession session, string key, T value)
-            {
-                session.SetString(key, JsonSerializer.Serialize(value));
-            }
+public static class SessionExtensions
+{
+    public static void Set<T>(this ISession session, string key, T value)
+    {
+        session.SetString(key, JsonSerializer.Serialize(value));
+    }
 
-            public static T? Get<T>(this ISession session, string key)
-            {
-                var value = session.GetString(key);
-                return value == null ? default : JsonSerializer.Deserialize<T>(value);
-            }
-        }
+    public static T? Get<T>(this ISession session, string key)
+    {
+        var value = session.GetString(key);
+        return value == null ? default : JsonSerializer.Deserialize<T>(value);
+    }
+}
 
-    
+
 
