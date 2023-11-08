@@ -36,11 +36,12 @@ namespace PizzaGroup.Controllers
             return View(defaultPizzas);
         }
 
+        
         public IActionResult ViewOrder()
         {
             //Get this fixed
 
-            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
 
 
             return View(order);
@@ -57,18 +58,16 @@ namespace PizzaGroup.Controllers
 
         public IActionResult SubmitOrder()
         {
-            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
 
             Order order2 = new Order
             {
                 CustomerId = order.CustomerId,
                 EmployeeId = order.EmployeeId,
             };
-            _context.Add(order2);
+            _context.Add(order2); 
+            _context.SaveChanges();
 
-              
-                _context.SaveChanges();
-                
                 foreach (var pizza in order.Pizzas)
                 {
                         OrderPizza orderPizza = new()
@@ -77,25 +76,44 @@ namespace PizzaGroup.Controllers
                             PizzaId = pizza.Key,
                             OrderId = order2.Id,
                         };
-                        _context.OrderPizzas.Add(orderPizza); 
+                _context.OrderPizzas.Add(orderPizza); 
                 }
 
             _context.SaveChanges();
+
+
+            Order? clearOrder = null;
+            HttpContext.Session.Set<Order>(SessionKeyOrder, clearOrder); ;
+
 
             return RedirectToAction("index", "Home");
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult Delete(Pizza pizza)
+        public IActionResult Delete(int pizzaId, int index)
         {
-            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);  // The button shouldn't pop up unless there is something add validation just in case later
-            IList<Pizza> pizzaList = order.PizzaList;
-            IDictionary<int, int> pizzaDictionary = order.Pizzas;
-            pizzaDictionary.Remove(pizza.Id);
-            pizzaList.Remove(pizza);
-            //order.Pizzas.Remove();
+            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+
+            Pizza? pizza = _context.Pizzas.Find(pizzaId);
+
+            if (pizza == null || order == null)
+            {
+                return NotFound();
+            }
+            //IList<Pizza> pizzaList = order.PizzaList;
+            //IDictionary<int, int> pizzaDictionary = order.Pizzas;
+            //pizzaDictionary.Remove(pizza.Id);
+
+            order.PizzaList.RemoveAt(index);
+          
+
+            order.Pizzas.Remove(pizzaId);
+
+            //order.PizzaList.Remove(pizza);  //WHY WONT YOU REMOVE?????!?!?!?!??!?!?
+            
             HttpContext.Session.Set(SessionKeyOrder, order);
-            return RedirectToAction("ViewOrder", order);
+
+            return RedirectToAction("ViewOrder");
         }
 
 

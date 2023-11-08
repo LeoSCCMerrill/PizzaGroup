@@ -27,7 +27,9 @@
                 <td>@pizza.Size.Name</td>
                 <td>@pizza.Price.ToString("c")</td>
                 <td>
-                  
+                    <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id">
+                            <input type="submit" class="btn btn-primary" />
+                    </form>
                 </td>
                 @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                 {
@@ -40,11 +42,7 @@
                     <a asp-action="DeletePizza" asp-controller="Management" asp-route-id="@pizza.Id" class="btn btn-primary">Delete</a>
                 </td>
                 }
-                <td>
-            <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id">
-                <input type="submit" class="btn btn-primary" />
-                </form>
-                </td>
+
             </tr>
         }
         </tbody>

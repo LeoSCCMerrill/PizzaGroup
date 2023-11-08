@@ -1,7 +1,7 @@
 ﻿@model Order
 @ViewBag.Orders
 
-@if (@Model != null){
+@if (@Model != null || @Model.PizzaList.Count != 0){
     <table style="border-width:1; border-color:"Black"; >
     <thead>
     <tr>
@@ -13,7 +13,7 @@
     </thead>
     <tbody>
         <form method="post">
-            @foreach (var pizza in @Model.PizzaList)
+            @foreach (Pizza pizza in @Model.PizzaList)
             {
         <tr>
         <td>@pizza.Id</td>
@@ -22,7 +22,7 @@
             <br/>
             <input type="radio" name="pickup" /><label> Pickup</label>
         </td>
-        <td><button asp-action="Delete" asp-route-pizza="@Model.PizzaList">Delete</button></td>
+        <td><button asp-action="Delete" asp-route-pizzaId="@pizza.Id" asp-route-index="@Model.PizzaList.IndexOf(pizza)" >Delete</button></td>
         <br/>
         </tr>
             }
@@ -46,7 +46,7 @@
 
 }else{
 <h1>Nothing is here</h1>
-<form method="post">
+<form method="GET">
     <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Buy A Pizza</a>
 </form>
 }
