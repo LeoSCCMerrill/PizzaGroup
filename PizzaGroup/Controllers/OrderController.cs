@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.AspNetCore.Session;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace PizzaGroup.Controllers
 {
@@ -55,37 +56,40 @@ namespace PizzaGroup.Controllers
             return View(eInfo);
         }
 
-        public IActionResult SubmitOrder()
+        public async Task<IActionResult> SubmitOrder()
         {
-            
-            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
-            if(order.PizzaList.Count > 0)
+            if (HttpContext == null || HttpContext.Session == null || HttpContext.Session.Get<Order>(SessionKeyOrder) == null)
             {
-                Order order2 = new Order
-                {
-                    CustomerId = order.CustomerId,
-                    EmployeeId = order.EmployeeId,
-                };
-                _context.Add(order2);
-
-
-                _context.SaveChanges();
-
-                foreach (var pizza in order.Pizzas)
-                {
-                    OrderPizza orderPizza = new()
-                    {
-                        Quantity = pizza.Value,
-                        PizzaId = pizza.Key,
-                        OrderId = order2.Id,
-                    };
-                    _context.OrderPizzas.Add(orderPizza);
-                }
-
-                _context.SaveChanges();
+                return RedirectToAction("Index", "Home");
             }
-
-            return RedirectToAction("index", "Home");
+            Order orderSession = HttpContext.Session.Get<Order>(SessionKeyOrder);
+            Order order = new()
+            {
+                CustomerId = orderSession.CustomerId,
+                EmployeeId = orderSession.EmployeeId,
+            };
+            if (!(order.EmployeeId.Length > 0))
+            {
+                await AssignToEmployee(order);
+            }
+            if (!(order.EmployeeId.Length > 0))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            _context.Add(order);
+            _context.SaveChanges();
+            foreach (var pizza in order.Pizzas)
+            {
+                OrderPizza orderPizza = new()
+                {
+                    Quantity = pizza.Value,
+                    PizzaId = pizza.Key,
+                    OrderId = order.Id,
+                };
+                _context.OrderPizzas.Add(orderPizza);
+            }
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost, ActionName("Delete")]
@@ -126,7 +130,7 @@ namespace PizzaGroup.Controllers
                 order = new Order
                 {
                     CustomerId = id,
-                    EmployeeId = "Something New"
+                    EmployeeId = ""
                 };
                 HttpContext.Session.Set<Order>(SessionKeyOrder, order);
             }
@@ -143,6 +147,33 @@ namespace PizzaGroup.Controllers
 
             return View("ViewOrder", order);
 
+        }
+        private async Task AssignToEmployee(Order order)
+        {
+            IList<Order> orders = _context.Orders.ToList();
+            IDictionary<string, int> employeeAssignments = (await userManager.GetUsersInRoleAsync("Employee")).ToDictionary(u=>u.Id, u=>0);
+            if (employeeAssignments.Count > 0)
+            {
+                foreach (Order orderElement in orders)
+                {
+                    if (orderElement.OrderStatus == OrderStatus.OUT_FOR_DELIVERY ||
+                        orderElement.OrderStatus == OrderStatus.ASSIGNED ||
+                        orderElement.OrderStatus == OrderStatus.FINAL_CHECK ||
+                        orderElement.OrderStatus == OrderStatus.ADDING_TOPPINGS ||
+                        orderElement.OrderStatus == OrderStatus.BAKING_PIZZAS ||
+                        orderElement.OrderStatus == OrderStatus.TOSSING_DOUGH)
+                    {
+                        employeeAssignments[orderElement.EmployeeId]++;
+                    }
+                }
+                string assigneeId = employeeAssignments.MinBy(kvp => kvp.Value).Key;
+                if (assigneeId != null)
+                {
+                    order.EmployeeId = assigneeId;
+                    return;
+                }
+            }
+            order.EmployeeId = "";
         }
     }
 }
