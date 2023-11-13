@@ -4,31 +4,43 @@
 
 <body id="grad">
     <div class="center">
-        <h2>Welcome to Hizza Pizza</h2>
+        <h2>Orders assigned to you</h2>
     </div>
-    @{ Decimal totalPrice = 0.0m; }
-    @foreach(Order order in Model)
-    {
-        
-            <div>
-                @foreach (var pizza in order.PizzaList)
-                {
-                    <div>@pizza.Name</div>
-                    <div>@pizza.Crust.Name</div>
-                    @foreach (Topping topping in pizza.Toppings)
-                    {
-                        <div>@topping.Name</div>
+
+    <div class="flex-container">
+        @for (int i = 0; i < Model.Count; i++)
+        {
+            Decimal totalPrice = 0.0m;
+            int curOrder = i + 1;
+            <div class="flex-item">
+                <table class="table table-bordered table-light table-order">
+                    <tr><th class="standard-cell">Order @curOrder of @Model.Count</th></tr>
+                    <tr>
+                        <td>
+                            @for (int j = 0; j < Model[i].PizzaList.Count; j++)
+                            {
+                                int curPizza = j + 1;
+                                <table>
+                                    <tr><th>Pizza @curPizza of @Model[i].PizzaList.Count </th></tr>
+                                    <tr><td>@Model[i].PizzaList[j].Name</td></tr>
+                                    <tr><td>Price: @Model[i].PizzaList[j].Price</td></tr>
+                                    @{
+                                        totalPrice += Model[i].PizzaList[j].Price;
+                                    }
+
+                                </table>
+                            }
+                        </td>
+                    </tr>
+                    @{
+                        string standardStatus = Model[i].OrderStatus.ToString().Substring(0, 1) + Model[i].OrderStatus.ToString().Substring(1).ToLower();
                     }
-                    <div>@pizza.Size.Name</div>
-                    <div>@pizza.Price</div>
-                    totalPrice += pizza.Price;
-                    
-                }
-                <div>@order.OrderStatus</div>
-                <div>@totalPrice</div>
-            <form asp-controller="Employee" asp-action="Details" asp-route-id="@order.Id" method="get">
-                <button type="submit">Details</button>
-            </form>
+                    <tr><td class="standard-cell">Status: @standardStatus</td></tr>
+                    <tr><td class="standard-cell">Order Total: @totalPrice.ToString("c")</td></tr>
+                    <tr><td class="standard-cell"><a class="btn btn-info" style="width: 100%;" asp-controller="Employee" asp-action="Details" asp-route-id="@Model[i].Id">Details</a></td></tr>
+                    <tr><td class="standard-cell"><a class="btn btn-danger" style="width: 100%;" asp-controller="Employee" asp-action="DeleteOrder" asp-route-id="@Model[i].Id">Delete Order</a></td></tr>
+                </table>
             </div>
-    }
+        }
+    </div>
 </body>
