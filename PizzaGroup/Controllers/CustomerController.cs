@@ -70,6 +70,13 @@ namespace PizzaGroup.Controllers
             
         }
 
+        [HttpGet]
+        public IActionResult PizzaStatus()
+        {
+            //var status
+            return View();
+        }
+
         private bool IsShopOpen(DateTime currentTime)
         {
             DayOfWeek dayOfWeek = currentTime.DayOfWeek;

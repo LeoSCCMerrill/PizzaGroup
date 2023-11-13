@@ -29,6 +29,9 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="ListPizzas">Pizza</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="PizzaStatus">Your Order Status</a>
+                        </li>
             
 @*          To access the following links you must be logged in AND be in the Manager or Owner role  *@              
                         @if (User.IsInRole("Manager") || User.IsInRole("Owner"))
