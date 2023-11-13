@@ -52,21 +52,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "92ec190b-bb06-46e6-8d75-21b11d575c5d",
+                            ConcurrencyStamp = "a6f91489-1ff8-4d58-9f74-20dde4257bcf",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "9e3d4712-d999-4368-a7e0-93992793d04d",
+                            ConcurrencyStamp = "f9b9a83c-997b-4bd7-90c0-b83b91bb6a32",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "555a37e9-d53b-469b-89c2-05d51d818ada",
+                            ConcurrencyStamp = "eb201c63-1227-4a47-a283-2f9d6db884bc",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -752,13 +752,13 @@ namespace PizzaGroup.Migrations
             modelBuilder.Entity("PizzaGroup.Models.OrderPizza", b =>
                 {
                     b.HasOne("PizzaGroup.Models.Order", "Order")
-                        .WithMany()
+                        .WithMany("OrderPizza")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("PizzaGroup.Models.Pizza", "Pizza")
-                        .WithMany()
+                        .WithMany("OrderPizzas")
                         .HasForeignKey("PizzaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -817,8 +817,15 @@ namespace PizzaGroup.Migrations
                     b.Navigation("Pizzas");
                 });
 
+            modelBuilder.Entity("PizzaGroup.Models.Order", b =>
+                {
+                    b.Navigation("OrderPizza");
+                });
+
             modelBuilder.Entity("PizzaGroup.Models.Pizza", b =>
                 {
+                    b.Navigation("OrderPizzas");
+
                     b.Navigation("PizzaToppings");
                 });
 

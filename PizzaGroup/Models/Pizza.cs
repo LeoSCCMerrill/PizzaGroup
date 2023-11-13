@@ -19,6 +19,7 @@ namespace PizzaGroup.Models
         public IList<Topping>? Toppings { get; set; } = new List<Topping>();
         public IList<Order>? Orders { get; set; } = new List<Order>();
         public IList<PizzaTopping>? PizzaToppings { get; set; } = new List<PizzaTopping>();
+        public IList<OrderPizza>? OrderPizzas { get; set; } = new List<OrderPizza>();
         public string? UserId { get; set; }
         public User? User { get; set; }
     }

@@ -76,9 +76,10 @@ namespace PizzaGroup.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+            order.OrderStatus = OrderStatus.ASSIGNED;
             _context.Add(order);
             _context.SaveChanges();
-            foreach (var pizza in order.Pizzas)
+            foreach (var pizza in orderSession.Pizzas)
             {
                 OrderPizza orderPizza = new()
                 {
