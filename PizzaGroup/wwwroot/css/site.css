@@ -93,6 +93,13 @@ main {
     background-color: #ddd;
 }
 
+table, th, td {
+    border: 1px solid;
+}
+
+#underlined {
+    text-decoration: underline;
+}
 #customers th {
     padding-top: 12px;
     padding-bottom: 12px;
