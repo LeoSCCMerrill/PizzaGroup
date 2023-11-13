@@ -1,78 +1,27 @@
 ﻿@model Order
 
-<h1>Details</h1>
+<h1 id="underlined">Details</h1>
 <body id="grad">
 
 	<form>
-		<table>
-		<tr>
-			<th>Pizza</th>
-			<th>Size</th>
-			<th>Crust</th>
-			<th>Sauce</th>
-			<th>Meat</th>
-			<th>Veggies</th>
-			<th>Cheese</th>
-		</tr>
-		<div>
-			@foreach (Pizza pizza in Model.PizzaList)
+
+		@foreach (Pizza pizza in Model.PizzaList)
+		{
+			<h2>@pizza.Name</h2>
+			var previousToppingType = ToppingType.OTHER;
+			@foreach(Topping topping in pizza.Toppings.OrderBy(o => o.ToppingType))
 			{
-				<tr>
-					<td>@pizza.Name</td>
-					<td>@pizza.Size</td>
-					<td>@pizza.Crust</td>
-					@foreach (PizzaTopping pizzaTopping in pizza.PizzaToppings)
-					{
-						<td>@pizzaTopping.Topping.Name</td>
+				
+				if(topping.ToppingType != previousToppingType)
+				{
+					
+					<h3>@topping.ToppingType</h3>
+				}
+				previousToppingType = topping.ToppingType;
+				<p>@topping.Name</p>
 
-						<td>
-							@for (int i = 0; i < pizza.Toppings.Count; i++)
-							{
-								@if (pizza.Toppings[i].ToppingType == ToppingType.SAUCE)
-								{
-
-									@pizza.Toppings[i].Name
-								}
-							}
-						</td>
-						<td>
-							@for (int i = 0; i < pizza.Toppings.Count; i++)
-							{
-								@if (pizza.Toppings[i].ToppingType == ToppingType.MEAT)
-								{
-
-									@pizza.Toppings[i].Name
-								}
-							}
-						</td>
-						<td>
-							@for (int i = 0; i < pizza.Toppings.Count; i++)
-							{
-								@if (pizza.Toppings[i].ToppingType == ToppingType.VEGGIE)
-								{
-
-									@pizza.Toppings[i].Name
-								}
-							}
-						</td>
-						<td>
-							@for (int i = 0; i < pizza.Toppings.Count; i++)
-							{
-								@if (pizza.Toppings[i].ToppingType == ToppingType.CHEESE)
-								{
-
-									@pizza.Toppings[i].Name
-								}
-							}
-						</td>
-					}
-
-
-				</tr>
 			}
-
-		</div>
-		</table>
+		}
 	</form>
 	<br />
 	<button type="submit">Pizza Finished</button>
