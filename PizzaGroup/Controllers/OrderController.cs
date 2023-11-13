@@ -90,6 +90,7 @@ namespace PizzaGroup.Controllers
                 _context.OrderPizzas.Add(orderPizza);
             }
             _context.SaveChanges();
+            HttpContext.Session.Remove(SessionKeyOrder);
             return RedirectToAction("Index", "Home");
         }
 
