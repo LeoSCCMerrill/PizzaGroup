@@ -12,8 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.AspNetCore.Session;
 using System.Text.Json;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.EntityFrameworkCore;
 
 namespace PizzaGroup.Controllers
 {
@@ -71,64 +70,62 @@ namespace PizzaGroup.Controllers
             return View(eInfo);
         }
 
-        public IActionResult SubmitOrder()
+        public async Task<IActionResult> SubmitOrder()
         {
-            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
-
-            Order order2 = new Order
+            if (HttpContext == null || HttpContext.Session == null || HttpContext.Session.Get<Order>(SessionKeyOrder) == null)
             {
-                CustomerId = order.CustomerId,
-                EmployeeId = order.EmployeeId,
+                return RedirectToAction("Index", "Home");
+            }
+            Order orderSession = HttpContext.Session.Get<Order>(SessionKeyOrder);
+            Order order = new()
+            {
+                CustomerId = orderSession.CustomerId,
+                EmployeeId = orderSession.EmployeeId,
             };
-            _context.Add(order2); 
+            if (!(order.EmployeeId.Length > 0))
+            {
+                await AssignToEmployee(order);
+            }
+            if (!(order.EmployeeId.Length > 0))
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            order.OrderStatus = OrderStatus.ASSIGNED;
+            _context.Add(order);
             _context.SaveChanges();
-
-                foreach (var pizza in order.Pizzas)
+            foreach (var pizza in orderSession.Pizzas)
+            {
+                OrderPizza orderPizza = new()
                 {
-                        OrderPizza orderPizza = new()
-                        {
-                            Quantity = pizza.Value,
-                            PizzaId = pizza.Key,
-                            OrderId = order2.Id,
-                        };
-                _context.OrderPizzas.Add(orderPizza); 
-                }
-
+                    Quantity = pizza.Value,
+                    PizzaId = pizza.Key,
+                    OrderId = order.Id,
+                };
+                _context.OrderPizzas.Add(orderPizza);
+            }
             _context.SaveChanges();
-
-
-
-            HttpContext.Session.Set<Order>(SessionKeyOrder, null); // Clears the session
-
-
-            return RedirectToAction("index", "Home");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost, ActionName("Delete")]
-        public IActionResult Delete(int pizzaId, int index)
+        public IActionResult Delete(int id)
         {
-            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
-
-            Pizza? pizza = _context.Pizzas.Find(pizzaId);
-
-            if (pizza == null || order == null)
+            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);  // The button shouldn't pop up unless there is something add validation just in case later
+            IList<Pizza> pizzaList = order.PizzaList;
+            IDictionary<int, int> pizzaDictionary = order.Pizzas;
+            var pizza = pizzaList.FirstOrDefault(p => p.Id == id);
+            if (pizzaDictionary[id] > 1)
             {
-                return NotFound();
+                pizzaDictionary[id]--;
+            } else
+            {
+                pizzaDictionary.Remove(id);
             }
-            //IList<Pizza> pizzaList = order.PizzaList;
-            //IDictionary<int, int> pizzaDictionary = order.Pizzas;
-            //pizzaDictionary.Remove(pizza.Id);
-
-            order.PizzaList.RemoveAt(index);
-          
-
-            order.Pizzas.Remove(pizzaId);
-
-            //order.PizzaList.Remove(pizza);  //WHY WONT YOU REMOVE?????!?!?!?!??!?!?
             
+            pizzaList.Remove(pizza);
             HttpContext.Session.Set(SessionKeyOrder, order);
-
             return RedirectToAction("ViewOrder");
+
         }
 
 
@@ -148,7 +145,7 @@ namespace PizzaGroup.Controllers
                 order = new Order
                 {
                     CustomerId = id,
-                    EmployeeId = "Something New"
+                    EmployeeId = ""
                 };
                 HttpContext.Session.Set<Order>(SessionKeyOrder, order);
             }
@@ -165,6 +162,33 @@ namespace PizzaGroup.Controllers
 
             return RedirectToAction("ViewOrder");
 
+        }
+        private async Task AssignToEmployee(Order order)
+        {
+            IList<Order> orders = _context.Orders.ToList();
+            IDictionary<string, int> employeeAssignments = (await userManager.GetUsersInRoleAsync("Employee")).ToDictionary(u=>u.Id, u=>0);
+            if (employeeAssignments.Count > 0)
+            {
+                foreach (Order orderElement in orders)
+                {
+                    if (orderElement.OrderStatus == OrderStatus.OUT_FOR_DELIVERY ||
+                        orderElement.OrderStatus == OrderStatus.ASSIGNED ||
+                        orderElement.OrderStatus == OrderStatus.FINAL_CHECK ||
+                        orderElement.OrderStatus == OrderStatus.ADDING_TOPPINGS ||
+                        orderElement.OrderStatus == OrderStatus.BAKING_PIZZAS ||
+                        orderElement.OrderStatus == OrderStatus.TOSSING_DOUGH)
+                    {
+                        employeeAssignments[orderElement.EmployeeId]++;
+                    }
+                }
+                string assigneeId = employeeAssignments.MinBy(kvp => kvp.Value).Key;
+                if (assigneeId != null)
+                {
+                    order.EmployeeId = assigneeId;
+                    return;
+                }
+            }
+            order.EmployeeId = "";
         }
     }
 }

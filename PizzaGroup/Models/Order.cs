@@ -14,7 +14,8 @@ public class Order
     [NotMapped]
     public IDictionary<int, int> Pizzas { get; set; }
     [NotMapped]
-    public IList<Pizza> PizzaList { get; set; }
+    public IList<Pizza> PizzaList { get; set; } = new List<Pizza>();
+    public IList<OrderPizza> OrderPizza { get; set; } = new List<OrderPizza>();
     public Order()
     {
         Pizzas = new Dictionary<int, int>();

@@ -1,38 +1,33 @@
 ﻿@model Order
 @ViewBag.Orders
 
-
-@if (@Model == null || @Model.PizzaList.Count == 0)
-{
-<h1>Nothing is here</h1>
-<form method="GET">
-    <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Buy A Pizza</a>
-</form>
-}else{
-
-<table style="border-width:1; border-color:" Black";>
-    <thead>
-        <tr>
-            <th>Pizza ID</th>
-            <th>Price</th>
-            <th>Delivery/Pickup</th>
-            <th></th>
-        </tr>
+@if (@Model != null && Model.PizzaList.Count > 0){
+    <table id="customers" >
+        <thead>
+    <tr>
+        <th>Pizza</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
     </thead>
     <tbody>
         <form method="post">
-            @foreach (Pizza pizza in @Model.PizzaList)
-            {
+                @{
+                    int counter = 0;
+                    int lastPizzaId = 0;
+                }
+
+            @foreach (var pizza in @Model.PizzaList.OrderBy(p => p.Id))
+            { if(@lastPizzaId != pizza.Id)
+                {
+                    counter = 0;
+                }
+                lastPizzaId = pizza.Id;
+                counter++;
             <tr>
-                <td>@pizza.Id</td>
+                <td>@pizza.Name (@counter of @Model.Pizzas[pizza.Id])</td>
                 <td>@pizza.Price</td>
-                <td>
-                    <input type="radio" name="delivery" /><label> Delivery</label>
-                    <br />
-                    <input type="radio" name="pickup" /><label> Pickup</label>
-                </td>
-                <td><button asp-action="Delete" asp-route-pizzaId="@pizza.Id" asp-route-index="@Model.PizzaList.IndexOf(pizza)">Delete</button></td>
-                <br />
+                <td><button asp-action="Delete" asp-route-id="@pizza.Id">Delete</button></td>
             </tr>
             }
         </form>
@@ -49,6 +44,30 @@
 <input type="text" name="zipcode" pattern="[0-9]{5}" required />
 <br />
 @*</form>*@
+    <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Add another pizza</a>
+    <br />
+
+    <input type="radio" name="orderType" value="delivery"/>
+
+    <label> Delivery</label>
+    <br />
+    <input type="radio" name="orderType" value="pickup" checked/>
+
+    <label> Pickup</label>
+
+    
+    decimal total = 0.0m;
+    foreach (var pizza in Model.PizzaList)
+    {
+        total += pizza.Price;
+    }
+    <h3>Total: @total.ToString("c")</h3>
+    
+        
+    
+
+    
+    <h3>Enter a Delivery Address</h3>
 
 <form method="post" asp-action="SubmitOrder" asp-controller="Order">
     <button class="btn btn-primary" value="SUBMIT">Submit</button>

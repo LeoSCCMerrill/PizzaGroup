@@ -19,14 +19,14 @@
                     {
                         <div>@topping.Name</div>
                     }
-                    <div>@pizza.Size</div>
+                    <div>@pizza.Size.Name</div>
                     <div>@pizza.Price</div>
                     totalPrice += pizza.Price;
                     
                 }
                 <div>@order.OrderStatus</div>
                 <div>@totalPrice</div>
-            <form asp-controller="Employee" asp-action="Details" asp-route-orderId="@order" method="get">
+            <form asp-controller="Employee" asp-action="Details" asp-route-id="@order.Id" method="get">
                 <button type="submit">Details</button>
             </form>
             </div>
