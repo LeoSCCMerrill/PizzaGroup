@@ -10,6 +10,7 @@ using NuGet.Packaging;
 
 namespace PizzaGroup.Controllers
 {
+    [Authorize]
     public class CustomerController : Controller
 
     {
@@ -27,7 +28,7 @@ namespace PizzaGroup.Controllers
             _sizes = _context.Sizes.ToDictionary(size => size.Id, size => size);
             _toppings = _context.Toppings.ToDictionary(topping => topping.Id, topping => topping);
         }
-
+        [AllowAnonymous]
         [HttpGet]
         public IActionResult Index()
         {
@@ -37,7 +38,7 @@ namespace PizzaGroup.Controllers
             return View(pizzas);
         }
 
-
+        [AllowAnonymous]
         [HttpGet]  // retrieve the list of pizzas
         public IActionResult ListPizzas()
         {
@@ -57,14 +58,16 @@ namespace PizzaGroup.Controllers
                 .Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping)
                 .Where(p => p.UserId == null)
                 .ToList();
+                if(userId != null)
+                {
+                    IList<Pizza> userPizzas = _context.Pizzas.Include(p => p.Size)
+                    .Include(p => p.Crust)
+                    .Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping)
+                    .Where(p => p.UserId == userId)
+                    .ToList();
 
-                IList<Pizza> userPizzas = _context.Pizzas.Include(p => p.Size)
-                .Include(p => p.Crust)
-                .Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping)
-                .Where(p => p.UserId == userId)
-                .ToList();
-
-                pizzas.AddRange(userPizzas);
+                    pizzas.AddRange(userPizzas);
+                }
                 return View(pizzas);
             }
             
