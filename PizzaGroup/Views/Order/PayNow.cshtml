@@ -1,0 +1,104 @@
+﻿
+
+<body>
+    <h3>Credit/Debit Card Payment:</h3>
+    <label>
+        Name on Card:
+        <input type="text" name="cardholderName" />
+    </label>
+    <br />
+    <label>
+        Card Number:
+        <input type="text" name="cardNumber" id="cardNumber" />
+    </label>
+    <br />
+    <label>
+        Expiration Date:
+        <input type="text" name="expirationDate" />
+    </label>
+    <br />
+    <label>
+        CVV:
+        <input type="text" name="cvv" />
+    </label>
+    <br />
+    <button type="button" class="btn btn-primary" id="payWithCardButton">Pay with Card</button>
+</body>
+
+<script>
+    document.getElementById("payWithCardButton").addEventListener("click", function () {
+        // Retrieve card details
+        var cardholderName = document.querySelector('input[name="cardholderName"]').value;
+        var cardNumber = document.getElementById("cardNumber").value;
+        var expirationDate = document.querySelector('input[name="expirationDate"]').value;
+        var cvv = document.querySelector('input[name="cvv"]').value;
+
+        // Validate cardholderName
+        if (cardholderName.length < 4) {
+            alert("Cardholder name must be at least 4 characters long.");
+            return;
+        }
+
+        // Validate cardNumber
+        if (!/^\d{16}$/.test(cardNumber)) {
+            alert("Invalid card number. It should be 16 digits long.");
+            return;
+        }
+
+        // Validate expiration date format
+        if (!/^(0[1-9]|1[0-2])\/\d{2}$/.test(expirationDate)) {
+            alert("Invalid expiration date format. Please use MM/YY.");
+            return;
+        }
+
+        // Validate if expiration date is in the future
+        var today = new Date();
+        var expiration = new Date("20" + expirationDate.slice(3, 5), expirationDate.slice(0, 2), 1);
+        if (expiration < today) {
+            alert("Card has expired.");
+            return;
+        }
+
+        // Validate CVV2 code
+        if (!/^\d{3}$/.test(cvv)) {
+            alert("Invalid CVV2 code. It should be 3 digits long.");
+            return;
+        }
+
+        // Create and submit a form with card details
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "@Url.Action("ThankYou", "Order")";
+
+        // Create hidden input fields for card details
+        var cardholderNameField = document.createElement("input");
+        cardholderNameField.type = "hidden";
+        cardholderNameField.name = "cardholderName";
+        cardholderNameField.value = cardholderName;
+
+        var cardNumberField = document.createElement("input");
+        cardNumberField.type = "hidden";
+        cardNumberField.name = "cardNumber";
+        cardNumberField.value = cardNumber;
+
+        var expirationDateField = document.createElement("input");
+        expirationDateField.type = "hidden";
+        expirationDateField.name = "expirationDate";
+        expirationDateField.value = expirationDate;
+
+        var cvvField = document.createElement("input");
+        cvvField.type = "hidden";
+        cvvField.name = "cvv";
+        cvvField.value = cvv;
+
+        // Append the input fields to the form
+        form.appendChild(cardholderNameField);
+        form.appendChild(cardNumberField);
+        form.appendChild(expirationDateField);
+        form.appendChild(cvvField);
+
+        // Append the form to the body and submit it
+        document.body.appendChild(form);
+        form.submit();
+    });
+</script>

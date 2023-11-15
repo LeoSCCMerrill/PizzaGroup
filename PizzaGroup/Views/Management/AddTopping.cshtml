@@ -1,0 +1,24 @@
+﻿@model Topping
+
+<body id="grad">
+    <form method="post" asp-action="AddTopping">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <label asp-for="@Model.Name">Topping Name:</label>
+        <input asp-for="@Model.Name" />
+        <br />
+        <label asp-for="@Model.Price">Price:</label>
+        <input asp-for="@Model.Price" />
+        <br />
+        <label asp-for="@Model.ToppingType">Topping Type:</label>
+        <select asp-for="@Model.ToppingType" class="=form-control">
+            @foreach (ToppingType toppingType in Enum.GetValues(typeof(ToppingType)))
+            {
+                <option value="@toppingType">@toppingType</option>
+            }
+        </select>
+        <br />
+        <button type="submit">Confirm Changes</button>
+        <br />
+        <a asp-action="ToppingsControls" class="btn btn-primary">Back</a>
+    </form>
+</body>

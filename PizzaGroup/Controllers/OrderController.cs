@@ -191,6 +191,25 @@ namespace PizzaGroup.Controllers
             }
             order.EmployeeId = "";
         }
+
+        public IActionResult PayNow() {
+
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ProcessPayment()
+        {
+
+            return View("ThankYou");
+        }
+        public IActionResult ThankYou()
+        {
+            return View();
+        }
+
+
     }
 }
 public static class SessionExtensions
