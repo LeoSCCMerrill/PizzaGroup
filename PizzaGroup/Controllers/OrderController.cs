@@ -33,16 +33,28 @@ namespace PizzaGroup.Controllers
             var defaultPizzas = _context.Pizzas.Select(p => p.Id == PizzaId);
             return View(defaultPizzas);
         }
-        [HttpGet]
-        public IActionResult ViewOrder(int code)
+
+        
+        public IActionResult ViewOrder()
         {
             //Get this fixed
-            if (code < 0)
+
+            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+            decimal grandTotal = 0;
+
+
+            if (order == null) {
+                ViewBag.Total = null;
+            }else
             {
-                ViewBag.ErrorMessage = "There was an issue submitting your order. If this issue persists please call us!";
-                ViewBag.ErrorId = $"SubmitOrder exited with code {code}";
+                foreach (var item in order.PizzaList)
+                {
+                    grandTotal += item.Price;
+
+                }
+                ViewBag.Total = grandTotal;
             }
-            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+
             return View(order);
         }
 
@@ -144,7 +156,7 @@ namespace PizzaGroup.Controllers
             order.PizzaList.Add(pizza);
             HttpContext.Session.Set<Order>(SessionKeyOrder, order);
 
-            return RedirectToAction("ListPizzas", "Customer");
+            return RedirectToAction("ViewOrder");
 
         }
         private async Task AssignToEmployee(Order order)
@@ -174,6 +186,25 @@ namespace PizzaGroup.Controllers
             }
             order.EmployeeId = "";
         }
+
+        public IActionResult PayNow() {
+
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ProcessPayment()
+        {
+
+            return View("ThankYou");
+        }
+        public IActionResult ThankYou()
+        {
+            return View();
+        }
+
+
     }
 }
 public static class SessionExtensions

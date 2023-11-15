@@ -4,7 +4,22 @@
     ViewData["Title"] = "Order Status";
 }
 
-@if (Model != null)
-{
-    <h1>Current Order Status: @Model.OrderStatus</h1>
-}
+<body id="grad">
+
+
+    <h1>
+        Current Order Status:
+        @{}
+    </h1>
+
+    @*  This will only show up if you are logged in as a employee *@
+    @if (User.Identity.IsAuthenticated && (User.IsInRole("Employee")))
+    {
+        <form method="post" asp-action="" asp-controller="Order">
+            <input type="submit" class="btn btn-primary" value="Start Order" />
+        </form>
+        <br />
+        <a asp-action="UpdateStatus" asp-controller="Employee" class="btn btn-primary">Order Complete</a>
+    }
+
+</body>

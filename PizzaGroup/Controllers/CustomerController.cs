@@ -76,7 +76,7 @@ namespace PizzaGroup.Controllers
         [HttpGet]
         public IActionResult PizzaStatus()
         {
-            //var status
+
             return View();
         }
 
@@ -141,7 +141,7 @@ namespace PizzaGroup.Controllers
                             PizzaId = model.Pizza.Id,
                             ToppingId = entry.Topping.Id,
                         };
-                        price += entry.Topping.Price;
+                        price += (Decimal) entry.Topping.Price;
                         _context.PizzaToppings.Add(pizzaTopping);
                     }
                 }

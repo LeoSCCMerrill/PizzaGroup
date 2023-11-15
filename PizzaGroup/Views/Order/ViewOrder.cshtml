@@ -1,18 +1,9 @@
 ﻿@model Order
 @ViewBag.Orders
 
-@if (ViewBag.ErrorMessage != null && ViewBag.ErrorMessage.Count > 0)
-{
-    <h1 class="alert-danger">@ViewBag.ErrorMessage</h1>
-    @if (ViewBag.ErrorId != null && ViewBag.ErrorId.Count > 0)
-    {
-        <div class="alert-danger">@ViewBag.ErrorId</div>
-    }
-}
-
-@if (@Model != null && Model.PizzaList.Count > 0)
-{
-    <table id="customers">
+<body id="grad">
+@if (@Model != null && Model.PizzaList.Count > 0){
+    <table id="customers" >
         <thead>
             <tr>
                 <th>Pizza</th>
@@ -27,27 +18,28 @@
                     int lastPizzaId = 0;
                 }
 
-                @foreach (var pizza in @Model.PizzaList.OrderBy(p => p.Id))
+            @foreach (var pizza in @Model.PizzaList.OrderBy(p => p.Id))
+            { if(@lastPizzaId != pizza.Id)
                 {
-                    if (@lastPizzaId != pizza.Id)
-                    {
-                        counter = 0;
-                    }
-                    lastPizzaId = pizza.Id;
-                    counter++;
-                <tr>
-                    <td>@pizza.Name (@counter of @Model.Pizzas[pizza.Id])</td>
-                    <td>@pizza.Price</td>
-                    <td><button asp-action="Delete" asp-route-id="@pizza.Id">Delete</button></td>
-                </tr>
+                    counter = 0;
                 }
-            </form>
-        </tbody>
+                lastPizzaId = pizza.Id;
+                counter++;
+            <tr>
+                <td>@pizza.Name (@counter of @Model.Pizzas[pizza.Id])</td>
+                <td>@pizza.Price</td>
+                <td><button asp-action="Delete" asp-route-id="@pizza.Id">Delete</button></td>
+            </tr>
+            }
+        </form>
+    </tbody>
     </table>
-
+    <br />
     <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Add another pizza</a>
     <br />
+    <br />
 
+<h3>Enter a Delivery Address</h3>
     <input type="radio" name="orderType" value="delivery" />
 
     <label> Delivery</label>
@@ -55,19 +47,42 @@
     <input type="radio" name="orderType" value="pickup" checked />
 
     <label> Pickup</label>
+    <br />
+
+
+<label>Address: </label>
+<input type="text" name="address" pattern="(?=\S*\s)(?=[^a-zA-Z]*[a-zA-Z])(?=\D*\d)[a-zA-Z\d\s',.#/-]*" required />
+<br />
+<label>Zipcode: </label>
+<input type="text" name="zipcode" pattern="[0-9]{5}" required />
+<br />
 
 
     decimal total = 0.0m;
+    decimal salesTax = 0.07m;
+    decimal industryTax = 0.10m;
+    decimal totalDue = 0.0m;
     foreach (var pizza in Model.PizzaList)
     {
         total += pizza.Price;
+        salesTax = total * salesTax;
+        industryTax = total * industryTax;
+        totalDue = total + salesTax + industryTax;
     }
-    <h3>Total: @total.ToString("c")</h3>
+    <h4>Sub-Total: @total.ToString("c")</h4>
+    <h4>Sales Tax: @salesTax.ToString("c")</h4>
+    <h4>Service Industry Tax: @industryTax.ToString("c")</h4>
+    <h4 id="underlined">Total Due: @totalDue.ToString("c")</h4>
+    
+       
+        <br>
+    <form method="post" asp-action="payNow" asp-controller="Order">
+        <button class="btn btn-primary" value="SUBMIT">Pay Now</button>
+    </form>
+    <br />
+    
 
-
-
-
-
+    <div class="col-md-6">
     <h3>Enter a Delivery Address</h3>
     <label>Address: </label>
     <input type="text" name="address" pattern="(?=\S*\s)(?=[^a-zA-Z]*[a-zA-Z])(?=\D*\d)[a-zA-Z\d\s',.#/-]*" required />
@@ -78,14 +93,15 @@
     <br />
 
     <form method="post" asp-action="SubmitOrder" asp-controller="Order">
-        <button class="btn btn-primary" value="SUBMIT">SUBMIT</button>
+    <button  class="btn btn-primary" value="SUBMIT">Pay at Pickup</button>
     </form>
+    <br />
+    </div>
 
+}else{
+<h1>Nothing is here</h1>
+<form method="post">
+    <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Buy A Pizza</a>
+</form>
 }
-else
-{
-    <h1>Nothing is here</h1>
-    <form method="post">
-        <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Buy A Pizza</a>
-    </form>
-}
+</body>
