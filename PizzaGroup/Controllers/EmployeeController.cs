@@ -40,13 +40,18 @@ namespace PizzaGroup.Controllers
             return View(order);
         }
         [HttpPost]
-        public IActionResult UpdateStatus(Order order, OrderStatus status)
+        public IActionResult UpdateStatus(Order order, int status)
         {
-            if (order != null)
+            //Temp to see what is easier seding the Order ID or the whole Order
+            //Order order = _context.Orders.Find(orderId);
+
+            if (order == null)
             {
-                //order.OrderStatus = status;
+                return NotFound();
             }
-            _context.Update(order);
+
+            order.OrderStatus = (OrderStatus)status;
+            _context.Orders.Update(order);
             _context.SaveChanges();
             return RedirectToAction("Details", order);
         }
