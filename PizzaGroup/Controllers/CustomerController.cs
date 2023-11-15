@@ -76,7 +76,7 @@ namespace PizzaGroup.Controllers
         [HttpGet]
         public IActionResult PizzaStatus()
         {
-            //var status
+
             return View();
         }
 

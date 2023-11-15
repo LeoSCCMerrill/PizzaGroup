@@ -47,15 +47,14 @@
 
     <label> Pickup</label>
     <br />
-@*<form method="post" asp-controller="Order">*@
+
+
 <label>Address: </label>
 <input type="text" name="address" pattern="(?=\S*\s)(?=[^a-zA-Z]*[a-zA-Z])(?=\D*\d)[a-zA-Z\d\s',.#/-]*" required />
 <br />
 <label>Zipcode: </label>
 <input type="text" name="zipcode" pattern="[0-9]{5}" required />
 <br />
-
-@*</form>*@
 
 
     decimal total = 0.0m;
