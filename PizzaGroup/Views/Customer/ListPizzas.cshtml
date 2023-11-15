@@ -27,7 +27,7 @@
                 <td>@pizza.Size.Name</td>
                 <td>@pizza.Price.ToString("c")</td>
                 <td>
-                        <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id">
+                        <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id" >
                             <input type="submit" class="btn btn-primary"value="Add to Order"/>
                         </form>
                 </td>

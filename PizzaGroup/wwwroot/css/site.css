@@ -92,11 +92,11 @@ main {
 #customers tr:hover {
     background-color: #ddd;
 }
-
+/*
 table, th, td {
     border: 1px solid;
 }
-
+*/
 #underlined {
     text-decoration: underline;
 }
@@ -126,4 +126,43 @@ table, th, td {
 
 .standard-cell {
     height: 50px;
+}
+
+.cart-anchor {
+    padding-top: 0;
+    margin-top: -2px;
+}
+
+.cart-image {
+    height: 48px;
+}
+
+.cart-count {
+    position: absolute;
+    top: 9px;
+    color: #fff;
+    text-align: center;
+    right: 376px;
+}
+
+.cart-count-background {
+    animation-name: cart-add;
+    animation-duration: 0.5s;
+    position: absolute;
+    top: 11px;
+    background: #d64747;
+    color: #fff;
+    border-radius: 50%;
+    width: 23px;
+    height: 23px;
+    text-align: center;
+    right: 372px;
+}
+
+.cart-count-padding {
+    margin-left: -6px;
+}
+
+@keyframes cart-add {
+    50% { width: 27px; height: 27px; top: 9px; right: 370px;}
 }

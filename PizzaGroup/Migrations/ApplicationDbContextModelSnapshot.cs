@@ -52,21 +52,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "cb873ba5-1aca-4ddb-81a6-6a26f1e005d8",
+                            ConcurrencyStamp = "bde81df1-bb5b-4027-b3d7-2cd5a8d1d1c3",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "b8dd55b9-8ff4-466e-9fc9-32b2f1b7807a",
+                            ConcurrencyStamp = "f28651a9-3a89-4623-936b-355a23e42252",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "13a78bec-4ea7-4f85-99c2-08e10c2c9c23",
+                            ConcurrencyStamp = "46230871-34e5-4de3-abcd-c1f5914fd418",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -264,6 +264,9 @@ namespace PizzaGroup.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("CustomerId")
                         .IsRequired()

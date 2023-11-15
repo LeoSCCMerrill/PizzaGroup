@@ -4,4 +4,7 @@
     ViewData["Title"] = "Order Status";
 }
 
-<h1>Current Order Status: @Model.OrderStatus</h1>
+@if (Model != null)
+{
+    <h1>Current Order Status: @Model.OrderStatus</h1>
+}
