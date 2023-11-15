@@ -37,12 +37,26 @@ namespace PizzaGroup.Controllers
             return View(defaultPizzas);
         }
 
+        
         public IActionResult ViewOrder()
         {
             //Get this fixed
 
-            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+            decimal grandTotal = 0;
 
+
+            if (order == null) {
+                ViewBag.Total = null;
+            }else
+            {
+                foreach (var item in order.PizzaList)
+                {
+                    grandTotal += item.Price;
+
+                }
+                ViewBag.Total = grandTotal;
+            }
 
             return View(order);
 
@@ -90,6 +104,7 @@ namespace PizzaGroup.Controllers
                 _context.OrderPizzas.Add(orderPizza);
             }
             _context.SaveChanges();
+            HttpContext.Session.Remove(SessionKeyOrder);
             return RedirectToAction("Index", "Home");
         }
 
@@ -146,7 +161,7 @@ namespace PizzaGroup.Controllers
             order.PizzaList.Add(pizza);
             HttpContext.Session.Set<Order>(SessionKeyOrder, order);
 
-            return View("ViewOrder", order);
+            return RedirectToAction("ViewOrder");
 
         }
         private async Task AssignToEmployee(Order order)

@@ -52,21 +52,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "a6f91489-1ff8-4d58-9f74-20dde4257bcf",
+                            ConcurrencyStamp = "cb873ba5-1aca-4ddb-81a6-6a26f1e005d8",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "f9b9a83c-997b-4bd7-90c0-b83b91bb6a32",
+                            ConcurrencyStamp = "b8dd55b9-8ff4-466e-9fc9-32b2f1b7807a",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "eb201c63-1227-4a47-a283-2f9d6db884bc",
+                            ConcurrencyStamp = "13a78bec-4ea7-4f85-99c2-08e10c2c9c23",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
