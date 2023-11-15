@@ -1,6 +1,7 @@
 ﻿@model Order
 @ViewBag.Orders
 
+<body id="grad">
 @if (@Model != null && Model.PizzaList.Count > 0){
     <table id="customers" >
         <thead>
@@ -37,8 +38,6 @@
     <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Add another pizza</a>
     <br />
     <br />
-
-    <input type="radio" name="orderType" value="delivery"/>
 
 <h3>Enter a Delivery Address</h3>
     <input type="radio" name="orderType" value="delivery" />
@@ -106,3 +105,4 @@
     <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Buy A Pizza</a>
 </form>
 }
+</body>
