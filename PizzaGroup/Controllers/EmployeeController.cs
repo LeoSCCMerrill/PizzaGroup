@@ -55,6 +55,44 @@ namespace PizzaGroup.Controllers
             _context.SaveChanges();
             return RedirectToAction("Details", order);
         }
+        [HttpGet]
+        public IActionResult DeleteOrder(int id)
+        {
+            return View(id);
+        }
+        [HttpPost]
+        [ActionName("DeleteOrder")]
+        public IActionResult DeleteOrderPost(int id)
+        {
+            Order order = _context.Orders.Include(o => o.OrderPizza).FirstOrDefault(o => o.Id == id);
+            if (order != null)
+            {
+                if(order.EmployeeId == User.FindFirstValue(ClaimTypes.NameIdentifier))
+                {
+                    if(order.OrderStatus != OrderStatus.DELIVERED)
+                    {
+                        foreach(OrderPizza op in order.OrderPizza)
+                        {
+                            _context.OrderPizzas.Remove(op);
+                        }
+                        _context.Orders.Remove(order);
+                        _context.SaveChanges();
+                    } else
+                    {
+                        return RedirectToAction("BadDelete");
+                    }         
+                }
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return RedirectToAction("BadDelete");
+            }
+        }
+        public IActionResult BadDelete()
+        {
+            return View();
+        }
         [HttpPost]
         public IActionResult Delete(Order order)
         {

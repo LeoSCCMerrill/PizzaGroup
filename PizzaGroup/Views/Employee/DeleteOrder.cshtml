@@ -1,0 +1,10 @@
+﻿@model int
+
+<link rel="stylesheet" href="~/css/site.css">
+<body id="grad">
+    <h1>Are you sure you want to cancel this order?</h1>
+    <form method="post" asp-action="DeleteOrder" asp-route-id="@Model">
+        <button type="submit" class="btn btn-primary">Yes</button>
+        <a asp-action="Details" asp-route-id="@Model" class="btn btn-secondary">No</a>
+    </form>
+</body>
