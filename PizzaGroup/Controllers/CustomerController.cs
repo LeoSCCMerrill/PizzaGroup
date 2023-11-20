@@ -73,12 +73,6 @@ namespace PizzaGroup.Controllers
             
         }
 
-        [HttpGet]
-        public IActionResult PizzaStatus()
-        {
-
-            return View();
-        }
 
         private bool IsShopOpen(DateTime currentTime)
         {

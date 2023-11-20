@@ -13,6 +13,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.AspNetCore.Session;
 using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol.Plugins;
 
 namespace PizzaGroup.Controllers
 {
@@ -37,7 +38,24 @@ namespace PizzaGroup.Controllers
             return View(defaultPizzas);
         }
 
-        
+        [HttpGet]
+        public IActionResult PizzaStatus(int status)
+        {
+            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+            //var currentStatus = _context.Orders.
+
+
+            //currentStatus.OrderStatus = (OrderStatus)status;
+
+            if (order == null)
+            {
+                RedirectToAction("Index");
+            }
+
+            
+            return View(order);
+        }
+
         public IActionResult ViewOrder()
         {
             //Get this fixed
