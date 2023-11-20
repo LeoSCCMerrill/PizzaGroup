@@ -106,10 +106,18 @@ namespace PizzaGroup.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult Delete(int id)
         {
-            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);  // The button shouldn't pop up unless there is something add validation just in case later
+            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);  // The button shouldn't pop up unless there is something add validation just in case later
+            if (order == null)
+            {
+                return RedirectToAction("ViewOrder");
+            }
             IList<Pizza> pizzaList = order.PizzaList;
             IDictionary<int, int> pizzaDictionary = order.Pizzas;
-            var pizza = pizzaList.FirstOrDefault(p => p.Id == id);
+            Pizza? pizza = pizzaList.FirstOrDefault(p => p.Id == id);
+            if (pizza == null)
+            {
+                return RedirectToAction("ViewOrder");
+            }
             if (pizzaDictionary[id] > 1)
             {
                 pizzaDictionary[id]--;
@@ -117,7 +125,6 @@ namespace PizzaGroup.Controllers
             {
                 pizzaDictionary.Remove(id);
             }
-            
             pizzaList.Remove(pizza);
             HttpContext.Session.Set(SessionKeyOrder, order);
             return RedirectToAction("ViewOrder");
@@ -127,7 +134,7 @@ namespace PizzaGroup.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddOrder(int pizzaId)
+        public IActionResult AddOrder(int pizzaId)
         {
             Pizza? pizza = _context.Pizzas.Find(pizzaId);
             string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -156,7 +163,7 @@ namespace PizzaGroup.Controllers
             order.PizzaList.Add(pizza);
             HttpContext.Session.Set<Order>(SessionKeyOrder, order);
 
-            return RedirectToAction("ViewOrder");
+            return RedirectToAction("ListPizzas", "Customer");
 
         }
         private async Task AssignToEmployee(Order order)

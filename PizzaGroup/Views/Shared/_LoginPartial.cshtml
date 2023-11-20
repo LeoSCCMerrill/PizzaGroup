@@ -3,11 +3,12 @@
 @inject UserManager<User> UserManager
 @{
     string cartCount;
-    if (Context.Session.Get<Order>("_Order") != null)
+    Order? order = Context.Session.Get<Order>("_Order");
+    if (order != null)
     {
         try
         {
-            cartCount = Context.Session.Get<Order>("_Order").PizzaList.Count.ToString();
+            cartCount = order.PizzaList.Count.ToString();
         }
         catch (Exception e)
         {
