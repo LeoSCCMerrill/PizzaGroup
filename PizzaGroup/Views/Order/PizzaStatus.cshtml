@@ -1,4 +1,5 @@
-﻿@model Order
+﻿@using System.Security.Principal;
+@model Order
 
 @{
     ViewData["Title"] = "Order Status";
@@ -15,7 +16,10 @@
     </h1>
 
     @*  This will only show up if you are logged in as a employee *@
-    @if (User.Identity.IsAuthenticated && (User.IsInRole("Employee")))
+    @{
+        IIdentity? userIdentity = User.Identity;
+    }
+    @if ((userIdentity != null && userIdentity.IsAuthenticated) || (User.IsInRole("Employee")))
     {
         <form method="post" asp-action="AssignToEmployee" asp-controller="Order">
             <input type="submit" class="btn btn-primary" value="Start Order" />

@@ -5,14 +5,14 @@
 @if (@Model != null && Model.PizzaList.Count > 0){
     <table id="customers" >
         <thead>
-    <tr>
-        <th>Pizza</th>
-        <th>Price</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-        <form method="post">
+            <tr>
+                <th>Pizza</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <form method="post">
                 @{
                     int counter = 0;
                     int lastPizzaId = 0;
@@ -88,7 +88,7 @@
     <input type="text" name="address" pattern="(?=\S*\s)(?=[^a-zA-Z]*[a-zA-Z])(?=\D*\d)[a-zA-Z\d\s',.#/-]*" required />
     <br />
     <label>Zipcode: </label>
-    <input type="text" name="zipcode" pattern="[0-9]{5}" required/>
+    <input type="text" name="zipcode" pattern="[0-9]{5}" required />
     <br />
     <br />
 

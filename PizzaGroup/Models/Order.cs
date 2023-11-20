@@ -11,6 +11,7 @@ public class Order
     public string CustomerId { get; set; }
     public string EmployeeId { get; set; }
     public OrderStatus OrderStatus { get; set; } // Change Back to OrderStatus Later
+    public DateTime CreatedDate { get; set; }
     [NotMapped]
     public IDictionary<int, int> Pizzas { get; set; }
     [NotMapped]

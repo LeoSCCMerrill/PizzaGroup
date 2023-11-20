@@ -185,6 +185,21 @@ namespace PizzaGroup.Controllers
         }
 
         [HttpGet]
+        public IActionResult DeleteTopping(int id)
+        {
+            var model = _context.Toppings.FirstOrDefault(t => t.Id == id);
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult DeleteTopping(Topping model)
+        {
+            _context.ChangeTracker.Clear();
+            _context.Remove(model);
+            _context.SaveChanges();
+            return RedirectToAction("ToppingsControls");
+        }
+
+        [HttpGet]
         public IActionResult DeletePizza(int id)
         {
             ViewBag.UserId = null;

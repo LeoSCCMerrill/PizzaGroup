@@ -21,20 +21,17 @@ namespace PizzaGroup.Controllers
     public class OrderController : Controller
     {
         public const string SessionKeyOrder = "_Order";
-        private UserManager<User> userManager;
-        private RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<User> _userManager;
         private readonly ApplicationDbContext _context;
-        public OrderController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
+        public OrderController(UserManager<User> userManager, ApplicationDbContext context)
         {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
-            this._context = context;
+            _userManager = userManager;
+            _context = context;
         }
 
         public IActionResult Index(int PizzaId)
         {
             var defaultPizzas = _context.Pizzas.Select(p => p.Id == PizzaId);
-
             return View(defaultPizzas);
         }
 
@@ -77,10 +74,7 @@ namespace PizzaGroup.Controllers
             }
 
             return View(order);
-
-
         }
-
 
         public IActionResult Edit(int Id)
         {
@@ -90,15 +84,16 @@ namespace PizzaGroup.Controllers
 
         public async Task<IActionResult> SubmitOrder()
         {
-            if (HttpContext == null || HttpContext.Session == null || HttpContext.Session.Get<Order>(SessionKeyOrder) == null)
+            Order? orderSession = HttpContext.Session.Get<Order>(SessionKeyOrder);
+            if (orderSession == null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("ViewOrder", -1);
             }
-            Order orderSession = HttpContext.Session.Get<Order>(SessionKeyOrder);
             Order order = new()
             {
                 CustomerId = orderSession.CustomerId,
                 EmployeeId = orderSession.EmployeeId,
+                CreatedDate = DateTime.Now,
             };
             if (!(order.EmployeeId.Length > 0))
             {
@@ -106,7 +101,7 @@ namespace PizzaGroup.Controllers
             }
             if (!(order.EmployeeId.Length > 0))
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("ViewOrder", -2);
             }
             order.OrderStatus = OrderStatus.ASSIGNED;
             _context.Add(order);
@@ -129,10 +124,18 @@ namespace PizzaGroup.Controllers
         [HttpPost, ActionName("Delete")]
         public IActionResult Delete(int id)
         {
-            Order order = HttpContext.Session.Get<Order>(SessionKeyOrder);  // The button shouldn't pop up unless there is something add validation just in case later
+            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);  // The button shouldn't pop up unless there is something add validation just in case later
+            if (order == null)
+            {
+                return RedirectToAction("ViewOrder");
+            }
             IList<Pizza> pizzaList = order.PizzaList;
             IDictionary<int, int> pizzaDictionary = order.Pizzas;
-            var pizza = pizzaList.FirstOrDefault(p => p.Id == id);
+            Pizza? pizza = pizzaList.FirstOrDefault(p => p.Id == id);
+            if (pizza == null)
+            {
+                return RedirectToAction("ViewOrder");
+            }
             if (pizzaDictionary[id] > 1)
             {
                 pizzaDictionary[id]--;
@@ -140,7 +143,6 @@ namespace PizzaGroup.Controllers
             {
                 pizzaDictionary.Remove(id);
             }
-            
             pizzaList.Remove(pizza);
             HttpContext.Session.Set(SessionKeyOrder, order);
             return RedirectToAction("ViewOrder");
@@ -150,7 +152,7 @@ namespace PizzaGroup.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddOrder(int pizzaId)
+        public IActionResult AddOrder(int pizzaId)
         {
             Pizza? pizza = _context.Pizzas.Find(pizzaId);
             string id = User.FindFirstValue(ClaimTypes.NameIdentifier);
@@ -179,13 +181,13 @@ namespace PizzaGroup.Controllers
             order.PizzaList.Add(pizza);
             HttpContext.Session.Set<Order>(SessionKeyOrder, order);
 
-            return RedirectToAction("ViewOrder");
+            return RedirectToAction("ListPizzas", "Customer");
 
         }
         private async Task AssignToEmployee(Order order)
         {
             IList<Order> orders = _context.Orders.ToList();
-            IDictionary<string, int> employeeAssignments = (await userManager.GetUsersInRoleAsync("Employee")).ToDictionary(u=>u.Id, u=>0);
+            IDictionary<string, int> employeeAssignments = (await _userManager.GetUsersInRoleAsync("Employee")).ToDictionary(u=>u.Id, u=>0);
             if (employeeAssignments.Count > 0)
             {
                 foreach (Order orderElement in orders)

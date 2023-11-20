@@ -1,0 +1,13 @@
+﻿@model Topping
+
+<body id="grad">
+    <h1>Delete Topping?</h1>
+    <form method="post" asp-action="DeleteTopping" >
+        <h2>@Model.Name</h2>
+        <h2>$@Model.Price</h2>
+        <h2>Type = @Model.ToppingType</h2>
+        <button type="submit" class="btn btn-primary">Delete</button>
+        <a asp-action="ToppingsControls" class="btn btn-secondary">Back</a>
+    </form>
+    
+</body>
