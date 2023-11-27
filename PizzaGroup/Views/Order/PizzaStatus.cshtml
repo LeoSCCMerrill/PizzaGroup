@@ -7,25 +7,66 @@
 
 <body id="grad">
 
-
     <h1>
         Current Order Status:
-        @*@{
-            string currentStatus = Model.OrderStatus.ToString();
-        }*@
+        
     </h1>
-
-    @*  This will only show up if you are logged in as a employee *@
-    @{
-        IIdentity? userIdentity = User.Identity;
-    }
-    @if ((userIdentity != null && userIdentity.IsAuthenticated) || (User.IsInRole("Employee")))
+    <h1>
+        @Model.OrderStatus
+    </h1>
+    @if (@Model != null && Model.PizzaList.Count > 0)
     {
-        <form method="post" asp-action="AssignToEmployee" asp-controller="Order">
-            <input type="submit" class="btn btn-primary" value="Start Order" />
-        </form>
-        <br />
-        <a asp-action="UpdateStatus" asp-controller="Employee" class="btn btn-primary">Order Complete</a>
-    }
+        <table id="customers">
+            <thead>
+                <tr>
+                    <th>Pizza</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                <form method="post">
+                    @{
+                        int counter = 0;
+                        int lastPizzaId = 0;
+                    }
 
+                    @foreach (var pizza in @Model.PizzaList.OrderBy(p => p.Id))
+                    {
+                        if (@lastPizzaId != pizza.Id)
+                        {
+                            counter = 0;
+                        }
+                        lastPizzaId = pizza.Id;
+                        counter++;
+                    <tr>
+                        <td>@pizza.Name (@counter of @Model.Pizzas[pizza.Id])</td>
+                        <td>@pizza.Price</td>
+                    </tr>
+                    }
+                </form>
+            </tbody>
+        </table>
+
+
+        @*  This will only show up if you are logged in as a employee *@
+
+            IIdentity? userIdentity = User.Identity;
+
+        @if ((userIdentity != null && userIdentity.IsAuthenticated) && (User.IsInRole("Employee")))
+        {
+            <form method="post" asp-action="AssignToEmployee" asp-controller="Order">
+                <input type="submit" class="btn btn-primary" value="Start Order" />
+            </form>
+            <br />
+            <a asp-action="UpdateStatus" asp-controller="Employee" class="btn btn-primary">Order Complete</a>
+        }
+
+    } else
+    {
+        <br />
+        <h1>You haven't bought a pizza!</h1>
+        <form method="post">
+            <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Buy A Pizza</a>
+        </form>
+    }
 </body>

@@ -36,13 +36,9 @@ namespace PizzaGroup.Controllers
         }
 
         [HttpGet]
-        public IActionResult PizzaStatus(int status)
+        public IActionResult PizzaStatus()
         {
             Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
-            //var currentStatus = _context.Orders.
-
-
-            //currentStatus.OrderStatus = (OrderStatus)status;
 
             if (order == null)
             {
