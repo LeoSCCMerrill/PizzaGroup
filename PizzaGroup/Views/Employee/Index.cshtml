@@ -1,5 +1,5 @@
 ﻿@model IList<Order>
-
+</script>
 <link rel="stylesheet" href="~/css/site.css">
 
 <body id="grad">
@@ -35,7 +35,16 @@
                     @{
                         string standardStatus = Model[i].OrderStatus.ToString().Substring(0, 1) + Model[i].OrderStatus.ToString().Substring(1).ToLower();
                     }
-                    <tr><td class="standard-cell">Status: @standardStatus</td></tr>
+                    
+                    <tr>
+                        <td>
+                            <form method="post" asp-controller="employee" asp-action="UpdateStatus"  asp-route-orderId="@Model[i].Id">
+                                <select asp-items="Html.GetEnumSelectList<OrderStatus>()"></select>
+                                <input type="submit">
+                            </form>
+                        </td>
+                    </tr>
+                    
                     <tr><td class="standard-cell">Order Total: @totalPrice.ToString("c")</td></tr>
                     <tr><td class="standard-cell"><a class="btn btn-info" style="width: 100%;" asp-controller="Employee" asp-action="Details" asp-route-id="@Model[i].Id">Details</a></td></tr>
                     <tr><td class="standard-cell"><a class="btn btn-danger" style="width: 100%;" asp-controller="Employee" asp-action="DeleteOrder" asp-route-id="@Model[i].Id">Delete Order</a></td></tr>

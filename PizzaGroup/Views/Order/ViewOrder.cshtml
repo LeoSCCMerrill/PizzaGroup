@@ -69,5 +69,19 @@
 
 <form method="post" asp-action="SubmitOrder" asp-controller="Order">
     <button class="btn btn-primary" value="SUBMIT">Submit</button>
-</form>
+    </form>
+}
+else
+{
+    
+    <h1>Nothing Here</h1>
+
+    <form method="post" asp-controller="employee" asp-action="UpdateStatus" asp-route-status="temp.value" asp-route-order="@Model">
+    <select id="temp" asp-items="Html.GetEnumSelectList<OrderStatus>()"></select>\
+    <input type="submit">
+    </form>
+    <asp:dropdownlist asp-items="Html.GetEnumSelectList<OrderStatus>()"></asp:dropdownlist>
+    
+    
+
 }
