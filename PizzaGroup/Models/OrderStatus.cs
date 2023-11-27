@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace PizzaGroup.Models
+﻿namespace PizzaGroup.Models
 {
     public enum OrderStatus
     {

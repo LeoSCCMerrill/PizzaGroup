@@ -5,24 +5,25 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PizzaGroup.Data;
 using PizzaGroup.Models;
-using System.Security.Claims;
 
 namespace PizzaGroup.Controllers
 {
     [Authorize(Roles = "Owner, Manager")]
     public class ManagementController : Controller
     {
-        private readonly UserManager<User> userManager;
-        private readonly RoleManager<IdentityRole> roleManager;
+        private readonly UserManager<User> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ApplicationDbContext _context;
+        private readonly ILogger<ManagementController> _logger;
         private readonly IDictionary<int, Crust> _crusts;
         private readonly IDictionary<int, Size> _sizes;
         private readonly IDictionary<int, Topping> _toppings;
-        public ManagementController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context)
+        public ManagementController(UserManager<User> userManager, RoleManager<IdentityRole> roleManager, ApplicationDbContext context, ILogger<ManagementController> logger)
         {
-            this.userManager = userManager;
-            this.roleManager = roleManager;
+            _userManager = userManager;
+            _roleManager = roleManager;
             _context = context;
+            _logger = logger;
             _crusts = _context.Crusts.ToDictionary(crust => crust.Id, crust => crust);
             _sizes = _context.Sizes.ToDictionary(size => size.Id, size => size);
             _toppings = _context.Toppings.ToDictionary(topping => topping.Id, topping => topping);
@@ -46,8 +47,8 @@ namespace PizzaGroup.Controllers
             user.EmailConfirmed = true;
             user.Email = user.UserName;
             user.NormalizedEmail = user.NormalizedUserName;
-            await userManager.CreateAsync(user);
-            await userManager.AddToRoleAsync(user, "Employee");
+            await _userManager.CreateAsync(user, user.PasswordHash);
+            await _userManager.AddToRoleAsync(user, "Employee");
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
@@ -55,25 +56,25 @@ namespace PizzaGroup.Controllers
         [HttpPost]
         public async Task<IActionResult> DemoteManager(string userId)
         {
-            User user = await userManager.FindByIdAsync(userId);
-            await userManager.RemoveFromRoleAsync(user, "Manager");
-            await userManager.AddToRoleAsync(user, "Employee");
+            User user = await _userManager.FindByIdAsync(userId);
+            await _userManager.RemoveFromRoleAsync(user, "Manager");
+            await _userManager.AddToRoleAsync(user, "Employee");
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public async Task<IActionResult> PromoteEmployee(string userId)
         {
-            User user = await userManager.FindByIdAsync(userId);
-            await userManager.RemoveFromRoleAsync(user, "Employee");
-            await userManager.AddToRoleAsync(user, "Manager");
+            User user = await _userManager.FindByIdAsync(userId);
+            await _userManager.RemoveFromRoleAsync(user, "Employee");
+            await _userManager.AddToRoleAsync(user, "Manager");
             return RedirectToAction("Index");
         }
 
         [HttpPost]
         public async Task<IActionResult> DeleteEmployee(string userId)
         {
-            await userManager.DeleteAsync(await userManager.FindByIdAsync(userId));
+            await _userManager.DeleteAsync(await _userManager.FindByIdAsync(userId));
             return RedirectToAction("Index");
         }
 
@@ -83,11 +84,9 @@ namespace PizzaGroup.Controllers
             ViewBag.Sizes = _sizes.Values;
             ViewBag.Crusts = _crusts.Values;
             ViewBag.Toppings = _toppings.Values;
-            List<ToppingList> theList = new List<ToppingList>();
+            List<ToppingList> theList = new();
             foreach (Topping topping in _toppings.Values)
-            {
                 theList.Add(new ToppingList { Topping = topping, IsSelected = false });
-            }
             var theModel = new CustomizeViewModel
             {
                 Pizza = new Pizza { },
@@ -95,6 +94,7 @@ namespace PizzaGroup.Controllers
             };
             return View(theModel);
         }
+
         [HttpPost]
         public IActionResult CreateNewPizza(CustomizeViewModel model)
         {
@@ -102,7 +102,7 @@ namespace PizzaGroup.Controllers
             {
                 _context.Add(model.Pizza);
                 _context.SaveChanges();
-                Decimal price = 0.0m;
+                decimal price = 0.0m;
                 foreach (ToppingList entry in model.ToppingList)
                 {
                     if (entry.IsSelected == true)
@@ -112,7 +112,7 @@ namespace PizzaGroup.Controllers
                             PizzaId = model.Pizza.Id,
                             ToppingId = entry.Topping.Id,
                         };
-                        price += (Decimal) entry.Topping.Price;
+                        price += entry.Topping.Price;
                         _context.PizzaToppings.Add(pizzaTopping);
                     }
                 }
@@ -122,7 +122,6 @@ namespace PizzaGroup.Controllers
                 model.Pizza.Price = price;
                 _context.Update(model.Pizza);
                 _context.SaveChanges();
-
                 return RedirectToAction("ListPizzas");
             }
             else
@@ -152,16 +151,17 @@ namespace PizzaGroup.Controllers
         {
             if (ModelState.IsValid)
             {
-                var topping = _context.Toppings.Find(model.Id);
+                Topping? topping = _context.Toppings.Find(model.Id);
+                if (topping == null)
+                    return View(model);
                 topping.Name = model.Name;
                 topping.Price = model.Price;
                 topping.ToppingType = model.ToppingType;
                 _context.SaveChanges();
                 return RedirectToAction("ToppingsControls");
-            } else
-            {
-                return View(model);
             }
+            else
+                return View(model);
         }
 
         [HttpGet]
@@ -178,10 +178,9 @@ namespace PizzaGroup.Controllers
                 _context.Toppings.Add(model);
                 _context.SaveChanges();
                 return RedirectToAction("ToppingsControls");
-            } else
-            {
-                return View(model);
             }
+            else
+                return View(model);
         }
 
         [HttpGet]
@@ -190,6 +189,7 @@ namespace PizzaGroup.Controllers
             var model = _context.Toppings.FirstOrDefault(t => t.Id == id);
             return View(model);
         }
+
         [HttpPost]
         public IActionResult DeleteTopping(Topping model)
         {
@@ -204,9 +204,9 @@ namespace PizzaGroup.Controllers
         {
             ViewBag.UserId = null;
             Pizza model = _context.Pizzas.Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping)
-                .Include(p => p.Size)
-                .Include(p => p.Crust)
-                .FirstOrDefault(p => p.Id == id);
+                                         .Include(p => p.Size)
+                                         .Include(p => p.Crust)
+                                         .FirstOrDefault(p => p.Id == id) ?? new Pizza();
             return View(model);
         }
         [HttpPost]
@@ -217,12 +217,10 @@ namespace PizzaGroup.Controllers
                 var pizzaId = model.Id;
                 _context.Pizzas.Remove(model);
                 foreach (var pt in _context.PizzaToppings.Where(pt => pt.PizzaId == pizzaId).ToList())
-                {
                     _context.PizzaToppings.Remove(pt);
-                }
                 _context.SaveChanges();
             }
-            return RedirectToAction("ListPizzas","Customer");
+            return RedirectToAction("ListPizzas", "Customer");
         }
 
         [HttpPost]
@@ -230,13 +228,10 @@ namespace PizzaGroup.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Add the pizza to the database
                 _context.Pizzas.Add(model);
                 _context.SaveChanges();
-
-                return RedirectToAction("TestPizzaView"); // Redirect to the TestPizzaView
+                return RedirectToAction("TestPizzaView");
             }
-
             return View("CreateNewPizza", model); // Show the form with validation errors
         }
 
@@ -244,46 +239,51 @@ namespace PizzaGroup.Controllers
         [HttpGet]
         public IActionResult EditPizza(int id)
         {
-            
-            // Retrieve the selected Pizza by its Id
-            var pizza = _context.Pizzas.Include(p => p.Size).Include(p => p.Crust).FirstOrDefault(p => p.Id == id);
-           
+            Pizza? pizza = _context.Pizzas.Include(p => p.Size).Include(p => p.Crust).FirstOrDefault(p => p.Id == id);
             return View(pizza);
-
         }
+
         [Authorize(Roles = "Owner, Manager")]
         [HttpPost]
-        public IActionResult EditPizza(Pizza pizza, Crust crust)
+        public IActionResult EditPizza(Pizza pizza)
         {
-              
             if (ModelState.IsValid)
-            { 
- 
+            {
                 _context.Pizzas.Update(pizza);
                 _context.SaveChanges();
-
                 return RedirectToAction("ListPizzas", "Customer");
             }
             return View(pizza);
         }
 
+        [Authorize(Roles = "Owner, Manager")]
+        [HttpGet]
+        public IActionResult LimitedTimeDeal(int id)
+        {
+            var StartDate = ViewBag.StartDate ?? DateTime.Today;
+            var EndDate = ViewBag.EndDate ?? DateTime.Today;
+            
+                
+
+            // Retrieve the selected Pizza by its Id
+            var pizza = _context.Pizzas.Include(p => p.Size).Include(p => p.Crust).FirstOrDefault(p => p.Id == id);
+            return View(pizza);
+        }
 
         private async Task<UserViewModel> GetViewModel()
         {
             IList<User> users = new List<User>();
-            foreach (User user in userManager.Users)
+            foreach (User user in _userManager.Users)
             {
-                user.RoleNames = await userManager.GetRolesAsync(user);
+                user.RoleNames = await _userManager.GetRolesAsync(user);
                 users.Add(user);
             }
-            UserViewModel viewModel = new()
+            UserViewModel model = new()
             {
                 Users = users,
-                Roles = roleManager.Roles
+                Roles = _roleManager.Roles.ToList()
             };
-            return viewModel;
+            return model;
         }
-
     }
-   
 }

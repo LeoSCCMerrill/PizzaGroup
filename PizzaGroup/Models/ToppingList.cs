@@ -2,7 +2,7 @@
 {
     public class ToppingList
     {
-        public Topping Topping { get; set; }
-        public Boolean IsSelected { get; set; }
+        public Topping Topping { get; set; } = new Topping();
+        public bool IsSelected { get; set; }
     }
 }

@@ -1,25 +1,29 @@
 ﻿@model Pizza
 
 <body id="grad">
-	<h2>Edit Pizza: @Model.Name</h2>
+	<h2>Create a Limited-Time Deal for: @Model.Name</h2>
 
-	<form asp-action="EditPizza" method="post" id="customers">
+	<form asp-action="LimitedTimeDeal" method="post" id="customers">
 		<div asp-validation-summary="All" class="text-danger"></div>
 		<input type="hidden" asp-for="@Model.Id" />
-
-		<div class="form-group">
-			<label asp-for="@Model.Name">Pizza Name</label>
-			<input asp-for="@Model.Name" class="form-control" value="@Model.Name" />
-		</div>
 
 		<div class="form-control">
 			<label asp-for="@Model.Price">Price</label>
 			<input asp-for="@Model.Price" class="form-control" />
 		</div>
-	
+		<br />
+		<div>
+			<h4>Select Start Date:</h4>
+			<input value="@ViewBag.StartDate" type="date" required />
+		</div>
+		<br />
+		<h4>Select End Date:</h4>
+		<input value="@ViewBag.EndDate" type="date" required />
+		<br /><br />
+
 		<input type="hidden" asp-for="CrustId" />
 		<input type="hidden" asp-for="SizeId" />
-		<button type="submit" class="btn btn-edit">Edit</button>
+		<button type="submit" class="btn btn-edit">Create Deal</button>
 		<a asp-controller="Customer" asp-action="ListPizzas" class="btn btn-primary">Cancel</a>
 
 	</form>

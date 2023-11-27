@@ -1,4 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using PizzaGroup.Controllers;
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 @{
@@ -20,8 +21,8 @@
     {
         cartCount = "";
     }
-
 }
+
 <ul class="navbar-nav">
     <li class="nav-item">
         <a class="nav-link text-dark cart-anchor" asp-controller="Order" asp-action="ViewOrder" title="Cart" asp-route-code="1">
@@ -60,11 +61,3 @@
         </li>
     }
 </ul>
-
-<script>
-    "use strict"
-
-    document.addEventListener("DOMContentLoaded", () => {
-
-    })
-</script>
