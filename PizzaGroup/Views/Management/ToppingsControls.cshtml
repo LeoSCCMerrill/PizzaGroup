@@ -1,0 +1,20 @@
+﻿@model List<Topping>
+<body id ="grad">
+    <h1>Existing Toppings:</h1>
+    @{
+        ToppingType previousType = ToppingType.OTHER;
+        <ul>
+        @foreach(Topping topping in Model.OrderBy(t => t.ToppingType))
+        {
+            if(previousType != topping.ToppingType)
+            {
+                <h2>@topping.ToppingType</h2>
+            }
+            previousType = topping.ToppingType;
+            <li>@topping.Name <a asp-action="EditTopping" asp-route-id="@topping.Id">Edit</a> | <a asp-action="DeleteTopping" asp-route-id="@topping.Id">Delete</a></li>
+        }
+        </ul>
+        <a asp-action="AddTopping" class="btn btn-primary">New Topping</a>
+    }
+    
+</body>

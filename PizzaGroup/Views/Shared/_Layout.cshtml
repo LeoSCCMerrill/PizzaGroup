@@ -32,7 +32,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Customer" asp-action="PizzaStatus">Your Order Status</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="PizzaStatus">Your Order Status</a>
                             </li>
                         }
 @*          To access the following links you must be logged in AND be in the Manager or Owner role  *@              
@@ -43,6 +43,9 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Management" asp-action="Index">Employee Management</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Management" asp-action="ToppingsControls">Toppings Controls</a>
                             </li>
                         }
                         @if (User.IsInRole("Employee") || User.IsInRole("Manager") || User.IsInRole("Owner")) {

@@ -112,7 +112,7 @@ namespace PizzaGroup.Controllers
                             PizzaId = model.Pizza.Id,
                             ToppingId = entry.Topping.Id,
                         };
-                        price += entry.Topping.Price;
+                        price += (Decimal) entry.Topping.Price;
                         _context.PizzaToppings.Add(pizzaTopping);
                     }
                 }
@@ -133,6 +133,70 @@ namespace PizzaGroup.Controllers
                 return View(model);
             }
 
+        }
+        public IActionResult ToppingsControls()
+        {
+            List<Topping> model = _context.Toppings.ToList();
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult EditTopping(int id)
+        {
+            var model = _context.Toppings.FirstOrDefault(t => t.Id == id);
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult EditTopping(Topping model)
+        {
+            if (ModelState.IsValid)
+            {
+                var topping = _context.Toppings.Find(model.Id);
+                topping.Name = model.Name;
+                topping.Price = model.Price;
+                topping.ToppingType = model.ToppingType;
+                _context.SaveChanges();
+                return RedirectToAction("ToppingsControls");
+            } else
+            {
+                return View(model);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult AddTopping()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult AddTopping(Topping model)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Toppings.Add(model);
+                _context.SaveChanges();
+                return RedirectToAction("ToppingsControls");
+            } else
+            {
+                return View(model);
+            }
+        }
+
+        [HttpGet]
+        public IActionResult DeleteTopping(int id)
+        {
+            var model = _context.Toppings.FirstOrDefault(t => t.Id == id);
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult DeleteTopping(Topping model)
+        {
+            _context.ChangeTracker.Clear();
+            _context.Remove(model);
+            _context.SaveChanges();
+            return RedirectToAction("ToppingsControls");
         }
 
         [HttpGet]
