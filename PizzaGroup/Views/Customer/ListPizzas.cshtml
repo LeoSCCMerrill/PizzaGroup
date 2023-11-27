@@ -16,7 +16,7 @@
                 @{
                     IIdentity? userIdentity = User.Identity;
                 }
-                @if ((userIdentity != null && userIdentity.IsAuthenticated) || (User.IsInRole("Manager") || User.IsInRole("Owner")))
+                @if ((userIdentity != null && userIdentity.IsAuthenticated) && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                 {
                     <th>Edit Pizza</th>
                     <th>Remove Pizza</th>
@@ -39,7 +39,7 @@
                             <input type="submit" class="btn btn-primary" value="Add to Order" />
                         </form>
                     </td>
-                    @if ((userIdentity != null && userIdentity.IsAuthenticated) || (User.IsInRole("Manager") || User.IsInRole("Owner")))
+                    @if ((userIdentity != null && userIdentity.IsAuthenticated) && (User.IsInRole("Manager") || User.IsInRole("Owner")))
                     {
                         <td>
                             <a asp-controller="Management" asp-action="EditPizza" asp-route-id="@pizza.Id">
