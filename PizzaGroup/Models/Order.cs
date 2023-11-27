@@ -7,13 +7,12 @@ public class Order
 {
     [Key]
     public int Id { get; set; }
-    [Required(ErrorMessage = "Please Enter A CustomerID")]
-    public string CustomerId { get; set; }
-    public string EmployeeId { get; set; }
-    public OrderStatus OrderStatus { get; set; } // Change Back to OrderStatus Later
-    public DateTime CreatedDate { get; set; }
+    public string CustomerId { get; set; } = string.Empty;
+    public string EmployeeId { get; set; } = string.Empty;
+    public OrderStatus OrderStatus { get; set; }
+    public DateTime CreatedDate { get; set; } = DateTime.Now;
     [NotMapped]
-    public IDictionary<int, int> Pizzas { get; set; }
+    public IDictionary<int, int> Pizzas { get; set; } = new Dictionary<int, int>();
     [NotMapped]
     public IList<Pizza> PizzaList { get; set; } = new List<Pizza>();
     public IList<OrderPizza> OrderPizza { get; set; } = new List<OrderPizza>();

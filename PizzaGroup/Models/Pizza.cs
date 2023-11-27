@@ -1,25 +1,24 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace PizzaGroup.Models
 {
     public class Pizza
     {
         [Key]
-        public int Id { get; set; } //PK
+        public int Id { get; set; }
         [Required(ErrorMessage = "Please enter a pizza name")]
-        public string? Name { get; set; }
+        public string Name { get; set; } = string.Empty;
         [Required(ErrorMessage = "Please choose a size")]
         public int SizeId { get; set; }
         public Size? Size { get; set; }
         [Required(ErrorMessage = "Please choose a crust")]
-        public int CrustId { get; set; }
+        public int CrustId { get; set; } = 1;
         public Crust? Crust { get; set; }
-        public Decimal Price { get; set; } = 0.0m;
-        public IList<Topping>? Toppings { get; set; } = new List<Topping>();
-        public IList<Order>? Orders { get; set; } = new List<Order>();
-        public IList<PizzaTopping>? PizzaToppings { get; set; } = new List<PizzaTopping>();
-        public IList<OrderPizza>? OrderPizzas { get; set; } = new List<OrderPizza>();
+        public decimal Price { get; set; } = decimal.Zero;
+        public IList<Topping> Toppings { get; set; } = new List<Topping>();
+        public IList<Order> Orders { get; set; } = new List<Order>();
+        public IList<PizzaTopping> PizzaToppings { get; set; } = new List<PizzaTopping>();
+        public IList<OrderPizza> OrderPizzas { get; set; } = new List<OrderPizza>();
         public string? UserId { get; set; }
         public User? User { get; set; }
     }

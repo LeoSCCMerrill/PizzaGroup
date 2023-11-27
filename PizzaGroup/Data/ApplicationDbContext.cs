@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using PizzaGroup.Models;
+using System.Collections.Generic;
 
 namespace PizzaGroup.Data
 {
@@ -12,14 +12,14 @@ namespace PizzaGroup.Data
             : base(options)
         {
         }
-        public DbSet<User> ApplicationUsers { get; set; }
-        public DbSet<Pizza> Pizzas { get; set; }
-        public DbSet<Topping> Toppings { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Crust> Crusts { get; set; }
-        public DbSet<Size> Sizes { get; set; }
-        public DbSet<OrderPizza> OrderPizzas { get; set; }
-        public DbSet<PizzaTopping> PizzaToppings { get; set; }
+        public DbSet<User> ApplicationUsers => Set<User>();
+        public DbSet<Pizza> Pizzas => Set<Pizza>();
+        public DbSet<Topping> Toppings => Set<Topping>();
+        public DbSet<Order> Orders => Set<Order>();
+        public DbSet<Crust> Crusts => Set<Crust>();
+        public DbSet<Size> Sizes => Set<Size>();
+        public DbSet<OrderPizza> OrderPizzas => Set<OrderPizza>();
+        public DbSet<PizzaTopping> PizzaToppings => Set<PizzaTopping>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure the User entity
@@ -329,10 +329,138 @@ namespace PizzaGroup.Data
                 new Pizza
                 {
                     Id = 1,
-                    Name = "Custom 1",
+                    Name = "Pepperoni",
                     SizeId = 1,
                     CrustId = 1,
                     Price = 5.0m
+                },
+                new Pizza
+                {
+                    Id = 2,
+                    Name = "Beef",
+                    SizeId = 2,
+                    CrustId = 2,
+                    Price = 8.5m
+                },
+                new Pizza
+                {
+                    Id = 3,
+                    Name = "Cheese",
+                    SizeId = 3,
+                    CrustId = 3,
+                    Price = 8.0m
+                },
+                new Pizza
+                {
+                    Id = 4,
+                    Name = "Canadian Bacon",
+                    SizeId = 4,
+                    CrustId = 4,
+                    Price = 12.25m
+                },
+                new Pizza
+                {
+                    Id= 5,
+                    Name = "Sausage",
+                    SizeId = 4,
+                    CrustId = 5,
+                    Price = 14.0m
+                },
+                new Pizza
+                {
+                    Id = 6,
+                    Name = "Chicken Alfredo",
+                    SizeId = 4,
+                    CrustId = 6,
+                    Price = 18.25m
+                },
+                new Pizza
+                {
+                    Id = 7,
+                    Name = "Hawaiian",
+                    SizeId = 1,
+                    CrustId = 2,
+                    Price = 5.5m
+                },
+                new Pizza
+                {
+                    Id = 8,
+                    Name = "BBQ Chicken",
+                    SizeId = 3,
+                    CrustId = 3,
+                    Price = 14.0m
+                },
+                new Pizza
+                {
+                    Id = 9,
+                    Name = "Meat Lovers",
+                    SizeId = 2,
+                    CrustId = 4,
+                    Price = 10.0m
+                },
+                new Pizza
+                {
+                    Id = 10,
+                    Name = "Veggie Lovers",
+                    SizeId = 3,
+                    CrustId = 4,
+                    Price = 10.0m
+                },
+                new Pizza
+                {
+                    Id = 11,
+                    Name = "Hizza Special",
+                    SizeId = 4,
+                    CrustId = 5,
+                    Price = 16.75m
+                },
+                new Pizza
+                {
+                    Id = 12,
+                    Name = "Anchovie",
+                    SizeId = 1,
+                    CrustId = 6,
+                    Price = 5.0m
+                },
+                new Pizza
+                {
+                    Id = 13,
+                    Name = "Leo's Special",
+                    SizeId = 4,
+                    CrustId = 5,
+                    Price = 15.0m
+                },
+                new Pizza
+                {
+                    Id = 14,
+                    Name = "John's Special",
+                    SizeId = 4,
+                    CrustId = 1,
+                    Price = 15.0m
+                },
+                new Pizza
+                {
+                    Id= 15,
+                    Name = "Cameron's Special",
+                    SizeId = 4,
+                    CrustId = 2,
+                    Price = 15.5m
+                },
+                new Pizza
+                {
+                    Id = 16,
+                    Name = "Ryan's Special",
+                    SizeId = 4,
+                    CrustId = 3,
+                    Price = 15.25m
+                },
+                new Pizza
+                {
+                    Id = 17,
+                    Name = "Madelon's Special",
+                    SizeId = 4,
+                    CrustId = 4,
+                    Price = 15.25m
                 }
                 );
         }
