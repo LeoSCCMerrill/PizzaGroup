@@ -11,7 +11,7 @@
                 <h2>@topping.ToppingType</h2>
             }
             previousType = topping.ToppingType;
-            <li>@topping.Name <a asp-action="EditTopping" asp-route-id="@topping.Id">Edit</a></li>
+            <li>@topping.Name <a asp-action="EditTopping" asp-route-id="@topping.Id">Edit</a> | <a asp-action="DeleteTopping" asp-route-id="@topping.Id">Delete</a></li>
         }
         </ul>
         <a asp-action="AddTopping" class="btn btn-primary">New Topping</a>

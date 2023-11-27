@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using NuGet.Packaging;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace PizzaGroup.Controllers
 {
@@ -73,12 +74,6 @@ namespace PizzaGroup.Controllers
             
         }
 
-        [HttpGet]
-        public IActionResult PizzaStatus()
-        {
-            //var status
-            return View();
-        }
 
         private bool IsShopOpen(DateTime currentTime)
         {
@@ -127,7 +122,8 @@ namespace PizzaGroup.Controllers
         [HttpPost]
         public IActionResult CustomPizzaView(CustomizeViewModel model)
         {
-            if(ModelState.IsValid)
+            IEnumerable<ModelError> allErrors = ModelState.Values.SelectMany(v => v.Errors);
+            if (ModelState.IsValid)
             {
                 _context.Add(model.Pizza);
                 _context.SaveChanges();

@@ -5,14 +5,14 @@
 @if (@Model != null && Model.PizzaList.Count > 0){
     <table id="customers" >
         <thead>
-    <tr>
-        <th>Pizza</th>
-        <th>Price</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-        <form method="post">
+            <tr>
+                <th>Pizza</th>
+                <th>Price</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <form method="post">
                 @{
                     int counter = 0;
                     int lastPizzaId = 0;
@@ -39,25 +39,6 @@
     <br />
     <br />
 
-<h3>Enter a Delivery Address</h3>
-    <input type="radio" name="orderType" value="delivery" />
-
-    <label> Delivery</label>
-    <br />
-    <input type="radio" name="orderType" value="pickup" checked />
-
-    <label> Pickup</label>
-    <br />
-@*<form method="post" asp-controller="Order">*@
-<label>Address: </label>
-<input type="text" name="address" pattern="(?=\S*\s)(?=[^a-zA-Z]*[a-zA-Z])(?=\D*\d)[a-zA-Z\d\s',.#/-]*" required />
-<br />
-<label>Zipcode: </label>
-<input type="text" name="zipcode" pattern="[0-9]{5}" required />
-<br />
-
-@*</form>*@
-
 
     decimal total = 0.0m;
     decimal salesTax = 0.07m;
@@ -76,7 +57,7 @@
     <h4 id="underlined">Total Due: @totalDue.ToString("c")</h4>
     
        
-        <br>
+    <br>
     <form method="post" asp-action="payNow" asp-controller="Order">
         <button class="btn btn-primary" value="SUBMIT">Pay Now</button>
     </form>
@@ -84,19 +65,10 @@
     
 
     <div class="col-md-6">
-    <h3>Enter a Delivery Address</h3>
-    <label>Address: </label>
-    <input type="text" name="address" pattern="(?=\S*\s)(?=[^a-zA-Z]*[a-zA-Z])(?=\D*\d)[a-zA-Z\d\s',.#/-]*" required />
-    <br />
-    <label>Zipcode: </label>
-    <input type="text" name="zipcode" pattern="[0-9]{5}" required/>
-    <br />
-    <br />
-
-    <form method="post" asp-action="SubmitOrder" asp-controller="Order">
-    <button  class="btn btn-primary" value="SUBMIT">Pay at Pickup</button>
-    </form>
-    <br />
+        <form method="post" asp-action="SubmitOrder" asp-controller="Order">
+        <button  class="btn btn-primary" value="SUBMIT">Pay at Pickup</button>
+        </form>
+        <br />
     </div>
 
 }else{

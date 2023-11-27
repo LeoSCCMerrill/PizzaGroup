@@ -1,56 +1,60 @@
-﻿@model List<Pizza>
+﻿@using System.Security.Principal;
+@model List<Pizza>
 
 <h1>Browse all of our Classic Pizzas Here!</h1>
 <body id="grad">
 
     <table id="customers">
-    <thead>
-    <tr>
-        <th>Pizza</th>
-        <th>Size</th>
-        <th>Price</th>
-        <th>Add Pizza</th>
-       
-   @*  This will only show up if you are logged in as a manager *@
-                    @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
-                    {
-                        <th>Edit Pizza</th>
-                        <th>Remove Pizza</th>
-                        <th>Limited Time Deal</th>
-                    }
-    </tr>
+        <thead>
+            <tr>
+                <th>Pizza</th>
+                <th>Size</th>
+                <th>Price</th>
+                <th>Add Pizza</th>
+
+                @*  This will only show up if you are logged in as a manager *@
+                @{
+                    IIdentity? userIdentity = User.Identity;
+                }
+                @if ((userIdentity != null && userIdentity.IsAuthenticated) && (User.IsInRole("Manager") || User.IsInRole("Owner")))
+                {
+                    <th>Edit Pizza</th>
+                    <th>Remove Pizza</th>
+                }
+            </tr>
         </thead>
         <tbody>
-        @foreach (var pizza in @Model)
-        {
-            <tr>
-                <td>@pizza.Name</td>
-                <td>@pizza.Size.Name</td>
-                <td>@pizza.Price.ToString("c")</td>
-                <td>
-                        <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id">
-                            <input type="submit" class="btn btn-primary"value="Add to Order"/>
-                        </form>
-                </td>
-                @if (User.Identity.IsAuthenticated && (User.IsInRole("Manager") || User.IsInRole("Owner")))
+            @foreach (Pizza? pizza in Model)
+            {
+                @if (pizza == null || pizza.Size == null)
                 {
-                <td>
-                    <a asp-controller="Management" asp-action="EditPizza" asp-route-id="@pizza.Id">
-                       Edit Pizza
-                    </a>
-                </td>
-                <td>
-                    <a asp-action="DeletePizza" asp-controller="Management" asp-route-id="@pizza.Id" class="btn btn-primary">Delete</a>
-                </td>
-                        <td>
-                            <a asp-action="LimitedTimeDeal" asp-controller="Management" asp-route-id="@pizza.Id" class="btn btn-primary">Create Deal</a>
-                        </td>
+                    continue;
                 }
+                <tr>
+                    <td>@pizza.Name</td>
+                    <td>@pizza.Size.Name</td>
+                    <td>@pizza.Price.ToString("c")</td>
+                    <td>
+                        <form method="post" asp-action="AddOrder" asp-controller="Order" asp-route-pizzaId="@pizza.Id">
+                            <input type="submit" class="btn btn-primary" value="Add to Order" />
+                        </form>
+                    </td>
+                    @if ((userIdentity != null && userIdentity.IsAuthenticated) && (User.IsInRole("Manager") || User.IsInRole("Owner")))
+                    {
+                        <td>
+                            <a asp-controller="Management" asp-action="EditPizza" asp-route-id="@pizza.Id">
+                                Edit Pizza
+                            </a>
+                        </td>
+                        <td>
+                            <a asp-action="DeletePizza" asp-controller="Management" asp-route-id="@pizza.Id" class="btn btn-primary">Delete</a>
+                        </td>
+                    }
 
-            </tr>
-        }
+                </tr>
+            }
         </tbody>
-</table>
+    </table>
 
-<a asp-action="CustomPizzaView" asp-controller="Customer" class="btn btn-primary">Create new Pizza!</a>
+    <a asp-action="CustomPizzaView" asp-controller="Customer" class="btn btn-primary">Create new Pizza!</a>
 </body>

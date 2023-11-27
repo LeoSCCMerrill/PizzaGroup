@@ -1,29 +1,70 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
+@{
+    string cartCount;
+    Order? order = Context.Session.Get<Order>("_Order");
+    if (order != null)
+    {
+        try
+        {
+            cartCount = order.PizzaList.Count.ToString();
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e.StackTrace);
+            cartCount = "";
+        }
+    }
+    else
+    {
+        cartCount = "";
+    }
 
+}
 <ul class="navbar-nav">
     <li class="nav-item">
-        <a class="nav-link text-dark" asp-controller="Order" asp-action="ViewOrder" title="Cart"><img alt="Cart" src="~/images/cart.png" height="32"/> View Cart</a>
+        <a class="nav-link text-dark cart-anchor" asp-controller="Order" asp-action="ViewOrder" title="Cart" asp-route-code="1">
+            <img alt="Cart" src="~/images/cart.png" class="cart-image" />View Cart
+            @if (cartCount.Length > 0 && cartCount != "0")
+            {
+                <span class="cart-count-background"></span>
+                <span class="cart-count">
+                    @cartCount
+                    @if (int.Parse(cartCount) < 10)
+                    {
+                        <span class="cart-count-padding">&nbsp;</span>
+                    }
+                </span>
+            }
+        </a>
     </li>
-@if (SignInManager.IsSignedIn(User))
-{
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
-    </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Logout</button>
-        </form>
-    </li>
-}
-else
-{
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
-    </li>
-}
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+        </li>
+        <li class="nav-item">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+        </li>
+    }
 </ul>
+
+<script>
+    "use strict"
+
+    document.addEventListener("DOMContentLoaded", () => {
+
+    })
+</script>
