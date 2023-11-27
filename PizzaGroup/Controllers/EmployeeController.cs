@@ -37,34 +37,42 @@ namespace PizzaGroup.Controllers
                                                  .ThenInclude(pt => pt.Topping).Where(o => o.Id == id).FirstOrDefault();
             return View(order);
         }
+
         [HttpPost]
         public IActionResult EditOrder(Order order)
         {
             return View(order);
         }
-        [HttpPost]
-        public IActionResult UpdateStatus(int orderId)
-        {
-            
-            
-            //Temp to see what is easier seding the Order ID or the whole Order
-            Order? order = _context.Orders.Find(orderId);
 
+        [HttpPost]
+        public IActionResult UpdateStatus(int orderId, String selectValue)
+        {
+
+            //Couldn't figure out how to get the value from the selectList
+            //var strStatus = Request.Form["selectValue"];
+            int status = int.Parse(selectValue);
+            
+            Order? order = _context.Orders.Find(orderId);
             if (order == null)
             {
                 return NotFound();
             }
 
-            ////order.OrderStatus = (OrderStatus)status;
-            //_context.Orders.Update(order);
-            //_context.SaveChanges();
+            //Updates The Database
+            order.OrderStatus = (OrderStatus)status;
+            _context.Orders.Update(order);
+            _context.SaveChanges();
+
+
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public IActionResult DeleteOrder(int id)
         {
             return View(id);
         }
+
         [HttpPost]
         [ActionName("DeleteOrder")]
         public IActionResult DeleteOrderPost(int id)
@@ -94,10 +102,12 @@ namespace PizzaGroup.Controllers
                 return RedirectToAction("BadDelete");
             }
         }
+
         public IActionResult BadDelete()
         {
             return View();
         }
+
         [HttpPost]
         public IActionResult Delete(Order order)
         {
