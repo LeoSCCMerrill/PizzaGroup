@@ -2,25 +2,48 @@
 
 <body id="grad">
     <h3>Credit/Debit Card Payment:</h3>
-    <label>
-        Name on Card:
-        <input type="text" name="cardholderName" />
-    </label>
-    <br />
-    <label>
-        Card Number:
-        <input type="text" name="cardNumber" id="cardNumber" />
-    </label>
-    <br />
-    <label>
-        Expiration Date:
-        <input type="text" name="expirationDate" />
-    </label>
-    <br />
-    <label>
-        CVV:
-        <input type="text" name="cvv" />
-    </label>
+    <table>
+        <tr>
+            <td>
+                <label for="cardholderName">
+                    Name on Card:
+                </label>
+            </td>
+            <td>
+                <input class="m-1" type="text" name="cardholderName" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="cardNumber">
+                    Card Number:
+                </label>
+            </td>
+            <td>
+                <input class="m-1" type="text" name="cardNumber" id="cardNumber" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="expirationDate">
+                    Expiration Date:
+                </label>
+            </td>
+            <td>
+                <input class="m-1" type="text" name="expirationDate" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="cvv">
+                    CVV:
+                </label>
+            </td>
+            <td>
+                <input class="m-1" type="text" name="cvv" />
+            </td>
+        </tr>
+    </table>
     <br />
     <br />
     <button type="button" class="btn btn-primary" id="payWithCardButton">Pay with Card</button>
@@ -29,10 +52,12 @@
 <script>
     document.getElementById("payWithCardButton").addEventListener("click", function () {
         // Retrieve card details
-        var cardholderName = document.querySelector('input[name="cardholderName"]').value;
-        var cardNumber = document.getElementById("cardNumber").value;
-        var expirationDate = document.querySelector('input[name="expirationDate"]').value;
-        var cvv = document.querySelector('input[name="cvv"]').value;
+        const cardholderName = document.querySelector('input[name="cardholderName"]').value;
+        const cardNumber = document.getElementById("cardNumber").value;
+        const expirationDate = document.querySelector('input[name="expirationDate"]').value;
+        const cvv = document.querySelector('input[name="cvv"]').value;
+
+        // Retrieve error text displays
 
         // Validate cardholderName
         if (cardholderName.length < 4) {
@@ -53,8 +78,8 @@
         }
 
         // Validate if expiration date is in the future
-        var today = new Date();
-        var expiration = new Date("20" + expirationDate.slice(3, 5), expirationDate.slice(0, 2), 1);
+        const today = new Date();
+        const expiration = new Date("20" + expirationDate.slice(3, 5), expirationDate.slice(0, 2), 1);
         if (expiration < today) {
             alert("Card has expired.");
             return;
@@ -67,27 +92,27 @@
         }
 
         // Create and submit a form with card details
-        var form = document.createElement("form");
+        const form = document.createElement("form");
         form.method = "POST";
         form.action = "@Url.Action("ThankYou", "Order")";
 
         // Create hidden input fields for card details
-        var cardholderNameField = document.createElement("input");
+        const cardholderNameField = document.createElement("input");
         cardholderNameField.type = "hidden";
         cardholderNameField.name = "cardholderName";
         cardholderNameField.value = cardholderName;
 
-        var cardNumberField = document.createElement("input");
+        const cardNumberField = document.createElement("input");
         cardNumberField.type = "hidden";
         cardNumberField.name = "cardNumber";
         cardNumberField.value = cardNumber;
 
-        var expirationDateField = document.createElement("input");
+        const expirationDateField = document.createElement("input");
         expirationDateField.type = "hidden";
         expirationDateField.name = "expirationDate";
         expirationDateField.value = expirationDate;
 
-        var cvvField = document.createElement("input");
+        const cvvField = document.createElement("input");
         cvvField.type = "hidden";
         cvvField.name = "cvv";
         cvvField.value = cvv;

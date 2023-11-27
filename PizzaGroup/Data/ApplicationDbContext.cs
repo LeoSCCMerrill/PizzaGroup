@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
 using PizzaGroup.Models;
+using System.Collections.Generic;
 
 namespace PizzaGroup.Data
 {
@@ -12,14 +12,14 @@ namespace PizzaGroup.Data
             : base(options)
         {
         }
-        public DbSet<User> ApplicationUsers { get; set; }
-        public DbSet<Pizza> Pizzas { get; set; }
-        public DbSet<Topping> Toppings { get; set; }
-        public DbSet<Order> Orders { get; set; }
-        public DbSet<Crust> Crusts { get; set; }
-        public DbSet<Size> Sizes { get; set; }
-        public DbSet<OrderPizza> OrderPizzas { get; set; }
-        public DbSet<PizzaTopping> PizzaToppings { get; set; }
+        public DbSet<User> ApplicationUsers => Set<User>();
+        public DbSet<Pizza> Pizzas => Set<Pizza>();
+        public DbSet<Topping> Toppings => Set<Topping>();
+        public DbSet<Order> Orders => Set<Order>();
+        public DbSet<Crust> Crusts => Set<Crust>();
+        public DbSet<Size> Sizes => Set<Size>();
+        public DbSet<OrderPizza> OrderPizzas => Set<OrderPizza>();
+        public DbSet<PizzaTopping> PizzaToppings => Set<PizzaTopping>();
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Configure the User entity
