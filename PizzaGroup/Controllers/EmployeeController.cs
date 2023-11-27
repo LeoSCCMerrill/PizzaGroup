@@ -51,9 +51,9 @@ namespace PizzaGroup.Controllers
         [HttpPost]
         public IActionResult UpdateStatus(int orderId)
         {
+            Order? order = _context.Orders.Where(o => o.Id == orderId).FirstOrDefault();
             if (order == null)
-                return NotFound();
-            order.OrderStatus = (OrderStatus)status;
+                return RedirectToAction("Index");
             _context.Orders.Update(order);
             _context.SaveChanges();
             return RedirectToAction("Details", order);
