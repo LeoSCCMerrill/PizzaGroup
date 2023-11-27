@@ -86,9 +86,9 @@ namespace PizzaGroup.Controllers
             if (!(order.EmployeeId.Length > 0))
                 return RedirectToAction("ViewOrder", -2);
             order.OrderStatus = OrderStatus.ASSIGNED;
-            _context.Add(order);
+            _context.Orders.Add(order);
             _context.SaveChanges();
-            foreach (var pizza in orderSession.Pizzas)
+            foreach (KeyValuePair<int, int> pizza in orderSession.Pizzas)
             {
                 OrderPizza orderPizza = new()
                 {

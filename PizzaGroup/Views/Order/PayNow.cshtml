@@ -12,6 +12,7 @@
             <td>
                 <input class="m-1" type="text" name="cardholderName" />
             </td>
+            <td><div id="numberError"></div></td>
         </tr>
         <tr>
             <td>
@@ -22,6 +23,7 @@
             <td>
                 <input class="m-1" type="text" name="cardNumber" id="cardNumber" />
             </td>
+            <td><div id="numberError"></div></td>
         </tr>
         <tr>
             <td>
@@ -32,7 +34,7 @@
             <td>
                 <input class="m-1" type="text" name="expirationDate" />
             </td>
-            <td></td>
+            <td><div id="dateError"></div></td>
         </tr>
         <tr>
             <td>
@@ -43,7 +45,7 @@
             <td>
                 <input class="m-1" type="text" name="cvv" />
             </td>
-            <td></td>
+            <td><div id="cvvError" class="alert-warning"></div></td>
         </tr>
     </table>
     <br />

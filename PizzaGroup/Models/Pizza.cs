@@ -12,7 +12,7 @@ namespace PizzaGroup.Models
         public int SizeId { get; set; }
         public Size? Size { get; set; }
         [Required(ErrorMessage = "Please choose a crust")]
-        public int CrustId { get; set; }
+        public int CrustId { get; set; } = 1;
         public Crust? Crust { get; set; }
         public decimal Price { get; set; } = decimal.Zero;
         public IList<Topping> Toppings { get; set; } = new List<Topping>();

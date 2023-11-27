@@ -12,8 +12,8 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20231115193650_final")]
-    partial class final
+    [Migration("20231127204351_submit")]
+    partial class submit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -54,21 +54,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "bde81df1-bb5b-4027-b3d7-2cd5a8d1d1c3",
+                            ConcurrencyStamp = "4113e137-e3c1-4b51-b167-35eca4a0602a",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "f28651a9-3a89-4623-936b-355a23e42252",
+                            ConcurrencyStamp = "7622f648-4adb-43a1-9f2f-0b8fac44098c",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "46230871-34e5-4de3-abcd-c1f5914fd418",
+                            ConcurrencyStamp = "3b0f07a2-337c-40c3-b5cf-afee2d61c196",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -426,6 +426,7 @@ namespace PizzaGroup.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("Price")
