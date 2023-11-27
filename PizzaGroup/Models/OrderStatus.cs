@@ -1,9 +1,13 @@
-﻿using System.Diagnostics;
-
-namespace PizzaGroup.Models
+﻿namespace PizzaGroup.Models
 {
     public enum OrderStatus
     {
         NOT_SUBMITTED, SUBMITTED, ASSIGNED, TOSSING_DOUGH, ADDING_TOPPINGS, BAKING_PIZZAS, FINAL_CHECK, OUT_FOR_DELIVERY, DELIVERED
+    }
+
+    public enum ShowOrderStatus
+    {
+        ASSIGNED = 2, TOSSING_DOUGH = 3, ADDING_TOPPINGS = 4, BAKING_PIZZAS = 5, FINAL_CHECK = 6, OUT_FOR_DELIVERY = 7, DELIVERED = 8
+        //ASSIGNED, TOSSING_DOUGH, ADDING_TOPPINGS, BAKING_PIZZAS, FINAL_CHECK, OUT_FOR_DELIVERY, DELIVERED
     }
 }

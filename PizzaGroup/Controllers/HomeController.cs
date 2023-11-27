@@ -10,6 +10,7 @@ namespace PizzaGroup.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationDbContext _context;
+
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext context)
         {
             _logger = logger;
@@ -31,33 +32,14 @@ namespace PizzaGroup.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public  IActionResult TestPizzaView(int id)
+
+        public IActionResult TestPizzaView(int id)
         {
-            var theModel = _context.Pizzas.Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping)
-                .Include(p => p.Size)
-                .Include(p => p.Crust)
-                .FirstOrDefault(p => p.Id == id);
-            return View(theModel);
+            Pizza? model = _context.Pizzas.Include(p => p.PizzaToppings).ThenInclude(pt => pt.Topping)
+                                          .Include(p => p.Size)
+                                          .Include(p => p.Crust)
+                                          .FirstOrDefault(p => p.Id == id);
+            return View(model);
         }
-        //public Decimal CalculatePrice(Pizza pizza)
-        //{
-        //    Decimal price = 5.0m;
-        //    if (pizza.Toppings != null)
-        //    {
-        //        foreach (Topping topping in pizza.Toppings)
-        //        {
-        //            price += topping.Price;
-        //        }
-        //    }
-        //    if (pizza.Crust != null)
-        //    {
-        //        price += pizza.Crust.Price;
-        //    }
-        //    if (pizza.Size != null)
-        //    {
-        //        price *= pizza.Size.PriceMultiplier;
-        //    }
-        //    return price;
-        //}
     }
 }

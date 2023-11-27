@@ -2,42 +2,44 @@
 @ViewBag.Orders
 
 <body id="grad">
-@if (@Model != null && Model.PizzaList.Count > 0){
-    <table id="customers" >
-        <thead>
-            <tr>
-                <th>Pizza</th>
-                <th>Price</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <form method="post">
-                @{
-                    int counter = 0;
-                    int lastPizzaId = 0;
-                }
+    @if (@Model != null && Model.PizzaList.Count > 0)
+    {
+        <table id="customers">
+            <thead>
+                <tr>
+                    <th>Pizza</th>
+                    <th>Price</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <form method="post">
+                    @{
+                        int counter = 0;
+                        int lastPizzaId = 0;
+                    }
 
-            @foreach (var pizza in @Model.PizzaList.OrderBy(p => p.Id))
-            { if(@lastPizzaId != pizza.Id)
-                {
-                    counter = 0;
-                }
-                lastPizzaId = pizza.Id;
-                counter++;
-            <tr>
-                <td>@pizza.Name (@counter of @Model.Pizzas[pizza.Id])</td>
-                <td>@pizza.Price</td>
-                <td><button asp-action="Delete" asp-route-id="@pizza.Id">Delete</button></td>
-            </tr>
-            }
-        </form>
-    </tbody>
-    </table>
-    <br />
-    <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Add another pizza</a>
-    <br />
-    <br />
+                    @foreach (var pizza in @Model.PizzaList.OrderBy(p => p.Id))
+                    {
+                        if (@lastPizzaId != pizza.Id)
+                        {
+                            counter = 0;
+                        }
+                        lastPizzaId = pizza.Id;
+                        counter++;
+                    <tr>
+                        <td>@pizza.Name (@counter of @Model.Pizzas[pizza.Id])</td>
+                        <td>@pizza.Price</td>
+                        <td><button asp-action="Delete" asp-route-id="@pizza.Id" class="btn btn-danger">Delete</button></td>
+                    </tr>
+                    }
+                </form>
+            </tbody>
+        </table>
+        <br />
+        <a asp-action="ListPizzas" asp-controller="Customer" class="btn btn-primary">Add another pizza</a>
+        <br />
+        <br />
 
 
     decimal total = 0.0m;
@@ -47,10 +49,10 @@
     foreach (var pizza in Model.PizzaList)
     {
         total += pizza.Price;
-        salesTax = total * salesTax;
-        industryTax = total * industryTax;
-        totalDue = total + salesTax + industryTax;
     }
+    salesTax = total * salesTax;
+    industryTax = total * industryTax;
+    totalDue = total + salesTax + industryTax;
     <h4>Sub-Total: @total.ToString("c")</h4>
     <h4>Sales Tax: @salesTax.ToString("c")</h4>
     <h4>Service Industry Tax: @industryTax.ToString("c")</h4>
