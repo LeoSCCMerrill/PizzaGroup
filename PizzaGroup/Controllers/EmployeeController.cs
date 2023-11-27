@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using PizzaGroup.Data;
 using PizzaGroup.Models;
+using System.Reflection.Metadata;
 using System.Security.Claims;
 
 namespace PizzaGroup.Controllers
@@ -46,7 +49,7 @@ namespace PizzaGroup.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateStatus(Order order, int status)
+        public IActionResult UpdateStatus(int orderId)
         {
             if (order == null)
                 return NotFound();
@@ -99,5 +102,6 @@ namespace PizzaGroup.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        
     }
 }

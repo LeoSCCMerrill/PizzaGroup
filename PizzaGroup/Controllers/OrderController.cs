@@ -5,6 +5,7 @@ using PizzaGroup.Data;
 using PizzaGroup.Models;
 using System.Security.Claims;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 
 namespace PizzaGroup.Controllers
 {
@@ -27,6 +28,24 @@ namespace PizzaGroup.Controllers
         {
             var defaultPizzas = _context.Pizzas.Select(p => p.Id == PizzaId);
             return View(defaultPizzas);
+        }
+
+        [HttpGet]
+        public IActionResult PizzaStatus(int status)
+        {
+            Order? order = HttpContext.Session.Get<Order>(SessionKeyOrder);
+            //var currentStatus = _context.Orders.
+
+
+            //currentStatus.OrderStatus = (OrderStatus)status;
+
+            if (order == null)
+            {
+                RedirectToAction("Index");
+            }
+
+            
+            return View(order);
         }
 
         public IActionResult ViewOrder()
