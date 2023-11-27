@@ -252,6 +252,19 @@ namespace PizzaGroup.Controllers
             return View(pizza);
         }
 
+        [Authorize(Roles = "Owner, Manager")]
+        [HttpGet]
+        public IActionResult LimitedTimeDeal(int id)
+        {
+            var StartDate = ViewBag.StartDate ?? DateTime.Today;
+            var EndDate = ViewBag.EndDate ?? DateTime.Today;
+            
+                
+
+            // Retrieve the selected Pizza by its Id
+            var pizza = _context.Pizzas.Include(p => p.Size).Include(p => p.Crust).FirstOrDefault(p => p.Id == id);
+            return View(pizza);
+        }
 
         private async Task<UserViewModel> GetViewModel()
         {
