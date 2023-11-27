@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PizzaGroup.Data;
 
@@ -11,9 +12,10 @@ using PizzaGroup.Data;
 namespace PizzaGroup.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231127192003_temp")]
+    partial class temp
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,21 +54,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "4113e137-e3c1-4b51-b167-35eca4a0602a",
+                            ConcurrencyStamp = "bec15bc6-e551-411c-95c4-3fce2bc8fb36",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "7622f648-4adb-43a1-9f2f-0b8fac44098c",
+                            ConcurrencyStamp = "60b28808-8438-4bed-bdf3-00c1aaae048c",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "3b0f07a2-337c-40c3-b5cf-afee2d61c196",
+                            ConcurrencyStamp = "24f75bc0-ded1-4c48-8a1b-9529115373d2",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -341,137 +343,9 @@ namespace PizzaGroup.Migrations
                         {
                             Id = 1,
                             CrustId = 1,
-                            Name = "Pepperoni",
+                            Name = "Custom 1",
                             Price = 5.0m,
                             SizeId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CrustId = 2,
-                            Name = "Beef",
-                            Price = 8.5m,
-                            SizeId = 2
-                        },
-                        new
-                        {
-                            Id = 3,
-                            CrustId = 3,
-                            Name = "Cheese",
-                            Price = 8.0m,
-                            SizeId = 3
-                        },
-                        new
-                        {
-                            Id = 4,
-                            CrustId = 4,
-                            Name = "Canadian Bacon",
-                            Price = 12.25m,
-                            SizeId = 4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            CrustId = 5,
-                            Name = "Sausage",
-                            Price = 14.0m,
-                            SizeId = 4
-                        },
-                        new
-                        {
-                            Id = 6,
-                            CrustId = 6,
-                            Name = "Chicken Alfredo",
-                            Price = 18.25m,
-                            SizeId = 4
-                        },
-                        new
-                        {
-                            Id = 7,
-                            CrustId = 2,
-                            Name = "Hawaiian",
-                            Price = 5.5m,
-                            SizeId = 1
-                        },
-                        new
-                        {
-                            Id = 8,
-                            CrustId = 3,
-                            Name = "BBQ Chicken",
-                            Price = 14.0m,
-                            SizeId = 3
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CrustId = 4,
-                            Name = "Meat Lovers",
-                            Price = 10.0m,
-                            SizeId = 2
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CrustId = 4,
-                            Name = "Veggie Lovers",
-                            Price = 10.0m,
-                            SizeId = 3
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CrustId = 5,
-                            Name = "Hizza Special",
-                            Price = 16.75m,
-                            SizeId = 4
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CrustId = 6,
-                            Name = "Anchovie",
-                            Price = 5.0m,
-                            SizeId = 1
-                        },
-                        new
-                        {
-                            Id = 13,
-                            CrustId = 5,
-                            Name = "Leo's Special",
-                            Price = 15.0m,
-                            SizeId = 4
-                        },
-                        new
-                        {
-                            Id = 14,
-                            CrustId = 1,
-                            Name = "John's Special",
-                            Price = 15.0m,
-                            SizeId = 4
-                        },
-                        new
-                        {
-                            Id = 15,
-                            CrustId = 2,
-                            Name = "Cameron's Special",
-                            Price = 15.5m,
-                            SizeId = 4
-                        },
-                        new
-                        {
-                            Id = 16,
-                            CrustId = 3,
-                            Name = "Ryan's Special",
-                            Price = 15.25m,
-                            SizeId = 4
-                        },
-                        new
-                        {
-                            Id = 17,
-                            CrustId = 4,
-                            Name = "Madelon's Special",
-                            Price = 15.25m,
-                            SizeId = 4
                         });
                 });
 

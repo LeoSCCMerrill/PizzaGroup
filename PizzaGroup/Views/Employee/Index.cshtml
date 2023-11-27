@@ -35,12 +35,11 @@
                     @{
                         string standardStatus = Model[i].OrderStatus.ToString().Substring(0, 1) + Model[i].OrderStatus.ToString().Substring(1).ToLower();
                     }
-                    
                     <tr>
                         <td>
                             <form method="post" asp-controller="employee" asp-action="UpdateStatus"  asp-route-orderId="@Model[i].Id">
-                                <select asp-items="Html.GetEnumSelectList<OrderStatus>()"></select>
-                                <input type="submit">
+                                
+                                <select name="selectValue" asp-for="@Model[i].OrderStatus" asp-items="Html.GetEnumSelectList<ShowOrderStatus>()" onchange="submit()"></select>
                             </form>
                         </td>
                     </tr>
