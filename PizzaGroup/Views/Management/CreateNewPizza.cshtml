@@ -22,6 +22,7 @@
                         <div>
                             @Html.HiddenFor(m => m.ToppingList[i].Topping.Price)
                             @Html.HiddenFor(m => m.ToppingList[i].Topping.Id)
+                            @Html.HiddenFor(m => m.ToppingList[i].Topping.Name)
                             @Html.CheckBoxFor(m => m.ToppingList[i].IsSelected)
                             @Html.LabelFor(m => m.ToppingList[i].IsSelected, Model.ToppingList[i].Topping.Name)
                         </div>

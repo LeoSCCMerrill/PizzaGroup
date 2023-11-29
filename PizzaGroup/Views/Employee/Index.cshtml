@@ -23,6 +23,7 @@
                                 <table class="table-pizza">
                                     <tr><th>Pizza @curPizza of @Model[i].PizzaList.Count </th></tr>
                                     <tr><td>@Model[i].PizzaList[j].Name</td></tr>
+                                    <tr><td>Quantity: @Model[i].OrderPizza[j].Quantity</td></tr>
                                     <tr><td>Price: @Model[i].PizzaList[j].Price.ToString("C")</td></tr>
                                     @{
                                         totalPrice += Model[i].PizzaList[j].Price;
