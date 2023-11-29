@@ -52,21 +52,21 @@ namespace PizzaGroup.Migrations
                         new
                         {
                             Id = "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11",
-                            ConcurrencyStamp = "4113e137-e3c1-4b51-b167-35eca4a0602a",
+                            ConcurrencyStamp = "3ad109c4-c2ad-46e7-8971-38dfd3f1fc14",
                             Name = "Owner",
                             NormalizedName = "OWNER"
                         },
                         new
                         {
                             Id = "b4280b6a-0613-4cbd-a9e6-f1701e926e73",
-                            ConcurrencyStamp = "7622f648-4adb-43a1-9f2f-0b8fac44098c",
+                            ConcurrencyStamp = "4f3bfca2-b383-4d92-af50-fec3519d03a5",
                             Name = "Manager",
                             NormalizedName = "MANAGER"
                         },
                         new
                         {
                             Id = "22d6208e-e968-487e-a8f6-59a1c3ce94d7",
-                            ConcurrencyStamp = "3b0f07a2-337c-40c3-b5cf-afee2d61c196",
+                            ConcurrencyStamp = "7ad84f38-ab0a-4d61-a4be-f0d9bd6ac91e",
                             Name = "Employee",
                             NormalizedName = "EMPLOYEE"
                         });
@@ -555,8 +555,7 @@ namespace PizzaGroup.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal?>("Price")
-                        .IsRequired()
+                    b.Property<decimal>("Price")
                         .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("ToppingType")

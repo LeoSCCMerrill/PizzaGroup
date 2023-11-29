@@ -11,11 +11,12 @@
         Current Order Status:
         
     </h1>
-    <h1>
-        @Model.OrderStatus
-    </h1>
+    
     @if (@Model != null && Model.PizzaList.Count > 0)
     {
+        <h1>
+            @Model.OrderStatus
+        </h1>
         <table id="customers">
             <thead>
                 <tr>
