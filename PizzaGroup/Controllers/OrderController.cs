@@ -186,6 +186,7 @@ namespace PizzaGroup.Controllers
 
         public IActionResult ThankYou()
         {
+            HttpContext.Session.Remove(SessionKeyOrder);
             return View();
         }
     }
