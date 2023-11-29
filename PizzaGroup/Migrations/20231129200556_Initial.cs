@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace PizzaGroup.Migrations
 {
-    public partial class something : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -302,9 +302,9 @@ namespace PizzaGroup.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "7ad84f38-ab0a-4d61-a4be-f0d9bd6ac91e", "Employee", "EMPLOYEE" },
-                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "3ad109c4-c2ad-46e7-8971-38dfd3f1fc14", "Owner", "OWNER" },
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "4f3bfca2-b383-4d92-af50-fec3519d03a5", "Manager", "MANAGER" }
+                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "1a070be5-925e-41fc-8f85-160b9962f0a5", "Employee", "EMPLOYEE" },
+                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "23d8ed89-1e16-43ca-8a5f-5eee868f1d43", "Owner", "OWNER" },
+                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "8995d364-db88-428f-b91f-8f3f928e4849", "Manager", "MANAGER" }
                 });
 
             migrationBuilder.InsertData(
@@ -372,36 +372,17 @@ namespace PizzaGroup.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetUserRoles",
                 columns: new[] { "RoleId", "UserId" },
-                values: new object[,]
-                {
-                    { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "22d6208e-e968-487e-a8f6-59a1c3ce94d7" },
-                    { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11" },
-                    { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "b4280b6a-0613-4cbd-a9e6-f1701e926e73" }
-                });
+                values: new object[] { "22d6208e-e968-487e-a8f6-59a1c3ce94d7", "22d6208e-e968-487e-a8f6-59a1c3ce94d7" });
 
             migrationBuilder.InsertData(
-                table: "Pizzas",
-                columns: new[] { "Id", "CrustId", "Name", "Price", "SizeId", "UserId" },
-                values: new object[,]
-                {
-                    { 1, 1, "Pepperoni", 5.0m, 1, null },
-                    { 2, 2, "Beef", 8.5m, 2, null },
-                    { 3, 3, "Cheese", 8.0m, 3, null },
-                    { 4, 4, "Canadian Bacon", 12.25m, 4, null },
-                    { 5, 5, "Sausage", 14.0m, 4, null },
-                    { 6, 6, "Chicken Alfredo", 18.25m, 4, null },
-                    { 7, 2, "Hawaiian", 5.5m, 1, null },
-                    { 8, 3, "BBQ Chicken", 14.0m, 3, null },
-                    { 9, 4, "Meat Lovers", 10.0m, 2, null },
-                    { 10, 4, "Veggie Lovers", 10.0m, 3, null },
-                    { 11, 5, "Hizza Special", 16.75m, 4, null },
-                    { 12, 6, "Anchovie", 5.0m, 1, null },
-                    { 13, 5, "Leo's Special", 15.0m, 4, null },
-                    { 14, 1, "John's Special", 15.0m, 4, null },
-                    { 15, 2, "Cameron's Special", 15.5m, 4, null },
-                    { 16, 3, "Ryan's Special", 15.25m, 4, null },
-                    { 17, 4, "Madelon's Special", 15.25m, 4, null }
-                });
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11", "5cb99a62-bceb-4b4a-98d7-b250d8d7ae11" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[] { "b4280b6a-0613-4cbd-a9e6-f1701e926e73", "b4280b6a-0613-4cbd-a9e6-f1701e926e73" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
