@@ -127,8 +127,8 @@ namespace PizzaGroup.Controllers
             _logger.LogDebug("CustomerController.CustomPizzaView - Post Method");
             if (ModelState.IsValid)
             {
-                //_context.Add(model.Pizza);
-                //_context.SaveChanges();
+                _context.Add(model.Pizza);
+                _context.SaveChanges();
                 decimal price = 0.0m;
                 foreach (ToppingList entry in model.ToppingList)
                 {
@@ -143,12 +143,12 @@ namespace PizzaGroup.Controllers
                         _context.PizzaToppings.Add(pizzaTopping);
                     }
                 }
-                price += _crusts[model.Pizza.CrustId].Price;
+                price += _crusts[(int)model.Pizza.CrustId].Price;
                 price += 10.0m;
-                price *= _sizes[model.Pizza.SizeId].PriceMultiplier;
-                model.Pizza.Price = price;
-                _context.ChangeTracker.Clear();
-                _context.Add(model.Pizza);
+                price *= _sizes[(int)model.Pizza.SizeId].PriceMultiplier;
+                Pizza? pizza = _context.Pizzas.Include(p => p.Size).Include(p => p.Crust).FirstOrDefault(p => p.Id == model.Pizza.Id);
+                pizza.Price = price;
+                _context.Pizzas.Update(pizza);
                 _context.SaveChanges();
                 return RedirectToAction("ListPizzas");
             }
