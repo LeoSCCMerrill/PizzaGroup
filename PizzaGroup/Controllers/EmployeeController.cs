@@ -55,25 +55,19 @@ namespace PizzaGroup.Controllers
             //Couldn't figure out how to get the value from the selectList
             //var strStatus = Request.Form["selectValue"];
             int status = int.Parse(selectValue);
-            
+
             Order? order = _context.Orders.Find(orderId);
             if (order == null)
             {
                 return RedirectToAction("Index");
-            }               
-            _context.Orders.Update(order);
-            _context.SaveChanges();
-            return RedirectToAction("Details", order);
-        }
+            }
 
-        /*    //Updates The Database
             order.OrderStatus = (OrderStatus)status;
+
             _context.Orders.Update(order);
             _context.SaveChanges();
-
-
             return RedirectToAction("Index");
-        }*/
+        }  
 
         [HttpGet]
         public IActionResult DeleteOrder(int id)

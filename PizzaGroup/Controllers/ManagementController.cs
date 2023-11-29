@@ -114,9 +114,9 @@ namespace PizzaGroup.Controllers
                         _context.PizzaToppings.Add(pizzaTopping);
                     }
                 }
-                price += _crusts[model.Pizza.CrustId].Price;
+                price += _crusts[(int)model.Pizza.CrustId].Price;
                 price += 10.0m;
-                price *= _sizes[model.Pizza.SizeId].PriceMultiplier;
+                price *= _sizes[(int)model.Pizza.SizeId].PriceMultiplier;
                 model.Pizza.Price = price;
                 _context.ChangeTracker.Clear();
                 _context.Add(model.Pizza);
