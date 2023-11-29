@@ -58,20 +58,22 @@ namespace PizzaGroup.Controllers
             
             Order? order = _context.Orders.Find(orderId);
             if (order == null)
+            {
                 return RedirectToAction("Index");
+            }               
             _context.Orders.Update(order);
             _context.SaveChanges();
             return RedirectToAction("Details", order);
         }
 
-            //Updates The Database
+        /*    //Updates The Database
             order.OrderStatus = (OrderStatus)status;
             _context.Orders.Update(order);
             _context.SaveChanges();
 
 
             return RedirectToAction("Index");
-        }
+        }*/
 
         [HttpGet]
         public IActionResult DeleteOrder(int id)
@@ -100,7 +102,7 @@ namespace PizzaGroup.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            else
+            else { 
                 return RedirectToAction("BadDelete");
             }
         }
@@ -116,7 +118,6 @@ namespace PizzaGroup.Controllers
             _context.Orders.Remove(order);
             _context.SaveChanges();
             return RedirectToAction("Index");
-        }
-        
+        }       
     }
 }
